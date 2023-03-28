@@ -1,0 +1,11 @@
+html,
+body {
+  margin: 0 auto;
+  height: 100%;
+  background: #000;
+}
+
+*::-webkit-media-controls-start-playback-button {
+  display: none!important;
+  -webkit-appearance: none;
+}
