@@ -11,7 +11,7 @@ const OCR_LICENSE_KEY = 'FPkTB6QsFFW5YwiqAa2zk5yy0ylLfYSryPM1fnVJKLgWBk6FgEPMBP9
 
 /** webstorm에서 'Javascript Debugger' 사용 시 참고 */
 // const OCR_TARGET_ORIGIN = "https://localhost:63342/useb-ocr-wasm-sdk-sample";
-// const OCR_URL = "https://localhost:63342/useb-ocr-wasm-sdk-sample/sdk/ocr.html";
+// const OCR_URL = "https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/ocr.html";
 // const OCR_LICENSE_KEY = 'SHOULD BE ENTER LICENSE KEY';
 
 const ocrIframe = document.getElementById("resolution-simulation-iframe");
@@ -132,21 +132,26 @@ function updateOCRResult(data, json) {
 
   if (detail) {
     let ocr_type_txt = "N/A";
-    if (detail.ocr_type === "idcard") {
+    if (detail.ocr_type.indexOf("idcard") > -1) {
       ocr_type_txt = "주민등록증/운전면허증";
-    } else if (detail.ocr_type === "passport") {
+    } else if (detail.ocr_type.indexOf("passport") > -1) {
       ocr_type_txt = "국내/해외여권";
-    } else if (detail.ocr_type === "alien") {
+    } else if (detail.ocr_type.indexOf("alien") > -1) {
       ocr_type_txt = "외국인등록증";
-    } else if (detail.ocr_type === "credit") {
+    } else if (detail.ocr_type.indexOf("credit") > -1) {
       ocr_type_txt = "신용카드";
+    } else if (detail.ocr_type.indexOf("idcard-ssa") > -1) {
+      ocr_type_txt += " + 사본탐지";
     } else {
-      ocr_type_txt = "INVALID_TYPE";
+      ocr_type_txt = "INVALID_TYPE(" + detail.ocr_type + ")";
     }
-    title1.innerHTML += "- 인증 결과 : " + (json.result === "success" ? "<span style='color:blue'>성공</span>" : "<span style='color:red'>실패</span>") + " </br>";
+    title1.innerHTML += "- OCR 결과 : " + (json.result === "success" ? "<span style='color:blue'>성공</span>" : "<span style='color:red'>실패</span>") + " </br>";
     title1.innerHTML += "- OCR 종류 : " + "<span style='color:blue'>" + ocr_type_txt + "</span></br>";
+    if (detail.ocr_type.indexOf("-ssa") > -1) {
+      title1.innerHTML += "- 사본판별 결과 : " + "<span style='color:blue'>" + detail.ocr_data.truth + "</span></br>";
+    }
 
-    if (detail.ocr_type === 'credit') {
+    if (detail.ocr_type.indexOf("credit") > -1) {
       if (detail.ocr_origin_image) {
         content += "<br/> - 신용카드 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" + detail.ocr_origin_image + "' /></b>";
       }

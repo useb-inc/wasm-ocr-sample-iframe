@@ -49,10 +49,16 @@ const messageHandler = async (e) => {
       }
 
       switch (data.ocrType) {
+        // OCR
         case 'idcard':
         case 'passport':
         case 'alien':
         case 'credit':
+        // SSA
+        case 'idcard-ssa':
+        case 'passport-ssa':
+        case 'alien-ssa':
+        case 'credit-ssa':
           ocr.init(data.settings)
 
           const sendResult = (result) => {

@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>OCR WebAssembly Sample</title>
+    <title>OCR/SSA WebAssembly Sample</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" type="text/css" href="./css/demo.css" />
 
@@ -27,6 +27,11 @@
             <button id="passport">국내/해외 여권</button>
             <button id="alien">외국인등록증</button>
             <button id="credit">신용카드</button>
+
+            <button id="idcard-ssa">주민등록증/운전면허증 + 사본판별</button>
+            <button id="passport-ssa">국내/해외 여권 + 사본판별</button>
+            <button id="alien-ssa">외국인등록증 SSA + 사본판별</button>
+<!--            <button id="credit-ssa">신용카드 SSA + 사본판별</button>-->
         </section>
 
         <!-- 이미지 스캔 카메라 섹션 -->
@@ -44,6 +49,19 @@
                 <span>[접기]</span>
                 <i class="chevron fa-solid fa-chevron-down"></i>
             </div>
+            <fieldset>
+                <legend>사본판별 설정</legend>
+                <div>
+                    <label for="ssa-max-retry-count">Max Retry</label>
+                    <select id="ssa-max-retry-count" style='max-width: 100px;'>
+                        <option value=0>미사용</option>
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=5>5</option>
+                    </select>
+                </div>
+            </fieldset>
             <fieldset>
                 <legend>카메라 설정</legend>
                 <div>
