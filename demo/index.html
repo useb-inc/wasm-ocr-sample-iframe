@@ -63,6 +63,13 @@
                 </div>
             </fieldset>
             <fieldset>
+                <legend>UI 설정</legend>
+                <div>
+                    <label for="use-bottom-ui">하단 UI 사용</label>
+                    <input type="checkbox" id="use-bottom-ui" name="use-bottom-ui" checked>
+                </div>
+            </fieldset>
+            <fieldset>
                 <legend>카메라 설정</legend>
                 <div>
                     <label for="mirror-mode">mirror-mode</label>
@@ -121,23 +128,31 @@
                     <input type="text" id="border-style" name="border-style" value="solid">
                 </div>
                 <div>
-                    <label for="color-not-ready">스캔준비</label>
+                    <label for="color-not-ready">스캔준비　　</label>
                     <input type="color" id="color-not-ready" name="color-not-ready" value="#000000">
                 </div>
                 <div>
-                    <label for="color-ready">스캔대기</label>
+                    <label for="color-ready">스캔대기　　</label>
                     <input type="color" id="color-ready" name="color-ready" value="#b8b8b8">
                 </div>
                 <div>
-                    <label for="color-detecting">스캔진행</label>
-                    <input type="color" id="color-detecting" name="color-detecting" value="#ff951c">
+                    <label for='color-detect-success'>카드검출성공</label>
+                    <input type="color" id='color-detect-success' name='color-detect-success' value="#ffbf1c">
                 </div>
                 <div>
-                    <label for="color-success">스캔완료</label>
-                    <input type="color" id="color-success" name="color-success" value="#5cb85c">
+                    <label for='color-detect-failed'>카드검출실패</label>
+                    <input type="color" id='color-detect-failed' name='color-detect-failed' value="#ff8268">
                 </div>
                 <div>
-                    <label for="color-failed">스캔오류</label>
+                    <label for='color-detect-failed'>카드인식성공</label>
+                    <input type="color" id='color-ocr-recognized' name='color-ocr-recognized' value="#5e8fff">
+                </div>
+                <div>
+                    <label for="color-success">스캔성공　　</label>
+                    <input type="color" id="color-success" name="color-success" value="#14b00e">
+                </div>
+                <div>
+                    <label for="color-failed">스캔실패　　</label>
                     <input type="color" id="color-failed" name="color-failed" value="#FA113D">
                 </div>
                 <div>

@@ -3,6 +3,29 @@ body {
   margin: 0 auto;
   height: 100%;
   background: #000;
+  box-sizing: border-box;
+}
+
+*,
+:after,
+:before {
+  background-repeat: no-repeat;
+  box-sizing: inherit;
+}
+
+*::-webkit-media-controls-start-playback-button {
+  display: none!important;
+  -webkit-appearance: none;
+}
+
+.text-info {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 32px;
+  color: white;
 }
 
 *::-webkit-media-controls-start-playback-button {
