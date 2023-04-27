@@ -167,143 +167,143 @@ Module.expectedDataFileDownloads++;
       "start": 0,
       "end": 701059
     }, {
-      "filename": "/model/qr_fd_0411_0800.model",
+      "filename": "/model/qr_fd_720x448_RGB_DX_WASM_0425_0800.model",
       "start": 701059,
-      "end": 13508010
+      "end": 13509162
     }, {
       "filename": "/model/quramsoft",
-      "start": 13508010,
-      "end": 13508010
+      "start": 13509162,
+      "end": 13509162
     }, {
       "filename": "/tessdata/alien.traineddata",
-      "start": 13508010,
-      "end": 15475597
+      "start": 13509162,
+      "end": 15476749
     }, {
       "filename": "/tessdata/ar_num.traineddata",
-      "start": 15475597,
-      "end": 15505547
+      "start": 15476749,
+      "end": 15506699
     }, {
       "filename": "/tessdata/card.traineddata",
-      "start": 15505547,
-      "end": 15534929
+      "start": 15506699,
+      "end": 15536081
     }, {
       "filename": "/tessdata/driver_num.traineddata",
-      "start": 15534929,
-      "end": 15557251
+      "start": 15536081,
+      "end": 15558403
     }, {
       "filename": "/tessdata/eng.traineddata",
-      "start": 15557251,
-      "end": 15637308
+      "start": 15558403,
+      "end": 15638460
     }, {
       "filename": "/tessdata/giro.traineddata",
-      "start": 15637308,
-      "end": 15664256
+      "start": 15638460,
+      "end": 15665408
     }, {
       "filename": "/tessdata/income_alpha.traineddata",
-      "start": 15664256,
-      "end": 15720978
+      "start": 15665408,
+      "end": 15722130
     }, {
       "filename": "/tessdata/income_num.traineddata",
-      "start": 15720978,
-      "end": 15750056
+      "start": 15722130,
+      "end": 15751208
     }, {
       "filename": "/tessdata/juminnum.traineddata",
-      "start": 15750056,
-      "end": 15771979
+      "start": 15751208,
+      "end": 15773131
     }, {
       "filename": "/tessdata/kor.traineddata",
-      "start": 15771979,
-      "end": 16878888
+      "start": 15773131,
+      "end": 16880040
     }, {
       "filename": "/tessdata/name.traineddata",
-      "start": 16878888,
-      "end": 16925458
+      "start": 16880040,
+      "end": 16926610
     }, {
       "filename": "/tessdata/number.traineddata",
-      "start": 16925458,
-      "end": 16949570
+      "start": 16926610,
+      "end": 16950722
     }, {
       "filename": "/tessdata/ocr.traineddata",
-      "start": 16949570,
-      "end": 16967780
+      "start": 16950722,
+      "end": 16968932
     }, {
       "filename": "/tessdata/pass2.traineddata",
-      "start": 16967780,
-      "end": 16989424
+      "start": 16968932,
+      "end": 16990576
     }, {
       "filename": "/tessdata/passport.traineddata",
-      "start": 16989424,
-      "end": 17056333
+      "start": 16990576,
+      "end": 17057485
     }, {
       "filename": "/weights/apo_0",
-      "start": 17056333,
-      "end": 17237269
+      "start": 17057485,
+      "end": 17238421
     }, {
       "filename": "/weights/dash_0",
-      "start": 17237269,
-      "end": 17418205
+      "start": 17238421,
+      "end": 17419357
     }, {
       "filename": "/weights/expr_0",
-      "start": 17418205,
-      "end": 17600197
+      "start": 17419357,
+      "end": 17601349
     }, {
       "filename": "/weights/expr_1",
-      "start": 17600197,
-      "end": 17782189
+      "start": 17601349,
+      "end": 17783341
     }, {
       "filename": "/weights/name_dxdy_0",
-      "start": 17782189,
-      "end": 17977153
+      "start": 17783341,
+      "end": 17978305
     }, {
       "filename": "/weights/name_dxdy_1",
-      "start": 17977153,
-      "end": 18172117
+      "start": 17978305,
+      "end": 18173269
     }, {
       "filename": "/weights/name_org_0",
-      "start": 18172117,
-      "end": 18305641
+      "start": 18173269,
+      "end": 18306793
     }, {
       "filename": "/weights/name_org_1",
-      "start": 18305641,
-      "end": 18439165
+      "start": 18306793,
+      "end": 18440317
     }, {
       "filename": "/weights/number_0",
-      "start": 18439165,
-      "end": 18539237
+      "start": 18440317,
+      "end": 18540389
     }, {
       "filename": "/weights/number_1",
-      "start": 18539237,
-      "end": 18639309
+      "start": 18540389,
+      "end": 18640461
     }, {
       "filename": "/weights/number_2",
-      "start": 18639309,
-      "end": 18739381
+      "start": 18640461,
+      "end": 18740533
     }, {
       "filename": "/weights/number_3",
-      "start": 18739381,
-      "end": 18839453
+      "start": 18740533,
+      "end": 18840605
     }, {
       "filename": "/weights/slash_0",
-      "start": 18839453,
-      "end": 19020389
+      "start": 18840605,
+      "end": 19021541
     }, {
       "filename": "/weights/slash_1",
-      "start": 19020389,
-      "end": 19201325
+      "start": 19021541,
+      "end": 19202477
     }, {
       "filename": "/weights/slash_2",
-      "start": 19201325,
-      "end": 19382261
+      "start": 19202477,
+      "end": 19383413
     }, {
       "filename": "/weights/vseg_0",
-      "start": 19382261,
-      "end": 19423873
+      "start": 19383413,
+      "end": 19425025
     }, {
       "filename": "/weights/vseg_1",
-      "start": 19423873,
-      "end": 19465485
+      "start": 19425025,
+      "end": 19466637
     }],
-    "remote_package_size": 19465485
+    "remote_package_size": 19466637
   })
 })();
 var moduleOverrides = Object.assign({}, Module);
@@ -781,7 +781,7 @@ function createWasm() {
 var tempDouble;
 var tempI64;
 var ASM_CONSTS = {
-  911076: () => {
+  911140: () => {
     var jsString = window.location.hostname;
     var lengthBytes = lengthBytesUTF8(jsString) + 1;
     var stringOnWasmHeap = _malloc(lengthBytes);

@@ -2,17 +2,21 @@
 const OCR_TARGET_ORIGIN = "https://ocr.useb.co.kr";
 const OCR_URL = "https://ocr.useb.co.kr/ocr.html";
 const OCR_LICENSE_KEY = 'FPkTB6QsFFW5YwiqAa2zk5yy0ylLfYSryPM1fnVJKLgWBk6FgEPMBP9RJiCd24ldGurGnkAUPatzrf9Km90ADqjlTF/FHFyculQP21k4pxkfbSRs='
+const OCR_RESOURCE_BASE_URL = 'https://ocr.useb.co.kr/';
 
 /** localhost에서 'npm run start'로 실행 시 사용 참고 */
 // const OCR_TARGET_ORIGIN = "*";     // 보안적으로 취약하니 *을 사용하는것은 권장하지 않습니다. (refer : https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#:~:text=serialize%20them%20yourself.-,targetOrigin,-Specifies%20what%20the)
 // const OCR_TARGET_ORIGIN = "https://127.0.0.1:8090/"
 // const OCR_URL = "https://127.0.0.1:8090/sdk/ocr.html"
 // const OCR_LICENSE_KEY = 'SHOULD BE ENTER LICENSE KEY';
+// const OCR_RESOURCE_BASE_URL = https://127.0.0.1:8090/sdk/;
 
 /** webstorm에서 'Javascript Debugger' 사용 시 참고 */
 // const OCR_TARGET_ORIGIN = "https://localhost:63342/useb-ocr-wasm-sdk-sample";
 // const OCR_URL = "https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/ocr.html";
 // const OCR_LICENSE_KEY = 'SHOULD BE ENTER LICENSE KEY';
+// const OCR_RESOURCE_BASE_URL = 'https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/';
+
 
 const ocrIframe = document.getElementById("resolution-simulation-iframe");
 
@@ -23,6 +27,7 @@ const onClickStartCallback = (type, settings) => {
       settings: {
         ...settings,
         licenseKey: OCR_LICENSE_KEY,
+        resourceBaseUrl: OCR_RESOURCE_BASE_URL,
       },
     };
 
@@ -147,7 +152,7 @@ function updateOCRResult(data, json) {
     }
     title1.innerHTML += "- OCR 결과 : " + (json.result === "success" ? "<span style='color:blue'>성공</span>" : "<span style='color:red'>실패</span>") + " </br>";
     title1.innerHTML += "- OCR 종류 : " + "<span style='color:blue'>" + ocr_type_txt + "</span></br>";
-    if (detail.ocr_type.indexOf("-ssa") > -1) {
+    if (detail.ocr_type.indexOf("-ssa") > -1 && detail.ocr_data?.truth) {
       title1.innerHTML += "- 사본판별 결과 : " + "<span style='color:blue'>" + detail.ocr_data.truth + "</span></br>";
     }
 
