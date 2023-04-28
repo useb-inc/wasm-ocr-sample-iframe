@@ -1,19 +1,19 @@
 /** 아래 정보는 UseB 도메인에서만 동작하는 정보로 테스트를 위해서는 테스트 라이센스 키를 발급받고, TARGET_ORIGIN 과 URL 은 변경해야합니다. */
-const OCR_TARGET_ORIGIN = "https://ocr.useb.co.kr";
-const OCR_URL = "https://ocr.useb.co.kr/ocr.html";
-const OCR_LICENSE_KEY = 'FPkTB6QsFFW5YwiqAa2zk5yy0ylLfYSryPM1fnVJKLgWBk6FgEPMBP9RJiCd24ldGurGnkAUPatzrf9Km90ADqjlTF/FHFyculQP21k4pxkfbSRs='
-const OCR_RESOURCE_BASE_URL = 'https://ocr.useb.co.kr/';
+// const OCR_TARGET_ORIGIN = "*";     // 보안적으로 취약하니 *을 사용하는것은 권장하지 않습니다. (refer : https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#:~:text=serialize%20them%20yourself.-,targetOrigin,-Specifies%20what%20the)
+const OCR_TARGET_ORIGIN = 'undefined';
+const OCR_URL = 'undefined';
+const OCR_LICENSE_KEY = 'undefined';
+const OCR_RESOURCE_BASE_URL = 'undefined';
 
 /** localhost에서 'npm run start'로 실행 시 사용 참고 */
-// const OCR_TARGET_ORIGIN = "*";     // 보안적으로 취약하니 *을 사용하는것은 권장하지 않습니다. (refer : https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage#:~:text=serialize%20them%20yourself.-,targetOrigin,-Specifies%20what%20the)
-// const OCR_TARGET_ORIGIN = "https://127.0.0.1:8090/"
-// const OCR_URL = "https://127.0.0.1:8090/sdk/ocr.html"
+// const OCR_TARGET_ORIGIN = 'https://127.0.0.1:8090'
+// const OCR_URL = 'https://127.0.0.1:8090/sdk/ocr.html'
 // const OCR_LICENSE_KEY = 'SHOULD BE ENTER LICENSE KEY';
-// const OCR_RESOURCE_BASE_URL = https://127.0.0.1:8090/sdk/;
+// const OCR_RESOURCE_BASE_URL = 'https://127.0.0.1:8090/sdk/';
 
 /** webstorm에서 'Javascript Debugger' 사용 시 참고 */
-// const OCR_TARGET_ORIGIN = "https://localhost:63342/useb-ocr-wasm-sdk-sample";
-// const OCR_URL = "https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/ocr.html";
+// const OCR_TARGET_ORIGIN = 'https://localhost:63342/useb-ocr-wasm-sdk-sample';
+// const OCR_URL = 'https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/ocr.html';
 // const OCR_LICENSE_KEY = 'SHOULD BE ENTER LICENSE KEY';
 // const OCR_RESOURCE_BASE_URL = 'https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/';
 
