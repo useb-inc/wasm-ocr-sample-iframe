@@ -99,16 +99,22 @@ const messageHandler = async (e) => {
                   textMsg = (`영역 안에 ${cardTypeString}이 꽉 차도록 위치시키면 자동 촬영됩니다.`);
                   break;
                 case ocr.IN_PROGRESS.CARD_DETECT_SUCCESS:
-                  textMsg = (`${cardTypeString}이(가) 감지되었습니다. ${cardTypeString} 정보를 확인 중 입니다.`);
+                  textMsg = (`${cardTypeString}이(가) 감지되었습니다. ${cardTypeString} 정보를 자동으로 인식(OCR) 중 입니다.`);
                   break;
                 case ocr.IN_PROGRESS.CARD_DETECT_FAILED:
                   textMsg = (`${cardTypeString}이(가) 감지되지 않습니다. ${cardTypeString} 영역 안에 ${cardTypeString}을 위치시켜 주세요.`);
                   break;
                 case ocr.IN_PROGRESS.OCR_RECOGNIZED:
-                  textMsg = (`${cardTypeString}이(가) 감지되어, ${cardTypeString} 정보를 인식 중입니다.`);
+                  textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다.`);
+                  break;
+                case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
+                  textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다. ${cardTypeString} 사본(도용) 여부 판별 중 입니다.`);
                   break;
                 case ocr.IN_PROGRESS.OCR_SUCCESS:
-                  textMsg = (`${cardTypeString} 인식에 성공하였습니다.`);
+                  textMsg = (`${cardTypeString} 인식이 완료 되었습니다.`);
+                  break;
+                case ocr.IN_PROGRESS.OCR_SUCCESS_WITH_SSA:
+                  textMsg = (`${cardTypeString} 인식 및 사본(도용) 여부 판별이 완료되었습니다.`);
                   break;
                 case ocr.IN_PROGRESS.OCR_FAILED:
                   textMsg = (`${cardTypeString} 인식에 실패하였습니다. 다시 시도해주세요.`);
