@@ -86,10 +86,10 @@ const messageHandler = async (e) => {
             }
           }
 
-          const onInProgressChanged = (inProgress, bottomUI) => {
+          const onInProgressChange = (inProgress, customUI, uiPosition, useTextMsg) => {
             const isCreditCard = data.ocrType.indexOf('credit') > -1;
             const cardTypeString = isCreditCard ? '신용카드' : '신분증';
-            if (bottomUI) {
+            if (customUI && useTextMsg) {
               let textMsg = '';
               switch (inProgress) {
                 case ocr.IN_PROGRESS.NOT_READY:
@@ -99,16 +99,16 @@ const messageHandler = async (e) => {
                   textMsg = (`영역 안에 ${cardTypeString}이 꽉 차도록 위치시키면 자동 촬영됩니다.`);
                   break;
                 case ocr.IN_PROGRESS.CARD_DETECT_SUCCESS:
-                  textMsg = (`${cardTypeString}이(가) 감지되었습니다. ${cardTypeString} 정보를 자동으로 인식(OCR) 중 입니다.`);
+                  textMsg = (`${cardTypeString}이(가) 감지되었습니다. <br/>${cardTypeString} 정보를 자동으로 인식(OCR) 중 입니다.`);
                   break;
                 case ocr.IN_PROGRESS.CARD_DETECT_FAILED:
-                  textMsg = (`${cardTypeString}이(가) 감지되지 않습니다. ${cardTypeString} 영역 안에 ${cardTypeString}을 위치시켜 주세요.`);
+                  textMsg = (`${cardTypeString}이(가) 감지되지 않습니다. <br/>${cardTypeString} 영역 안에 ${cardTypeString}을 위치시켜 주세요.`);
                   break;
                 case ocr.IN_PROGRESS.OCR_RECOGNIZED:
                   textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다.`);
                   break;
                 case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
-                  textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다. ${cardTypeString} 사본(도용) 여부 판별 중 입니다.`);
+                  textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다. <br/>${cardTypeString} 사본(도용) 여부 판별 중 입니다.`);
                   break;
                 case ocr.IN_PROGRESS.OCR_SUCCESS:
                   textMsg = (`${cardTypeString} 인식이 완료 되었습니다.`);
@@ -120,11 +120,22 @@ const messageHandler = async (e) => {
                   textMsg = (`${cardTypeString} 인식에 실패하였습니다. 다시 시도해주세요.`);
                   break;
               }
-              bottomUI.innerHTML = textMsg;
+
+              let textMsgUI = document.getElementById(`${uiPosition}-ui-text-msg`);
+              if (textMsgUI) {
+                textMsgUI.innerHTML = textMsg;
+              } else {
+                customUI.innerHTML = `<span id="${uiPosition}-ui-text-msg" style="width: 100%;" class="text-info">${textMsg}</span>`
+                textMsgUI = document.getElementById(`${uiPosition}-ui-text-msg`);
+              }
+
+              if (uiPosition === 'middle') {
+                textMsgUI.style.backgroundColor = '#00000044';
+              }
             }
           }
 
-          await ocr.startOCR(data.ocrType, sendResult, sendResult, onInProgressChanged);
+          await ocr.startOCR(data.ocrType, sendResult, sendResult, onInProgressChange);
 
           break;
         default:

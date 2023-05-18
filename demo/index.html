@@ -43,11 +43,11 @@
         </section>
 
         <!-- 옵션 세팅 섹션 -->
-        <section class="settings-section">
+        <section class="settings-section collapsed">
             <div id='settings-toggle'>
                 <b>UI Simulator</b>
-                <span>[접기]</span>
-                <i class="chevron fa-solid fa-chevron-down"></i>
+                <span>[펼치기]</span>
+                <i class="chevron fa-solid fa-chevron-up"></i>
             </div>
             <fieldset>
                 <legend>사본판별 설정</legend>
@@ -65,8 +65,15 @@
             <fieldset>
                 <legend>UI 설정</legend>
                 <div>
-                    <label for="use-bottom-ui">하단 UI 사용</label>
-                    <input type="checkbox" id="use-bottom-ui" name="use-bottom-ui" checked>
+                    <label for="use-top-ui">상단 UI</label><br/>
+                    ┌ UI: <input type="checkbox" id="use-top-ui" name="use-top-ui" checked><br/>
+                    └─ TEXT: <input type="checkbox" id='use-top-ui-text-msg' name="use-top-ui-text-msg"><br/>
+                    <label for="use-middle-ui">중단 UI</label><br/>
+                    ┌ UI: <input type="checkbox" id="use-middle-ui" name="use-middle-ui"><br/>
+                    └─ TEXT: <input type="checkbox" id='use-middle-ui-text-msg' name="use-middle-ui-text-msg" checked><br/>
+                    <label for="use-bottom-ui">하단 UI 사용</label><br/>
+                    ┌ UI: <input type="checkbox" id="use-bottom-ui" name="use-bottom-ui" checked><br/>
+                    └─ TEXT: <input type="checkbox" id='use-bottom-ui-text-msg' name="use-bottom-ui-text-msg"><br/>
                 </div>
             </fieldset>
             <fieldset>
