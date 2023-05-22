@@ -23,15 +23,22 @@
 
     <section id="simulator-section" class="simulator-section customer--section">
         <section class="type-section">
-            <button id="idcard">주민등록증/운전면허증</button>
-            <button id="passport">국내/해외 여권</button>
-            <button id="alien">외국인등록증</button>
-            <button id="credit">신용카드</button>
+            <div id='type-toggle'>
+                <b>OCR Type</b>
+                <span>[접기]</span>
+                <i class="chevron fa-solid fa-chevron-down"></i>
+            </div>
 
-            <button id="idcard-ssa">주민등록증/운전면허증 + 사본판별</button>
-            <button id="passport-ssa">국내/해외 여권 + 사본판별</button>
-            <button id="alien-ssa">외국인등록증 SSA + 사본판별</button>
-<!--            <button id="credit-ssa">신용카드 SSA + 사본판별</button>-->
+            <div class='type-button'>
+                <button id="idcard">주민등록증/운전면허증</button>
+                <button id="passport">국내/해외 여권</button>
+                <button id="alien">외국인등록증</button>
+                <button id="credit">신용카드</button>
+
+                <button id="idcard-ssa">주민등록증/운전면허증 + 사본판별</button>
+                <button id="passport-ssa">국내/해외 여권 + 사본판별</button>
+                <button id="alien-ssa">외국인등록증 SSA + 사본판별</button>
+            </div>
         </section>
 
         <!-- 이미지 스캔 카메라 섹션 -->

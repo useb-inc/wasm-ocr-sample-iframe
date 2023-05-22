@@ -24,12 +24,35 @@ body {
   padding: 10px;
   left: 10px;
   top: 10px;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border: 5px solid #EEE;
+  border-radius: 5px;
+  background: #EEE;
+  flex-direction: column;
+  margin: 0 auto;
+  transition: all 0.3s ease-in-out;
+}
+
+#type-toggle {
+  position: fixed;
+  padding: 10px;
+  left: 10px;
+  top: 10px;
   width: 95%;
   max-width: 500px;
   height: auto;
   border: 5px solid #EEE;
   border-radius: 5px;
   background: #EEE;
+}
+
+.type-button {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 40px;
 }
 
 .scan-section {
