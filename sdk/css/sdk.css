@@ -22,8 +22,8 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 20px;
-  line-height: 32px;
+  font-size: 3.8vmin;
+  line-height: 5vmin;
   color: white;
 }
 
@@ -31,17 +31,17 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 4.5vmin;
+  line-height: 9vmin;
   color: #cccccc;
 }
 
-.button-ui {
+.bottom-ui {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 14px;
-  line-height: 28px;
+  font-size: 3.8vmin;
+  line-height: 7.6vmin;
   color: #868686;
 }
 
