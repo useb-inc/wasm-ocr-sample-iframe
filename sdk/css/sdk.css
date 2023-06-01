@@ -22,8 +22,8 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 1.0em;
-  line-height: 1.8em;
+  font-size: 3.8vmin;
+  line-height: 5vmin;
   color: white;
 }
 
@@ -31,8 +31,8 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 0.8em;
-  line-height: 1.7em;
+  font-size: 4.5vmin;
+  line-height: 9vmin;
   color: #cccccc;
 }
 
@@ -40,8 +40,8 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 0.6em;
-  line-height: 1.5em;
+  font-size: 3.8vmin;
+  line-height: 7.6vmin;
   color: #868686;
 }
 
