@@ -22,26 +22,48 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 3.8vmin;
+  font-size: 3.2vmin;
   line-height: 5vmin;
   color: white;
 }
 
-.top-ui {
+.text-color-black {
+  color: black;
+  font-weight: bold;
+}
+
+.text-weight-bold {
+  font-weight: bold;
+}
+
+.preview-img {
+  border-radius: 3vmin;
+}
+
+.preview-ui {
+  display: flex;
+  border-radius: 3vmin;
+  background-color: #FFF;
+  justify-content: center;
+  align-items: center;
+  border: 6vmin solid #FFF;
+}
+
+.top-ui-logo {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 4.5vmin;
-  line-height: 9vmin;
+  font-size: 4.2vmin;
+  line-height: 8.4vmin;
   color: #cccccc;
 }
 
-.bottom-ui {
+.bottom-ui-copyright {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 3.8vmin;
-  line-height: 7.6vmin;
+  font-size: 3.2vmin;
+  line-height: 7.2vmin;
   color: #868686;
 }
 

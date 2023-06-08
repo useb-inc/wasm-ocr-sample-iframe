@@ -17,12 +17,26 @@
 
   <div data-useb-ocr='topUI'>
     <span id='top-ui-text-msg' class='text-info'></span>
-    <span class='top-ui'>useB.<b><span style='color:white'>wasmOCR</span></b></span>
+    <span class='top-ui-logo'>useB.<b><span style='color:white'>wasmOCR</span></b></span>
+  </div>
+
+  <div data-useb-ocr='middleUI'>
+    <div id='middle-ui-bg' style="width: 100%; background-color: #00000044">
+      <span id='middle-ui-loading'></span>
+      <span id="middle-ui-text-msg" class="text-info"></span>
+    </div>
   </div>
 
   <div data-useb-ocr='bottomUI'>
     <span id='bottom-ui-text-msg' class='text-info'></span>
-    <span class='bottom-ui'>Powered by <b>useB.</b></span>
+    <span class='bottom-ui-copyright'>Powered by <b>useB.</b></span>
+  </div>
+
+  <div data-useb-ocr='previewUI' class='preview-ui'>
+    <span class="text-info" class="text-info text-color-black text-weight-bold">신분증 인식 성공</span>
+    <img data-useb-ocr='previewImage' id='preview-ui-image' class='preview-img' />
+    <span id='preview-ui-loading'></span>
+    <span id="preview-ui-text-msg" class="text-info text-color-black"></span>
   </div>
 
   <script type="module" src='./useb-ocr-wasm-sdk.js' async></script>

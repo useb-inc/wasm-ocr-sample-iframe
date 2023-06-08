@@ -60,83 +60,7 @@ const messageHandler = async (e) => {
         case 'alien-ssa':
         case 'credit-ssa':
           ocr.init(data.settings)
-
-          const sendResult = (result) => {
-            console.debug('sendResult', result);
-            const returnMessage = btoa(encodeURIComponent(JSON.stringify(result)));
-            if (window.parent) {
-              // Browser iframe
-              window.parent.postMessage(returnMessage, targetOrigin);
-            }
-
-            if (window.ReactNativeWebView) {
-              // react-native webview
-              window.ReactNativeWebView.postMessage(returnMessage);
-            }
-
-            if (window.webkit && window.webkit.messageHandlers) {
-              // iOS: WKScriptMessageHandler WKScriptMessage name(usebwasmocr)
-              window.webkit.messageHandlers.usebwasmocr &&
-              window.webkit.messageHandlers.usebwasmocr.postMessage(returnMessage);
-            } else if (window['usebwasmocr']) {
-              // Android: WebView JavascriptInterface name(usebwasmocr) and JS function(result)
-              window['usebwasmocr'] &&
-              window['usebwasmocr']['receive'] &&
-              window['usebwasmocr']['receive'](returnMessage);
-            }
-          }
-
-          const onInProgressChange = (inProgress, customUI, uiPosition, useTextMsg) => {
-            const isCreditCard = data.ocrType.indexOf('credit') > -1;
-            const cardTypeString = isCreditCard ? '신용카드' : '신분증';
-            if (customUI && useTextMsg) {
-              let textMsg = '';
-              switch (inProgress) {
-                case ocr.IN_PROGRESS.NOT_READY:
-                  textMsg = (`${cardTypeString} 촬영을 위해 카메라를 불러오는 중 입니다.`);
-                  break;
-                case ocr.IN_PROGRESS.READY:
-                  textMsg = (`영역 안에 ${cardTypeString}이 꽉 차도록 위치시키면 자동 촬영됩니다.`);
-                  break;
-                case ocr.IN_PROGRESS.CARD_DETECT_SUCCESS:
-                  textMsg = (`${cardTypeString}이(가) 감지되었습니다. <br/>${cardTypeString} 정보를 자동으로 인식(OCR) 중 입니다.`);
-                  break;
-                case ocr.IN_PROGRESS.CARD_DETECT_FAILED:
-                  textMsg = (`${cardTypeString}이(가) 감지되지 않습니다. <br/>${cardTypeString} 영역 안에 ${cardTypeString}을 위치시켜 주세요.`);
-                  break;
-                case ocr.IN_PROGRESS.OCR_RECOGNIZED:
-                  textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다.`);
-                  break;
-                case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
-                  textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다. <br/>${cardTypeString} 사본(도용) 여부 판별 중 입니다.`);
-                  break;
-                case ocr.IN_PROGRESS.OCR_SUCCESS:
-                  textMsg = (`${cardTypeString} 인식이 완료 되었습니다.`);
-                  break;
-                case ocr.IN_PROGRESS.OCR_SUCCESS_WITH_SSA:
-                  textMsg = (`${cardTypeString} 인식 및 사본(도용) 여부 판별이 완료되었습니다.`);
-                  break;
-                case ocr.IN_PROGRESS.OCR_FAILED:
-                  textMsg = (`${cardTypeString} 인식에 실패하였습니다. 다시 시도해주세요.`);
-                  break;
-              }
-
-              let textMsgUI = document.getElementById(`${uiPosition}-ui-text-msg`);
-              if (textMsgUI) {
-                textMsgUI.innerHTML = textMsg;
-              } else {
-                customUI.innerHTML = `<span id="${uiPosition}-ui-text-msg" style="width: 100%;" class="text-info">${textMsg}</span>`
-                textMsgUI = document.getElementById(`${uiPosition}-ui-text-msg`);
-              }
-
-              if (uiPosition === 'middle') {
-                textMsgUI.style.backgroundColor = '#00000044';
-              }
-            }
-          }
-
           await ocr.startOCR(data.ocrType, sendResult, sendResult, onInProgressChange);
-
           break;
         default:
           new Error("Invalid ocrType");
@@ -162,7 +86,7 @@ window.usebwasmocrreceive = messageHandler;
 
 function sendResult(result) {
   console.debug('sendResult', result);
-  const returnMessage = btoa(encodeURIComponent(result));
+  const returnMessage = btoa(encodeURIComponent(JSON.stringify(result)));
   if (window.parent) {
     // Browser iframe
     window.parent.postMessage(returnMessage, targetOrigin);
@@ -183,4 +107,92 @@ function sendResult(result) {
     window['usebwasmocr']['receive'] &&
     window['usebwasmocr']['receive'](returnMessage);
   }
+}
+
+function onInProgressChange(ocrType, inProgress, customUI, uiPosition, useTextMsg, usePreviewUI) {
+  const isCreditCard = ocrType.indexOf('credit') > -1;
+  const cardTypeString = isCreditCard ? '신용카드' : '신분증';
+  let showLoadingUI = false;
+
+  if (customUI && useTextMsg) {
+    let textMsg = '';
+    switch (inProgress) {
+      case ocr.IN_PROGRESS.NOT_READY:
+        showLoadingUI = true;
+        textMsg = (`${cardTypeString} 촬영을 위해 카메라를 불러오는 중 입니다.`);
+        break;
+      case ocr.IN_PROGRESS.READY:
+        textMsg = (`영역 안에 ${cardTypeString}이 꽉 차도록 위치시키면 자동 촬영됩니다.`);
+        break;
+      case ocr.IN_PROGRESS.CARD_DETECT_SUCCESS:
+        textMsg = (`${cardTypeString}이(가) 감지되었습니다. <br/>${cardTypeString} 정보를 자동으로 인식(OCR) 중 입니다.`);
+        break;
+      case ocr.IN_PROGRESS.CARD_DETECT_FAILED:
+        textMsg = (`${cardTypeString}이(가) 감지되지 않습니다. <br/>${cardTypeString} 영역 안에 ${cardTypeString}을 위치시켜 주세요.`);
+        break;
+      case ocr.IN_PROGRESS.OCR_RECOGNIZED:
+        textMsg = (`${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다.`);
+        break;
+      case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
+        textMsg = (`${cardTypeString}이(가) 정보가 <br/>자동으로 인식(OCR) 되었습니다. <br/>${cardTypeString} 사본(도용) 여부를 <br/>판별 중 입니다.`);
+        showLoadingUI = false;
+        break;
+      case ocr.IN_PROGRESS.OCR_SUCCESS:
+        textMsg = (`${cardTypeString} 인식이 완료 되었습니다.`);
+        break;
+      case ocr.IN_PROGRESS.OCR_SUCCESS_WITH_SSA:
+        textMsg = (`${cardTypeString} 인식 및 사본(도용) 여부 판별이 완료되었습니다.`);
+        break;
+      case ocr.IN_PROGRESS.OCR_FAILED:
+        textMsg = (`${cardTypeString} 인식에 실패하였습니다. 다시 시도해주세요.`);
+        break;
+    }
+
+    let loadingUIHTML;
+
+    let textMsgUI, loadingUI;
+
+    // SSA를 사용하고 OCR 완료되고 SSA 수행중인 시점에 previewUI를 사용중이면
+    if (usePreviewUI && inProgress === ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA) {
+      textMsgUI = document.getElementById(`preview-ui-text-msg`);
+      loadingUI = document.getElementById(`preview-ui-loading`);
+      loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, "#000")}`
+      textMsg = (`<br/>${cardTypeString} 사본(도용) 여부 판별 중...<br/>`);
+    } else {
+      textMsgUI = document.getElementById(`${uiPosition}-ui-text-msg`);
+      loadingUI = document.getElementById(`${uiPosition}-ui-loading`);
+      loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, "#FFF")}`
+    }
+
+    if (textMsgUI && loadingUI) {
+      textMsgUI.innerHTML = textMsg;
+      loadingUI.innerHTML = loadingUIHTML;
+    }
+  }
+}
+
+function getLoadingUIHTML(uiPosition, showLoadingUI, fillColor) {
+  return `` +
+    `<svg xmlns="http://www.w3.org/2000/svg" id="${uiPosition}-ui-loading" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: ${showLoadingUI ? 'block' : 'none'}; shape-rendering: auto;" width="32px" height="32px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">\n` +
+    `  <circle cx="84" cy="50" r="10" fill="${fillColor}">\n` +
+    `    <animate attributeName="r" repeatCount="indefinite" dur="0.5555555555555556s" calcMode="spline" keyTimes="0;1" values="10;0" keySplines="0 0.5 0.5 1" begin="0s"></animate>\n` +
+    `    <animate attributeName="fill" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="discrete" keyTimes="0;0.25;0.5;0.75;1" values="#86868600;#86868600;#86868600;#86868600;#86868600" begin="0s"></animate>\n` +
+    `  </circle>` +
+    `  <circle cx="16" cy="50" r="10" fill="${fillColor}">\n` +
+    `    <animate attributeName="r" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="0;0;10;10;10" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="0s"></animate>\n` +
+    `    <animate attributeName="cx" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="16;16;16;50;84" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="0s"></animate>\n` +
+    `  </circle>` +
+    `  <circle cx="50" cy="50" r="10" fill="${fillColor}">\n` +
+    `    <animate attributeName="r" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="0;0;10;10;10" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.5555555555555556s"></animate>\n` +
+    `    <animate attributeName="cx" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="16;16;16;50;84" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.5555555555555556s"></animate>\n` +
+    `  </circle>` +
+    `  <circle cx="84" cy="50" r="10" fill="${fillColor}">\n` +
+    `    <animate attributeName="r" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="0;0;10;10;10" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="-1.1111111111111112s"></animate>\n` +
+    `    <animate attributeName="cx" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="16;16;16;50;84" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="-1.1111111111111112s"></animate>\n` +
+    `  </circle>` +
+    `  <circle cx="16" cy="50" r="10" fill="${fillColor}">\n` +
+    `    <animate attributeName="r" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="0;0;10;10;10" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="-1.6666666666666665s"></animate>\n` +
+    `    <animate attributeName="cx" repeatCount="indefinite" dur="2.2222222222222223s" calcMode="spline" keyTimes="0;0.25;0.5;0.75;1" values="16;16;16;50;84" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" begin="-1.6666666666666665s"></animate>\n` +
+    `  </circle>\n` +
+    `</svg>`;
 }
