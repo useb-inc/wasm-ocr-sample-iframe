@@ -148,7 +148,6 @@ function onInProgressChange(ocrType, inProgress, customUI, uiPosition, useTextMs
     }
 
     let loadingUIHTML;
-
     let textMsgUI, loadingUI;
 
     // SSA를 사용하고 OCR 완료되고 SSA 수행중인 시점에 previewUI를 사용중이면
@@ -163,8 +162,11 @@ function onInProgressChange(ocrType, inProgress, customUI, uiPosition, useTextMs
       loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, "#FFF")}`
     }
 
-    if (textMsgUI && loadingUI) {
+    if (textMsgUI) {
       textMsgUI.innerHTML = textMsg;
+    }
+
+    if (loadingUI){
       loadingUI.innerHTML = loadingUIHTML;
     }
   }

@@ -72,6 +72,10 @@
             <fieldset>
                 <legend>UI 설정</legend>
                 <div>
+                    <div>
+                        <label for="body-background-color">배경색설정　</label>
+                        <input type="color" id="body-background-color" name="body-background-color" value="#333333">
+                    </div>
                     <label for="use-top-ui">상단 UI</label><br/>
                     ┌ UI: <input type="checkbox" id="use-top-ui" name="use-top-ui" checked><br/>
                     └─ TEXT: <input type="checkbox" id='use-top-ui-text-msg' name="use-top-ui-text-msg"><br/>
@@ -172,9 +176,48 @@
                     <label for="color-failed">OCR실패　　</label>
                     <input type="color" id="color-failed" name="color-failed" value="#FA113D">
                 </div>
+            </fieldset>
+            <fieldset>
+                <legend>마스킹 프레임 옵션</legend>
                 <div>
-                    <label for="color-mask-frame">마스킹프레임</label>
-                    <input type="color" id="color-mask-frame" name="color-mask-frame" value="#202023">
+                    <label for="use-mask-frame-color-change">색상변경여부</label>
+                    <input type="checkbox" id="use-mask-frame-color-change" name="use-mask-frame-color-change" checked>
+                </div>
+                <div id='mask-frame-color-default'>
+                    <div>
+                        <label for="mask-frame-color-base-color">기본색상　　</label>
+                        <input type="color" id="mask-frame-color-base-color" name="mask-frame-color-base-color" value="#333333">
+                    </div>
+                </div>/
+                <div id='mask-frame-color-custom'>
+                    <div>
+                        <label for="mask-frame-color-not-ready">스캔준비　　</label>
+                        <input type="color" id="mask-frame-color-not-ready" name="mask-frame-color-not-ready" value="#333333">
+                    </div>
+                    <div>
+                        <label for="mask-frame-color-ready">스캔대기　　</label>
+                        <input type="color" id="mask-frame-color-ready" name="mask-frame-color-ready" value="#333333">
+                    </div>
+                    <div>
+                        <label for='mask-frame-color-detect-success'>카드검출성공</label>
+                        <input type="color" id='mask-frame-color-detect-success' name='mask-frame-color-detect-success' value="#222222">
+                    </div>
+                    <div>
+                        <label for='mask-frame-color-detect-failed'>카드검출실패</label>
+                        <input type="color" id='mask-frame-color-detect-failed' name='mask-frame-color-detect-failed' value="#333333">
+                    </div>
+                    <div>
+                        <label for='mask-frame-color-ocr-recognized'>사본판별중　</label>
+                        <input type="color" id='mask-frame-color-ocr-recognized' name='mask-frame-color-ocr-recognized' value="#222222">
+                    </div>
+                    <div>
+                        <label for="mask-frame-color-success">OCR완료　　</label>
+                        <input type="color" id="mask-frame-color-success" name="mask-frame-color-success" value="#111111">
+                    </div>
+                    <div>
+                        <label for="mask-frame-color-failed">OCR실패　　</label>
+                        <input type="color" id="mask-frame-color-failed" name="mask-frame-color-failed" value="#111111">
+                    </div>
                 </div>
             </fieldset>
             <fieldset>
