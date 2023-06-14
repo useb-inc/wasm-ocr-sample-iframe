@@ -109,7 +109,7 @@ function sendResult(result) {
   }
 }
 
-function onInProgressChange(ocrType, inProgress, customUI, uiPosition, useTextMsg, usePreviewUI) {
+function onInProgressChange(ocrType, inProgress, customUI, uiPosition, useTextMsg, usePreviewUI, recognizedImage) {
   const isCreditCard = ocrType.indexOf('credit') > -1;
   const cardTypeString = isCreditCard ? '신용카드' : '신분증';
   let showLoadingUI = false;
@@ -135,7 +135,6 @@ function onInProgressChange(ocrType, inProgress, customUI, uiPosition, useTextMs
         break;
       case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
         textMsg = (`${cardTypeString}이(가) 정보가 <br/>자동으로 인식(OCR) 되었습니다. <br/>${cardTypeString} 사본(도용) 여부를 <br/>판별 중 입니다.`);
-        showLoadingUI = false;
         break;
       case ocr.IN_PROGRESS.OCR_SUCCESS:
         textMsg = (`${cardTypeString} 인식이 완료 되었습니다.`);
