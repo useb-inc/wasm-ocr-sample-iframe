@@ -18,10 +18,10 @@ const OCR_RESOURCE_BASE_URL = 'https://ocr.useb.co.kr/';
 // const OCR_RESOURCE_BASE_URL = 'https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/';
 
 
-const ocrIframe = document.getElementById("resolution-simulation-iframe");
+const ocrIframe = document.getElementById('resolution-simulation-iframe');
 
 const onClickStartCallback = (type, settings) => {
-  ocrIframe.onload = function () {
+  ocrIframe.onload = function() {
     let params = {
       ocrType: type,
       settings: {
@@ -46,25 +46,26 @@ const onClickRestartCallback = () => {
   document.getElementById('ocr_result').innerHTML = '';
   document.getElementById('ocr_status').innerHTML = '';
 
-  ocrIframe.src = "";
+  ocrIframe.src = '';
   ui_simulator.resetButton();
 
   startOCR();
-}
+};
 
 import UISimulator from './js/ui_simulator.js';
+
 const ui_simulator = new UISimulator(onClickStartCallback, onClickRestartCallback);
 
 const postMessageListener = (event) => {
-  console.debug("message response", event.data); // base64 encoded된 JSON 메시지이므로 decoded해야 함
-  console.debug("origin :", event.origin);
+  console.debug('message response', event.data); // base64 encoded된 JSON 메시지이므로 decoded해야 함
+  console.debug('origin :', event.origin);
   try {
     const decodedData = decodeURIComponent(atob(event.data));
-    console.debug("decoded", decodedData);
+    console.debug('decoded', decodedData);
     const json = JSON.parse(decodedData);
-    console.debug("json", json);
+    console.debug('json', json);
 
-    console.log(json.result + " 처리 필요");
+    console.log(json.result + ' 처리 필요');
 
     let json2 = _.cloneDeep(json);
 
@@ -72,36 +73,36 @@ const postMessageListener = (event) => {
       const review_result = json2.review_result;
 
       if (review_result.ocr_masking_image) {
-        review_result.ocr_masking_image = review_result.ocr_masking_image.substring(0, 50) + "...생략...";
+        review_result.ocr_masking_image = review_result.ocr_masking_image.substring(0, 50) + '...생략...';
       }
       if (review_result.ocr_origin_image) {
-        review_result.ocr_origin_image = review_result.ocr_origin_image.substring(0, 50) + "...생략...";
+        review_result.ocr_origin_image = review_result.ocr_origin_image.substring(0, 50) + '...생략...';
       }
     }
 
     const str = JSON.stringify(json2, undefined, 4);
     const strHighlight = syntaxHighlight(str);
 
-    if (json.result === "success") {
+    if (json.result === 'success') {
       updateDebugWin(strHighlight);
       updateOCRResult(strHighlight, json);
-      updateOCRStatus("OCR이 완료되었습니다.")
-    } else if (json.result === "failed") {
+      updateOCRStatus('OCR이 완료되었습니다.');
+    } else if (json.result === 'failed') {
       updateDebugWin(strHighlight);
       updateOCRResult(strHighlight, json);
-      updateOCRStatus("OCR이 실패되었습니다.")
+      updateOCRStatus('OCR이 실패되었습니다.');
     } else {
       // invalid result
     }
 
   } catch (error) {
-    console.log("wrong data", error);
+    console.log('wrong data', error);
   } finally {
     endOCR();
   }
 };
 
-window.addEventListener("message", postMessageListener);
+window.addEventListener('message', postMessageListener);
 
 function showLoadingUI() {
   document.getElementById('loading-ui').style.display = 'flex';
@@ -122,50 +123,50 @@ function endOCR() {
 }
 
 function updateOCRResult(data, json) {
-  const OCRResult = document.getElementById("ocr_result");
-  OCRResult.innerHTML = "";
+  const OCRResult = document.getElementById('ocr_result');
+  OCRResult.innerHTML = '';
 
-  const title1 = document.createElement("h3");
-  title1.innerHTML = "<h3 class=\"custom--headline\">최종 결과</h3>";
+  const title1 = document.createElement('h3');
+  title1.innerHTML = '<h3 class="custom--headline">최종 결과</h3>';
 
-  const result1 = document.createElement("div");
+  const result1 = document.createElement('div');
   result1.className = 'syntaxHighlight bright';
   result1.style.textAlign = 'center';
 
   const detail = json.review_result;
-  let content = "";
+  let content = '';
 
   if (detail) {
-    let ocr_type_txt = "N/A";
-    if (detail.ocr_type.indexOf("idcard") > -1) {
-      ocr_type_txt = "주민등록증/운전면허증";
-    } else if (detail.ocr_type.indexOf("passport") > -1) {
-      ocr_type_txt = "국내/해외여권";
-    } else if (detail.ocr_type.indexOf("alien") > -1) {
-      ocr_type_txt = "외국인등록증";
-    } else if (detail.ocr_type.indexOf("credit") > -1) {
-      ocr_type_txt = "신용카드";
-    } else if (detail.ocr_type.indexOf("idcard-ssa") > -1) {
-      ocr_type_txt += " + 사본탐지";
+    let ocr_type_txt = 'N/A';
+    if (detail.ocr_type.indexOf('idcard') > -1) {
+      ocr_type_txt = '주민등록증/운전면허증';
+    } else if (detail.ocr_type.indexOf('passport') > -1) {
+      ocr_type_txt = '국내/해외여권';
+    } else if (detail.ocr_type.indexOf('alien') > -1) {
+      ocr_type_txt = '외국인등록증';
+    } else if (detail.ocr_type.indexOf('credit') > -1) {
+      ocr_type_txt = '신용카드';
+    } else if (detail.ocr_type.indexOf('idcard-ssa') > -1) {
+      ocr_type_txt += ' + 사본탐지';
     } else {
-      ocr_type_txt = "INVALID_TYPE(" + detail.ocr_type + ")";
+      ocr_type_txt = 'INVALID_TYPE(' + detail.ocr_type + ')';
     }
-    title1.innerHTML += "- OCR 결과 : " + (json.result === "success" ? "<span style='color:blue'>성공</span>" : "<span style='color:red'>실패</span>") + " </br>";
-    title1.innerHTML += "- OCR 종류 : " + "<span style='color:blue'>" + ocr_type_txt + "</span></br>";
-    if (detail.ocr_type.indexOf("-ssa") > -1 && detail.ocr_data?.truth) {
-      title1.innerHTML += "- 사본판별 결과 : " + "<span style='color:blue'>" + detail.ocr_data.truth + "</span></br>";
+    title1.innerHTML += '- OCR 결과 : ' + (json.result === 'success' ? '<span style=\'color:blue\'>성공</span>' : '<span style=\'color:red\'>실패</span>') + ' </br>';
+    title1.innerHTML += '- OCR 종류 : ' + '<span style=\'color:blue\'>' + ocr_type_txt + '</span></br>';
+    if (detail.ocr_type.indexOf('-ssa') > -1 && detail.ocr_data?.truth) {
+      title1.innerHTML += '- 사본판별 결과 : ' + '<span style=\'color:blue\'>' + detail.ocr_data.truth + '</span></br>';
     }
 
-    if (detail.ocr_type.indexOf("credit") > -1) {
+    if (detail.ocr_type.indexOf('credit') > -1) {
       if (detail.ocr_origin_image) {
-        content += "<br/> - 신용카드 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" + detail.ocr_origin_image + "' /></b>";
+        content += '<br/> - 신용카드 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style=\'max-height:200px;\' src=\'' + detail.ocr_origin_image + '\' /></b>';
       }
     } else {
       if (detail.ocr_masking_image) {
-        content += "<br/> - 신분증 마스킹 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" + detail.ocr_masking_image + "' /></b>";
+        content += '<br/> - 신분증 마스킹 사진<br/>&nbsp;&nbsp;&nbsp;<img style=\'max-height:200px;\' src=\'' + detail.ocr_masking_image + '\' /></b>';
       }
       if (detail.ocr_origin_image) {
-        content += "<br/> - 신분증 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" + detail.ocr_origin_image + "' /></b>";
+        content += '<br/> - 신분증 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style=\'max-height:200px;\' src=\'' + detail.ocr_origin_image + '\' /></b>';
       }
     }
   }
@@ -174,17 +175,17 @@ function updateOCRResult(data, json) {
   OCRResult.appendChild(title1);
   OCRResult.appendChild(result1);
 
-  const title2 = document.createElement("h3");
-  title2.innerHTML = "<h3 class=\"custom--headline\">PostMessage 상세</h3>";
+  const title2 = document.createElement('h3');
+  title2.innerHTML = '<h3 class="custom--headline">PostMessage 상세</h3>';
 
-  const result2 = document.createElement("pre");
-  result2.className = "syntaxHighlight bright";
+  const result2 = document.createElement('pre');
+  result2.className = 'syntaxHighlight bright';
   result2.innerHTML = data;
   OCRResult.appendChild(title2);
   OCRResult.appendChild(result2);
 }
 
 function updateOCRStatus(msg) {
-  const div = document.getElementById("ocr_status");
+  const div = document.getElementById('ocr_status');
   div.innerHTML = msg;
 }

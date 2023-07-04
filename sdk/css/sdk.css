@@ -14,7 +14,7 @@ body {
 }
 
 *::-webkit-media-controls-start-playback-button {
-  display: none!important;
+  display: none !important;
   -webkit-appearance: none;
 }
 
@@ -67,6 +67,6 @@ body {
 }
 
 *::-webkit-media-controls-start-playback-button {
-  display: none!important;
+  display: none !important;
   -webkit-appearance: none;
 }
