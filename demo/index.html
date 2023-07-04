@@ -1,283 +1,455 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>OCR/SSA WebAssembly Sample</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./css/demo.css" />
 
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>OCR/SSA WebAssembly Sample</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link rel='stylesheet' type='text/css' href='./css/demo.css' />
+    <script type="text/javascript" src="./js/util.js"></script>
+    <script type="text/javascript" src="./lib/lodash.min.js"></script>
+    <script type="module" src="./js/ui_simulator.js" async></script>
+    <script
+      src="https://kit.fontawesome.com/71d7c8cd6e.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-  <script type='text/javascript' src='./js/util.js'></script>
-  <script type='text/javascript' src='./lib/lodash.min.js'></script>
-  <script type='module' src='./js/ui_simulator.js' async></script>
-  <script src='https://kit.fontawesome.com/71d7c8cd6e.js' crossorigin='anonymous'></script>
-
-</head>
-
-<body>
-<div id='debug_win' class='debug_win' style='display: none'></div>
-<div id='loading-ui' class='fullscreen'
-     style='display: none; background: rgba(0, 0, 0, 0.4); justify-content: center; align-items:center; font-size: 2rem;color: white;'>
-  LOADING ....
-</div>
-
-<section id='simulator-section' class='simulator-section customer--section'>
-  <section class='type-section'>
-    <div id='type-toggle'>
-      <b>OCR Type</b>
-      <span>[접기]</span>
-      <i class='chevron fa-solid fa-chevron-down'></i>
+  <body>
+    <div id="debug_win" class="debug_win" style="display: none"></div>
+    <div
+      id="loading-ui"
+      class="fullscreen"
+      style="
+        display: none;
+        background: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        color: white;
+      "
+    >
+      LOADING ....
     </div>
 
-    <div class='type-button'>
-      <button id='idcard'>주민등록증/운전면허증</button>
-      <button id='passport'>국내/해외 여권</button>
-      <button id='alien'>외국인등록증</button>
-      <button id='credit'>신용카드</button>
-
-      <button id='idcard-ssa'>주민등록증/운전면허증 + 사본판별</button>
-      <button id='passport-ssa'>국내/해외 여권 + 사본판별</button>
-      <button id='alien-ssa'>외국인등록증 SSA + 사본판별</button>
-    </div>
-  </section>
-
-  <!-- 이미지 스캔 카메라 섹션 -->
-  <section class='scan-section'>
-    <iframe
-      id='resolution-simulation-iframe'
-      class='resolution-simulation-iframe'
-      allow='camera'></iframe>
-  </section>
-
-  <!-- 옵션 세팅 섹션 -->
-  <section class='settings-section collapsed'>
-    <div id='settings-toggle'>
-      <b>UI Simulator</b>
-      <span>[펼치기]</span>
-      <i class='chevron fa-solid fa-chevron-up'></i>
-    </div>
-    <fieldset>
-      <legend>사본판별 설정</legend>
-      <div>
-        <label for='ssa-max-retry-count'>Max Retry</label>
-        <select id='ssa-max-retry-count' style='max-width: 100px;'>
-          <option value='0'>미사용</option>
-          <option value='1'>1</option>
-          <option value='2'>2</option>
-          <option value='3'>3</option>
-          <option value='5'>5</option>
-        </select>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>UI 설정</legend>
-      <div>
-        <label for='use-top-ui'>상단 UI</label><br />
-        ┌ UI: <input type='checkbox' id='use-top-ui' name='use-top-ui' checked><br />
-        └─ TEXT: <input type='checkbox' id='use-top-ui-text-msg' name='use-top-ui-text-msg'><br />
-        <label for='use-middle-ui'>중단 UI</label><br />
-        ┌ UI: <input type='checkbox' id='use-middle-ui' name='use-middle-ui' checked><br />
-        └─ TEXT: <input type='checkbox' id='use-middle-ui-text-msg' name='use-middle-ui-text-msg' checked><br />
-        <label for='use-bottom-ui'>하단 UI 사용</label><br />
-        ┌ UI: <input type='checkbox' id='use-bottom-ui' name='use-bottom-ui' checked><br />
-        └─ TEXT: <input type='checkbox' id='use-bottom-ui-text-msg' name='use-bottom-ui-text-msg'><br />
-        <label for='use-bottom-ui'>Preview UI 사용</label><br />
-        └ UI: <input type='checkbox' id='use-preview-ui' name='use-preview-ui' checked><br />
-        <span style='font-size: 8px;'>※ 사본판별시 OCR 결과 미리보기 UI</span>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>촬영 옵션</legend>
-      <div>
-        <label for='use-capture-ui'>수동 촬영 UI 사용</label>
-        <input type='checkbox' id='use-capture-ui' name='use-capture-ui' checked>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>카메라 설정</legend>
-      <div>
-        <label for='mirror-mode'>mirror-mode</label>
-        <input type='checkbox' id='mirror-mode' name='mirror-mode'>
-      </div>
-      <div>
-        <label for='rotation-degree'>rotation-degree</label>
-        <select id='rotation-degree' style='max-width: 50px;'>
-          <option value='0'>0도</option>
-          <option value='90'>90도</option>
-          <option value='180'>180도</option>
-          <option value='270'>270도</option>
-        </select>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>UI 해상도 시뮬레이션</legend>
-      <div>
-        <label for='resolution-template'>해상도</label>
-
-        <select id='resolution-template'>
-          <option value='responsive'>반응형(Responsive)</option>
-          <option value='412x915'>(세로) S20 Ultra</option>
-          <option value='915x412'>(가로) S20 Ultra</option>
-          <option value='390x844'>(세로) iPhone 12 pro</option>
-          <option value='844x390'>(가로) iPhone 12 pro</option>
-          <option value='768x1024'>(세로) iPad Mini</option>
-          <option value='1024x768'>(가로) iPad Mini</option>
-          <option value='custom'>직접입력</option>
-          "resolution-template"
-        </select>
-        <div id='resolution-custom' style='display: none;'>
-          width x height<br />
-          <input type='number' id='resolution-width' name='resolution-width' value='420' min='100' max='1920'
-                 style='width:50px;'> x
-          <input type='number' id='resolution-height' name='resolution-height' value='915' min='100' max='1920'
-                 style='width:50px;'>
-          <button id='resolution-reverse-button' style='vertical-align: middle;'>반전</button>
-          <br />
+    <section id="simulator-section" class="simulator-section customer--section">
+      <section class="type-section">
+        <div id="type-toggle">
+          <b>OCR Type</b>
+          <span>[접기]</span>
+          <i class="chevron fa-solid fa-chevron-down"></i>
         </div>
-        <div>
-          배율(확대/축소)<br />
-          <input type='number' id='resolution-expend-ratio' name='resolution-expend-ratio' value='1.0'
-                 style='width:50px;'>
-        </div>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>인식 프레임 옵션</legend>
-      <div>
-        <label for='border-width'>border-width</label>
-        <input type='number' id='border-width' name='border-width' value='5' min='0'>
-      </div>
-      <div>
-        <label for='border-radius'>border-radius</label>
-        <input type='number' id='border-radius' name='border-radius' value='20' min='0'>
-      </div>
-      <div>
-        <label for='border-style'>border-style (ex: none, solid)</label>
-        <input type='text' id='border-style' name='border-style' value='solid'>
-      </div>
-      <div>
-        <label for='color-not-ready'>스캔준비　　</label>
-        <input type='color' id='color-not-ready' name='color-not-ready' value='#000000'>
-      </div>
-      <div>
-        <label for='color-ready'>스캔대기　　</label>
-        <input type='color' id='color-ready' name='color-ready' value='#b8b8b8'>
-      </div>
-      <div>
-        <label for='color-detect-success'>카드검출성공</label>
-        <input type='color' id='color-detect-success' name='color-detect-success' value='#5e8fff'>
-      </div>
-      <div>
-        <label for='color-detect-failed'>카드검출실패</label>
-        <input type='color' id='color-detect-failed' name='color-detect-failed' value='#725b67'>
-      </div>
-      <div>
-        <label for='color-ocr-recognized'>사본판별중　</label>
-        <input type='color' id='color-ocr-recognized' name='color-ocr-recognized' value='#003ac2'>
-      </div>
-      <div>
-        <label for='color-success'>OCR완료　　</label>
-        <input type='color' id='color-success' name='color-success' value='#14b00e'>
-      </div>
-      <div>
-        <label for='color-failed'>OCR실패　　</label>
-        <input type='color' id='color-failed' name='color-failed' value='#FA113D'>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>마스킹 프레임 옵션</legend>
-      <div>
-        <label for='use-mask-frame-color-change'>색상변경여부</label>
-        <input type='checkbox' id='use-mask-frame-color-change' name='use-mask-frame-color-change' checked>
-      </div>
-      <div id='mask-frame-color-default'>
-        <div>
-          <label for='mask-frame-color-base-color'>기본색상　　</label>
-          <input type='color' id='mask-frame-color-base-color' name='mask-frame-color-base-color' value='#333333'>
-        </div>
-      </div>
-      <div id='mask-frame-color-custom'>
-        <div>
-          <label for='mask-frame-color-not-ready'>스캔준비　　</label>
-          <input type='color' id='mask-frame-color-not-ready' name='mask-frame-color-not-ready' value='#333333'>
-        </div>
-        <div>
-          <label for='mask-frame-color-ready'>스캔대기　　</label>
-          <input type='color' id='mask-frame-color-ready' name='mask-frame-color-ready' value='#333333'>
-        </div>
-        <div>
-          <label for='mask-frame-color-detect-success'>카드검출성공</label>
-          <input type='color' id='mask-frame-color-detect-success' name='mask-frame-color-detect-success'
-                 value='#222222'>
-        </div>
-        <div>
-          <label for='mask-frame-color-detect-failed'>카드검출실패</label>
-          <input type='color' id='mask-frame-color-detect-failed' name='mask-frame-color-detect-failed' value='#333333'>
-        </div>
-        <div>
-          <label for='mask-frame-color-ocr-recognized'>사본판별중　</label>
-          <input type='color' id='mask-frame-color-ocr-recognized' name='mask-frame-color-ocr-recognized'
-                 value='#222222'>
-        </div>
-        <div>
-          <label for='mask-frame-color-success'>OCR완료　　</label>
-          <input type='color' id='mask-frame-color-success' name='mask-frame-color-success' value='#111111'>
-        </div>
-        <div>
-          <label for='mask-frame-color-failed'>OCR실패　　</label>
-          <input type='color' id='mask-frame-color-failed' name='mask-frame-color-failed' value='#111111'>
-        </div>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>디버깅 옵션</legend>
-      <div>
-        <label for='show-clipboard'>clip-frame 보기</label>
-        <input type='checkbox' id='show-clipboard' name='show-clipboard'>
-      </div>
-      <div>
-        <label for='show-canvas-preview'>canvas preview 보기</label>
-        <input type='checkbox' id='show-canvas-preview' name='show-canvas-preview'>
-      </div>
-    </fieldset>
-    <fieldset>
-      <div>
-        <button id='save-settings'>
-          <i class='fa-solid fa-check' style='display:none'></i>
-          <span>설정적용</span>
-        </button>
-      </div>
-    </fieldset>
-  </section>
-</section>
 
-<section
-  id='result-section'
-  class='fullscreen result-section'
-  style='display: none'
->
-  <div class='custom--header'>
-    useB.OCR WebAssembly SDK Test Result
-  </div>
+        <div class="type-button">
+          <button id="idcard">주민등록증/운전면허증</button>
+          <button id="passport">국내/해외 여권</button>
+          <button id="alien">외국인등록증</button>
+          <button id="credit">신용카드</button>
 
-  <div class='custom--section'>
-    <div id='ocr_status' class='custom--headline'></div>
-  </div>
+          <button id="idcard-ssa">주민등록증/운전면허증 + 사본판별</button>
+          <button id="passport-ssa">국내/해외 여권 + 사본판별</button>
+          <button id="alien-ssa">외국인등록증 SSA + 사본판별</button>
+        </div>
+      </section>
 
-  <div class='custom--section'>
-    <button class='custom--btn' id='restart_btn'>
-      처음부터 다시하기
-    </button>
-  </div>
+      <!-- 이미지 스캔 카메라 섹션 -->
+      <section class="scan-section">
+        <iframe
+          id="resolution-simulation-iframe"
+          class="resolution-simulation-iframe"
+          allow="camera"
+        ></iframe>
+      </section>
 
-  <div class='custom--division'></div>
+      <!-- 옵션 세팅 섹션 -->
+      <section class="settings-section collapsed">
+        <div id="settings-toggle">
+          <b>UI Simulator</b>
+          <span>[펼치기]</span>
+          <i class="chevron fa-solid fa-chevron-up"></i>
+        </div>
+        <fieldset>
+          <legend>사본판별 설정</legend>
+          <div>
+            <label for="ssa-max-retry-count">Max Retry</label>
+            <select id="ssa-max-retry-count" style="max-width: 100px">
+              <option value="0">미사용</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>UI 설정</legend>
+          <div>
+            <label for="use-top-ui">상단 UI</label><br />
+            ┌ UI:
+            <input
+              type="checkbox"
+              id="use-top-ui"
+              name="use-top-ui"
+              checked
+            /><br />
+            └─ TEXT:
+            <input
+              type="checkbox"
+              id="use-top-ui-text-msg"
+              name="use-top-ui-text-msg"
+            /><br />
+            <label for="use-middle-ui">중단 UI</label><br />
+            ┌ UI:
+            <input
+              type="checkbox"
+              id="use-middle-ui"
+              name="use-middle-ui"
+              checked
+            /><br />
+            └─ TEXT:
+            <input
+              type="checkbox"
+              id="use-middle-ui-text-msg"
+              name="use-middle-ui-text-msg"
+              checked
+            /><br />
+            <label for="use-bottom-ui">하단 UI 사용</label><br />
+            ┌ UI:
+            <input
+              type="checkbox"
+              id="use-bottom-ui"
+              name="use-bottom-ui"
+              checked
+            /><br />
+            └─ TEXT:
+            <input
+              type="checkbox"
+              id="use-bottom-ui-text-msg"
+              name="use-bottom-ui-text-msg"
+            /><br />
+            <label for="use-bottom-ui">Preview UI 사용</label><br />
+            └ UI:
+            <input
+              type="checkbox"
+              id="use-preview-ui"
+              name="use-preview-ui"
+              checked
+            /><br />
+            <span style="font-size: 8px"
+              >※ 사본판별시 OCR 결과 미리보기 UI</span
+            >
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>촬영 옵션</legend>
+          <div>
+            <label for="use-capture-ui">수동 촬영 UI 사용</label>
+            <input type="checkbox" id="use-capture-ui" name="use-capture-ui" />
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>카메라 설정</legend>
+          <div>
+            <label for="mirror-mode">mirror-mode</label>
+            <input type="checkbox" id="mirror-mode" name="mirror-mode" />
+          </div>
+          <div>
+            <label for="rotation-degree">rotation-degree</label>
+            <select id="rotation-degree" style="max-width: 50px">
+              <option value="0">0도</option>
+              <option value="90">90도</option>
+              <option value="180">180도</option>
+              <option value="270">270도</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>UI 해상도 시뮬레이션</legend>
+          <div>
+            <label for="resolution-template">해상도</label>
 
-  <div id='ocr_result' class='custom--section'></div>
-</section>
+            <select id="resolution-template">
+              <option value="responsive">반응형(Responsive)</option>
+              <option value="412x915">(세로) S20 Ultra</option>
+              <option value="915x412">(가로) S20 Ultra</option>
+              <option value="390x844">(세로) iPhone 12 pro</option>
+              <option value="844x390">(가로) iPhone 12 pro</option>
+              <option value="768x1024">(세로) iPad Mini</option>
+              <option value="1024x768">(가로) iPad Mini</option>
+              <option value="custom">직접입력</option>
+              "resolution-template"
+            </select>
+            <div id="resolution-custom" style="display: none">
+              width x height<br />
+              <input
+                type="number"
+                id="resolution-width"
+                name="resolution-width"
+                value="420"
+                min="100"
+                max="1920"
+                style="width: 50px"
+              />
+              x
+              <input
+                type="number"
+                id="resolution-height"
+                name="resolution-height"
+                value="915"
+                min="100"
+                max="1920"
+                style="width: 50px"
+              />
+              <button
+                id="resolution-reverse-button"
+                style="vertical-align: middle"
+              >
+                반전
+              </button>
+              <br />
+            </div>
+            <div>
+              배율(확대/축소)<br />
+              <input
+                type="number"
+                id="resolution-expend-ratio"
+                name="resolution-expend-ratio"
+                value="1.0"
+                style="width: 50px"
+              />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>인식 프레임 옵션</legend>
+          <div>
+            <label for="border-width">border-width</label>
+            <input
+              type="number"
+              id="border-width"
+              name="border-width"
+              value="5"
+              min="0"
+            />
+          </div>
+          <div>
+            <label for="border-radius">border-radius</label>
+            <input
+              type="number"
+              id="border-radius"
+              name="border-radius"
+              value="20"
+              min="0"
+            />
+          </div>
+          <div>
+            <label for="border-style">border-style (ex: none, solid)</label>
+            <input
+              type="text"
+              id="border-style"
+              name="border-style"
+              value="solid"
+            />
+          </div>
+          <div>
+            <label for="color-not-ready">스캔준비　　</label>
+            <input
+              type="color"
+              id="color-not-ready"
+              name="color-not-ready"
+              value="#000000"
+            />
+          </div>
+          <div>
+            <label for="color-ready">스캔대기　　</label>
+            <input
+              type="color"
+              id="color-ready"
+              name="color-ready"
+              value="#b8b8b8"
+            />
+          </div>
+          <div>
+            <label for="color-detect-success">카드검출성공</label>
+            <input
+              type="color"
+              id="color-detect-success"
+              name="color-detect-success"
+              value="#5e8fff"
+            />
+          </div>
+          <div>
+            <label for="color-detect-failed">카드검출실패</label>
+            <input
+              type="color"
+              id="color-detect-failed"
+              name="color-detect-failed"
+              value="#725b67"
+            />
+          </div>
+          <div>
+            <label for="color-ocr-recognized">사본판별중　</label>
+            <input
+              type="color"
+              id="color-ocr-recognized"
+              name="color-ocr-recognized"
+              value="#003ac2"
+            />
+          </div>
+          <div>
+            <label for="color-success">OCR완료　　</label>
+            <input
+              type="color"
+              id="color-success"
+              name="color-success"
+              value="#14b00e"
+            />
+          </div>
+          <div>
+            <label for="color-failed">OCR실패　　</label>
+            <input
+              type="color"
+              id="color-failed"
+              name="color-failed"
+              value="#FA113D"
+            />
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>마스킹 프레임 옵션</legend>
+          <div>
+            <label for="use-mask-frame-color-change">색상변경여부</label>
+            <input
+              type="checkbox"
+              id="use-mask-frame-color-change"
+              name="use-mask-frame-color-change"
+              checked
+            />
+          </div>
+          <div id="mask-frame-color-default">
+            <div>
+              <label for="mask-frame-color-base-color">기본색상　　</label>
+              <input
+                type="color"
+                id="mask-frame-color-base-color"
+                name="mask-frame-color-base-color"
+                value="#333333"
+              />
+            </div>
+          </div>
+          <div id="mask-frame-color-custom">
+            <div>
+              <label for="mask-frame-color-not-ready">스캔준비　　</label>
+              <input
+                type="color"
+                id="mask-frame-color-not-ready"
+                name="mask-frame-color-not-ready"
+                value="#333333"
+              />
+            </div>
+            <div>
+              <label for="mask-frame-color-ready">스캔대기　　</label>
+              <input
+                type="color"
+                id="mask-frame-color-ready"
+                name="mask-frame-color-ready"
+                value="#333333"
+              />
+            </div>
+            <div>
+              <label for="mask-frame-color-detect-success">카드검출성공</label>
+              <input
+                type="color"
+                id="mask-frame-color-detect-success"
+                name="mask-frame-color-detect-success"
+                value="#222222"
+              />
+            </div>
+            <div>
+              <label for="mask-frame-color-detect-failed">카드검출실패</label>
+              <input
+                type="color"
+                id="mask-frame-color-detect-failed"
+                name="mask-frame-color-detect-failed"
+                value="#333333"
+              />
+            </div>
+            <div>
+              <label for="mask-frame-color-ocr-recognized">사본판별중　</label>
+              <input
+                type="color"
+                id="mask-frame-color-ocr-recognized"
+                name="mask-frame-color-ocr-recognized"
+                value="#222222"
+              />
+            </div>
+            <div>
+              <label for="mask-frame-color-success">OCR완료　　</label>
+              <input
+                type="color"
+                id="mask-frame-color-success"
+                name="mask-frame-color-success"
+                value="#111111"
+              />
+            </div>
+            <div>
+              <label for="mask-frame-color-failed">OCR실패　　</label>
+              <input
+                type="color"
+                id="mask-frame-color-failed"
+                name="mask-frame-color-failed"
+                value="#111111"
+              />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>디버깅 옵션</legend>
+          <div>
+            <label for="show-clipboard">clip-frame 보기</label>
+            <input type="checkbox" id="show-clipboard" name="show-clipboard" />
+          </div>
+          <div>
+            <label for="show-canvas-preview">canvas preview 보기</label>
+            <input
+              type="checkbox"
+              id="show-canvas-preview"
+              name="show-canvas-preview"
+            />
+          </div>
+        </fieldset>
+        <fieldset>
+          <div>
+            <button id="save-settings">
+              <i class="fa-solid fa-check" style="display: none"></i>
+              <span>설정적용</span>
+            </button>
+          </div>
+        </fieldset>
+      </section>
+    </section>
 
+    <section
+      id="result-section"
+      class="fullscreen result-section"
+      style="display: none"
+    >
+      <div class="custom--header">useB.OCR WebAssembly SDK Test Result</div>
 
-<script type='module' src='./demo.js' async></script>
-</body>
+      <div class="custom--section">
+        <div id="ocr_status" class="custom--headline"></div>
+      </div>
 
+      <div class="custom--section">
+        <button class="custom--btn" id="restart_btn">처음부터 다시하기</button>
+      </div>
+
+      <div class="custom--division"></div>
+
+      <div id="ocr_result" class="custom--section"></div>
+    </section>
+
+    <script type="module" src="./demo.js" async></script>
+  </body>
 </html>
