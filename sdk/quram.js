@@ -42,7 +42,6 @@ Module.expectedDataFileDownloads++;
       ? Module['locateFile'](REMOTE_PACKAGE_BASE, '')
       : REMOTE_PACKAGE_BASE;
     var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
-
     function fetchRemotePackage(packageName, packageSize, callback, errback) {
       if (
         typeof process === 'object' &&
@@ -112,11 +111,9 @@ Module.expectedDataFileDownloads++;
       };
       xhr.send(null);
     }
-
     function handleError(error) {
       console.error('package error:', error);
     }
-
     var fetchedCallback = null;
     var fetched = Module['getPreloadedPackage']
       ? Module['getPreloadedPackage'](REMOTE_PACKAGE_NAME, REMOTE_PACKAGE_SIZE)
@@ -135,23 +132,19 @@ Module.expectedDataFileDownloads++;
         },
         handleError
       );
-
     function runWithFS() {
       function assert(check, msg) {
         if (!check) throw msg + new Error().stack;
       }
-
       Module['FS_createPath']('/', 'face_detection', true, true);
       Module['FS_createPath']('/', 'model', true, true);
       Module['FS_createPath']('/', 'tessdata', true, true);
       Module['FS_createPath']('/', 'weights', true, true);
-
       function DataRequest(start, end, audio) {
         this.start = start;
         this.end = end;
         this.audio = audio;
       }
-
       DataRequest.prototype = {
         requests: {},
         open: function (mode, name) {
@@ -186,7 +179,6 @@ Module.expectedDataFileDownloads++;
           files[i]['audio'] || 0
         ).open('GET', files[i]['filename']);
       }
-
       function processPackageData(arrayBuffer) {
         assert(arrayBuffer, 'Loading data file failed.');
         assert(
@@ -201,7 +193,6 @@ Module.expectedDataFileDownloads++;
         }
         Module['removeRunDependency']('datafile_quram.data');
       }
-
       Module['addRunDependency']('datafile_quram.data');
       if (!Module.preloadResults) Module.preloadResults = {};
       Module.preloadResults[PACKAGE_NAME] = {
@@ -214,7 +205,6 @@ Module.expectedDataFileDownloads++;
         fetchedCallback = processPackageData;
       }
     }
-
     if (Module['calledRun']) {
       runWithFS();
     } else {
@@ -880,7 +870,6 @@ function createWasm() {
   var info = {
     a: asmLibraryArg,
   };
-
   function receiveInstance(instance, module) {
     var exports = instance.exports;
     Module['asm'] = exports;
@@ -890,13 +879,10 @@ function createWasm() {
     addOnInit(Module['asm']['ra']);
     removeRunDependency('wasm-instantiate');
   }
-
   addRunDependency('wasm-instantiate');
-
   function receiveInstantiationResult(result) {
     receiveInstance(result['instance']);
   }
-
   function instantiateArrayBuffer(receiver) {
     return getBinaryPromise()
       .then(function (binary) {
@@ -910,7 +896,6 @@ function createWasm() {
         abort(reason);
       });
   }
-
   function instantiateAsync() {
     if (
       !wasmBinary &&
@@ -934,7 +919,6 @@ function createWasm() {
       return instantiateArrayBuffer(receiveInstantiationResult);
     }
   }
-
   if (Module['instantiateWasm']) {
     try {
       var exports = Module['instantiateWasm'](info, receiveInstance);
@@ -953,7 +937,7 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
-  855556: () => {
+  855620: () => {
     var jsString = window.location.hostname;
     var lengthBytes = lengthBytesUTF8(jsString) + 1;
     var stringOnWasmHeap = _malloc(lengthBytes);
@@ -1345,7 +1329,6 @@ var PATH_FS = {
   relative: (from, to) => {
     from = PATH_FS.resolve(from).substr(1);
     to = PATH_FS.resolve(to).substr(1);
-
     function trim(arr) {
       var start = 0;
       for (; start < arr.length; start++) {
@@ -1358,7 +1341,6 @@ var PATH_FS = {
       if (start > end) return [];
       return arr.slice(start, end - start + 1);
     }
-
     var fromParts = trim(from.split('/'));
     var toParts = trim(to.split('/'));
     var length = Math.min(fromParts.length, toParts.length);
@@ -2241,12 +2223,10 @@ var FS = {
     }
     var mounts = FS.getMounts(FS.root.mount);
     var completed = 0;
-
     function doCallback(errCode) {
       FS.syncFSRequests--;
       return callback(errCode);
     }
-
     function done(errCode) {
       if (errCode) {
         if (!done.errored) {
@@ -2259,7 +2239,6 @@ var FS = {
         doCallback(null);
       }
     }
-
     mounts.forEach((mount) => {
       if (!mount.type.syncfs) {
         return done(null);
@@ -3225,7 +3204,6 @@ var FS = {
       this.lengthKnown = false;
       this.chunks = [];
     }
-
     LazyUint8Array.prototype.get = function LazyUint8Array_get(idx) {
       if (idx > this.length - 1 || idx < 0) {
         return undefined;
@@ -3359,7 +3337,6 @@ var FS = {
         return fn.apply(null, arguments);
       };
     });
-
     function writeChunks(stream, buffer, offset, length, position) {
       var contents = stream.node.contents;
       if (position >= contents.length) return 0;
@@ -3375,7 +3352,6 @@ var FS = {
       }
       return size;
     }
-
     stream_ops.read = (stream, buffer, offset, length, position) => {
       FS.forceLoadFile(node);
       return writeChunks(stream, buffer, offset, length, position);
@@ -3409,7 +3385,6 @@ var FS = {
   ) => {
     var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
     var dep = getUniqueRunDependency('cp ' + fullname);
-
     function processData(byteArray) {
       function finish(byteArray) {
         if (preFinish) preFinish();
@@ -3419,7 +3394,6 @@ var FS = {
         if (onload) onload();
         removeRunDependency(dep);
       }
-
       if (
         Browser.handledByPreloadPlugin(byteArray, fullname, finish, () => {
           if (onerror) onerror();
@@ -3430,7 +3404,6 @@ var FS = {
       }
       finish(byteArray);
     }
-
     addRunDependency(dep);
     if (typeof url == 'string') {
       asyncLoad(url, (byteArray) => processData(byteArray), onerror);
@@ -3472,12 +3445,10 @@ var FS = {
       var ok = 0,
         fail = 0,
         total = paths.length;
-
       function finish() {
         if (fail == 0) onload();
         else onerror();
       }
-
       paths.forEach((path) => {
         var putRequest = files.put(FS.analyzePath(path).object.contents, path);
         putRequest.onsuccess = () => {
@@ -3515,12 +3486,10 @@ var FS = {
       var ok = 0,
         fail = 0,
         total = paths.length;
-
       function finish() {
         if (fail == 0) onload();
         else onerror();
       }
-
       paths.forEach((path) => {
         var getRequest = files.get(path);
         getRequest.onsuccess = () => {
@@ -4210,7 +4179,6 @@ function __embind_register_memory_view(rawType, dataTypeIndex, name) {
     Float64Array,
   ];
   var TA = typeMapping[dataTypeIndex];
-
   function decodeMemoryView(handle) {
     handle = handle >> 2;
     var heap = HEAPU32;
@@ -4218,7 +4186,6 @@ function __embind_register_memory_view(rawType, dataTypeIndex, name) {
     var data = heap[handle + 1];
     return new TA(buffer, data, size);
   }
-
   name = readLatin1String(name);
   registerType(
     rawType,
@@ -4545,12 +4512,10 @@ function _tzset_impl(timezone, daylight, tzname) {
   var stdTimezoneOffset = Math.max(winterOffset, summerOffset);
   HEAP32[timezone >> 2] = stdTimezoneOffset * 60;
   HEAP32[daylight >> 2] = Number(winterOffset != summerOffset);
-
   function extractZone(date) {
     var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
     return match ? match[1] : 'GMT';
   }
-
   var winterName = extractZone(winter);
   var summerName = extractZone(summer);
   var winterNamePtr = allocateUTF8(winterName);
@@ -4949,7 +4914,6 @@ function _strftime(s, maxsize, format, tm) {
     'November',
     'December',
   ];
-
   function leadingSomething(value, digits, character) {
     var str = typeof value == 'number' ? value.toString() : value || '';
     while (str.length < digits) {
@@ -4957,16 +4921,13 @@ function _strftime(s, maxsize, format, tm) {
     }
     return str;
   }
-
   function leadingNulls(value, digits) {
     return leadingSomething(value, digits, '0');
   }
-
   function compareByDay(date1, date2) {
     function sgn(value) {
       return value < 0 ? -1 : value > 0 ? 1 : 0;
     }
-
     var compare;
     if ((compare = sgn(date1.getFullYear() - date2.getFullYear())) === 0) {
       if ((compare = sgn(date1.getMonth() - date2.getMonth())) === 0) {
@@ -4975,7 +4936,6 @@ function _strftime(s, maxsize, format, tm) {
     }
     return compare;
   }
-
   function getFirstWeekStartDate(janFourth) {
     switch (janFourth.getDay()) {
       case 0:
@@ -5000,7 +4960,6 @@ function _strftime(s, maxsize, format, tm) {
         return new Date(janFourth.getFullYear() - 1, 11, 30);
     }
   }
-
   function getWeekBasedYear(date) {
     var thisDate = __addDays(new Date(date.tm_year + 1900, 0, 1), date.tm_yday);
     var janFourthThisYear = new Date(thisDate.getFullYear(), 0, 4);
@@ -5015,7 +4974,6 @@ function _strftime(s, maxsize, format, tm) {
     }
     return thisDate.getFullYear() - 1;
   }
-
   var EXPANSION_RULES_2 = {
     '%a': function (date) {
       return WEEKDAYS[date.tm_wday].substring(0, 3);
@@ -5185,7 +5143,6 @@ function ccall(ident, returnType, argTypes, args, opts) {
       return ret;
     },
   };
-
   function convertReturnValue(ret) {
     if (returnType === 'string') {
       return UTF8ToString(ret);
@@ -5193,7 +5150,6 @@ function ccall(ident, returnType, argTypes, args, opts) {
     if (returnType === 'boolean') return Boolean(ret);
     return ret;
   }
-
   var func = getCFunc(ident);
   var cArgs = [];
   var stack = 0;
@@ -5209,12 +5165,10 @@ function ccall(ident, returnType, argTypes, args, opts) {
     }
   }
   var ret = func.apply(null, cArgs);
-
   function onDone(ret) {
     if (stack !== 0) stackRestore(stack);
     return convertReturnValue(ret);
   }
-
   ret = onDone(ret);
   return ret;
 }
@@ -6005,7 +5959,6 @@ function run(args) {
   if (runDependencies > 0) {
     return;
   }
-
   function doRun() {
     if (calledRun) return;
     calledRun = true;
@@ -6015,7 +5968,6 @@ function run(args) {
     if (Module['onRuntimeInitialized']) Module['onRuntimeInitialized']();
     postRun();
   }
-
   if (Module['setStatus']) {
     Module['setStatus']('Running...');
     setTimeout(function () {
