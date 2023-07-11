@@ -820,7 +820,7 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
- 859220: () => {
+ 859156: () => {
   var jsString = window.location.hostname;
   var lengthBytes = lengthBytesUTF8(jsString) + 1;
   var stringOnWasmHeap = _malloc(lengthBytes);
