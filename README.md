@@ -420,9 +420,9 @@ sdk/
     
     ```jsx
     {
-    	licenseKey: "발급받은 라이센스 키",
-    	frameBorderStyle: { // UI 에 보여질 프레임 설정
-    		width: 5,
+      licenseKey: "발급받은 라이센스 키",
+      frameBorderStyle: { // UI 에 보여질 프레임 설정
+        width: 5,
         style: "solid",
         radius: 10,
         not_ready: '#000000', // 검정
@@ -431,7 +431,7 @@ sdk/
         detect_failed: '#FA113D', // 빨강
         detect_success: '#5cb85c', // 초록
         mask_frame: "#202023" // 짙은 회색
-    	},
+      },
     }
     ```
 
