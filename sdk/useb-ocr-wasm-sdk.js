@@ -112,7 +112,8 @@ function sendResult(result) {
   }
 }
 
-async function onInProgressChange(
+async function __onInProgressChangeWASM(
+  ocrMode,
   ocrType,
   inProgress,
   customUI,
@@ -233,6 +234,147 @@ async function onInProgressChange(
     }
 
     await ocr.__sleep(1); // for UI update
+  }
+}
+
+async function __onInProgressChangeServer(
+  ocrMode,
+  ocrType,
+  inProgress,
+  customUI,
+  uiPosition,
+  useTextMsg,
+  useCaptureUI,
+  usePreviewUI,
+  recognizedImage
+) {
+  const isCreditCard = ocrType.indexOf('credit') > -1;
+  const cardTypeString = isCreditCard ? '신용카드' : '신분증';
+  let showLoadingUI = false;
+  let showCaptureUI = false;
+
+  // customUI
+  if (customUI && useTextMsg) {
+    let textMsg = '';
+    switch (inProgress) {
+      case ocr.IN_PROGRESS.NOT_READY:
+        showLoadingUI = true;
+        textMsg = `${cardTypeString} 촬영을 위해 카메라를 불러오는 중 입니다.`;
+        break;
+      case ocr.IN_PROGRESS.READY:
+        textMsg = `영역 안에 ${cardTypeString}이 꽉 차도록 위치시킨 후 촬영 버튼을 눌러주세요.`;
+        showCaptureUI = true;
+        break;
+      case ocr.IN_PROGRESS.MANUAL_CAPTURE_SUCCESS:
+        showLoadingUI = true;
+        textMsg = `${cardTypeString}이(가) 촬영되었습니다. <br/>${cardTypeString} 정보를 인식(OCR) 중 입니다.`;
+        break;
+      case ocr.IN_PROGRESS.MANUAL_CAPTURE_FAILED:
+        textMsg = `${cardTypeString}이(가) 감지되지 않습니다. <br/>${cardTypeString} 영역 안에 ${cardTypeString}을 위치시킨 후 촬영 버튼을 눌러주세요.`;
+        showCaptureUI = true;
+        break;
+      case ocr.IN_PROGRESS.OCR_RECOGNIZED:
+        textMsg = `${cardTypeString}이(가) 정보가 자동으로 인식(OCR) 되었습니다.`;
+        break;
+      case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
+        textMsg = `${cardTypeString}이(가) 정보가 <br/>자동으로 인식(OCR) 되었습니다. <br/>${cardTypeString} 사본(도용) 여부를 <br/>판별 중 입니다.`;
+        break;
+      case ocr.IN_PROGRESS.OCR_SUCCESS:
+        textMsg = `${cardTypeString} 인식이 완료 되었습니다.`;
+        break;
+      case ocr.IN_PROGRESS.OCR_SUCCESS_WITH_SSA:
+        textMsg = `${cardTypeString} 인식 및 사본(도용) 여부 판별이 완료되었습니다.`;
+        break;
+      case ocr.IN_PROGRESS.OCR_FAILED:
+        textMsg = `${cardTypeString} 인식에 실패하였습니다. 다시 시도해주세요.`;
+        break;
+    }
+
+    let loadingUIHTML;
+    let textMsgUI, loadingUI;
+
+    textMsgUI = customUI.querySelector(`#${uiPosition}-ui-text-msg`);
+    loadingUI = customUI.querySelector(`#${uiPosition}-ui-loading`);
+    loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, '#FFF')}`;
+
+    if (textMsgUI) {
+      textMsgUI.innerHTML = textMsg;
+    }
+
+    if (loadingUI) {
+      loadingUI.innerHTML = loadingUIHTML;
+    }
+
+    // PreviewUI
+    if (usePreviewUI) {
+      switch (inProgress) {
+        case ocr.IN_PROGRESS.MANUAL_CAPTURE_SUCCESS:
+          textMsgUI = document.getElementById(`preview-ui-text-msg`);
+          loadingUI = document.getElementById(`preview-ui-loading`);
+          loadingUIHTML = `${getLoadingUIHTML(
+            uiPosition,
+            showLoadingUI,
+            '#000'
+          )}`;
+          textMsg = `<br/>${cardTypeString} 정보 인식(OCR) 중 ...<br/>`;
+          break;
+        case ocr.IN_PROGRESS.MANUAL_CAPTURE_FAILED:
+          textMsgUI = document.getElementById(`preview-ui-text-msg`);
+          loadingUI = document.getElementById(`preview-ui-loading`);
+          loadingUIHTML = `${getLoadingUIHTML(
+            uiPosition,
+            showLoadingUI,
+            '#000'
+          )}`;
+          textMsg = `<br/>${cardTypeString} 감지 실패! 다시 촬영해주세요.<br/>(잠시 후 자동으로 알림이 닫힙니다.)<br/>`;
+          break;
+        case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
+          textMsgUI = document.getElementById(`preview-ui-text-msg`);
+          loadingUI = document.getElementById(`preview-ui-loading`);
+          loadingUIHTML = `${getLoadingUIHTML(
+            uiPosition,
+            showLoadingUI,
+            '#000'
+          )}`;
+          textMsg = `<br/>${cardTypeString} 사본(도용) 여부 판별 중...<br/>`;
+          break;
+      }
+
+      if (textMsgUI) textMsgUI.innerHTML = textMsg;
+      if (loadingUI) loadingUI.innerHTML = loadingUIHTML;
+    }
+
+    // captureUI
+    if (useCaptureUI) {
+      if (showCaptureUI) {
+        ocr.__setStyle(ocr.__captureUIWrap, { display: 'flex' });
+      } else {
+        ocr.__setStyle(ocr.__captureUIWrap, { display: 'none' });
+      }
+    }
+
+    await ocr.__sleep(1); // for UI update
+  }
+}
+
+async function onInProgressChange(
+  ocrMode,
+  ocrType,
+  inProgress,
+  customUI,
+  uiPosition,
+  useTextMsg,
+  useCaptureUI,
+  usePreviewUI,
+  recognizedImage
+) {
+  if (ocrMode === 'wasm') {
+    await __onInProgressChangeWASM.apply(this, arguments);
+  } else if (ocrMode === 'server') {
+    await __onInProgressChangeServer.apply(this, arguments);
+  } else {
+    console.error(`invalid ocrMode : ${ocrMode}`);
+    return;
   }
 }
 

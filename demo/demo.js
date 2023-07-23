@@ -17,17 +17,28 @@ const OCR_RESOURCE_BASE_URL = 'https://ocr.useb.co.kr/';
 // const OCR_LICENSE_KEY = 'SHOULD BE ENTER LICENSE KEY';
 // const OCR_RESOURCE_BASE_URL = 'https://localhost:63342/useb-ocr-wasm-sdk-sample/build/sdk/';
 
+const AUTH_SERVER_INFO = {
+  credential: {
+    customer_id: parseInt('84'),
+    username: 'kcuGDPG37Q',
+    password: '3uR7Pc2BwMa5D$u',
+  },
+  baseUrl: 'https://common-api.useb.co.kr',
+};
+const OCR_SERVER_BASE_URL = 'https://quram.useb.co.kr';
 
 const ocrIframe = document.getElementById('resolution-simulation-iframe');
 
 const onClickStartCallback = (type, settings) => {
-  ocrIframe.onload = function() {
+  ocrIframe.onload = function () {
     let params = {
       ocrType: type,
       settings: {
         ...settings,
         licenseKey: OCR_LICENSE_KEY,
         resourceBaseUrl: OCR_RESOURCE_BASE_URL,
+        authServerInfo: AUTH_SERVER_INFO,
+        ocrServerBaseUrl: OCR_SERVER_BASE_URL,
       },
     };
 
@@ -54,7 +65,10 @@ const onClickRestartCallback = () => {
 
 import UISimulator from './js/ui_simulator.js';
 
-const ui_simulator = new UISimulator(onClickStartCallback, onClickRestartCallback);
+const ui_simulator = new UISimulator(
+  onClickStartCallback,
+  onClickRestartCallback
+);
 
 const postMessageListener = (event) => {
   console.debug('message response', event.data); // base64 encoded된 JSON 메시지이므로 decoded해야 함
@@ -73,10 +87,16 @@ const postMessageListener = (event) => {
       const review_result = json2.review_result;
 
       if (review_result.ocr_masking_image) {
-        review_result.ocr_masking_image = review_result.ocr_masking_image.substring(0, 50) + '...생략...';
+        review_result.ocr_masking_image =
+          review_result.ocr_masking_image.substring(0, 50) + '...생략...';
       }
       if (review_result.ocr_origin_image) {
-        review_result.ocr_origin_image = review_result.ocr_origin_image.substring(0, 50) + '...생략...';
+        review_result.ocr_origin_image =
+          review_result.ocr_origin_image.substring(0, 50) + '...생략...';
+      }
+      if (review_result.ocr_face_image) {
+        review_result.ocr_face_image =
+          review_result.ocr_face_image.substring(0, 50) + '...생략...';
       }
     }
 
@@ -94,7 +114,6 @@ const postMessageListener = (event) => {
     } else {
       // invalid result
     }
-
   } catch (error) {
     console.log('wrong data', error);
   } finally {
@@ -151,22 +170,50 @@ function updateOCRResult(data, json) {
     } else {
       ocr_type_txt = 'INVALID_TYPE(' + detail.ocr_type + ')';
     }
-    title1.innerHTML += '- OCR 결과 : ' + (json.result === 'success' ? '<span style=\'color:blue\'>성공</span>' : '<span style=\'color:red\'>실패</span>') + ' </br>';
-    title1.innerHTML += '- OCR 종류 : ' + '<span style=\'color:blue\'>' + ocr_type_txt + '</span></br>';
+    title1.innerHTML +=
+      '- OCR 결과 : ' +
+      (json.result === 'success'
+        ? "<span style='color:blue'>성공</span>"
+        : "<span style='color:red'>실패</span>") +
+      ' </br>';
+    title1.innerHTML +=
+      '- OCR 종류 : ' +
+      "<span style='color:blue'>" +
+      ocr_type_txt +
+      '</span></br>';
     if (detail.ocr_type.indexOf('-ssa') > -1 && detail.ocr_data?.truth) {
-      title1.innerHTML += '- 사본판별 결과 : ' + '<span style=\'color:blue\'>' + detail.ocr_data.truth + '</span></br>';
+      title1.innerHTML +=
+        '- 사본판별 결과 : ' +
+        "<span style='color:blue'>" +
+        detail.ocr_data.truth +
+        '</span></br>';
     }
 
     if (detail.ocr_type.indexOf('credit') > -1) {
       if (detail.ocr_origin_image) {
-        content += '<br/> - 신용카드 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style=\'max-height:200px;\' src=\'' + detail.ocr_origin_image + '\' /></b>';
+        content +=
+          "<br/> - 신용카드 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" +
+          detail.ocr_origin_image +
+          "' /></b>";
       }
     } else {
       if (detail.ocr_masking_image) {
-        content += '<br/> - 신분증 마스킹 사진<br/>&nbsp;&nbsp;&nbsp;<img style=\'max-height:200px;\' src=\'' + detail.ocr_masking_image + '\' /></b>';
+        content +=
+          "<br/> - 신분증 마스킹 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" +
+          detail.ocr_masking_image +
+          "' /></b>";
       }
       if (detail.ocr_origin_image) {
-        content += '<br/> - 신분증 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style=\'max-height:200px;\' src=\'' + detail.ocr_origin_image + '\' /></b>';
+        content +=
+          "<br/> - 신분증 원본 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" +
+          detail.ocr_origin_image +
+          "' /></b>";
+      }
+      if (detail.ocr_face_image) {
+        content +=
+          "<br/> - 신분증의 얼굴 사진<br/>&nbsp;&nbsp;&nbsp;<img style='max-height:200px;' src='" +
+          detail.ocr_face_image +
+          "' /></b>";
       }
     }
   }

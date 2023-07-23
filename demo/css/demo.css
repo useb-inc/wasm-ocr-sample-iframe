@@ -27,9 +27,9 @@ body {
   width: 100%;
   max-width: 500px;
   height: auto;
-  border: 5px solid #EEE;
+  border: 5px solid #eee;
   border-radius: 5px;
-  background: #EEE;
+  background: #eee;
   flex-direction: column;
   margin: 0 auto;
   transition: all 0.3s ease-in-out;
@@ -43,9 +43,9 @@ body {
   width: 95%;
   max-width: 500px;
   height: auto;
-  border: 5px solid #EEE;
+  border: 5px solid #eee;
   border-radius: 5px;
-  background: #EEE;
+  background: #eee;
 }
 
 .type-button {
@@ -129,7 +129,7 @@ body {
 }
 
 button.active {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -160,11 +160,15 @@ button.active {
   width: 95%;
 }
 
-.settings-section input[type="color"] {
+.settings-section input[type='radio'] {
+  width: 13px;
+}
+
+.settings-section input[type='color'] {
   width: 50px;
 }
 
-.settings-section input[type="checkbox"] {
+.settings-section input[type='checkbox'] {
   width: 20px;
 }
 
@@ -328,28 +332,28 @@ select {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
@@ -366,6 +370,10 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+#ssa-type label {
+  display: block;
 }
 
 .custom--header {

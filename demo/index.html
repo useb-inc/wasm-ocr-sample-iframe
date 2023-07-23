@@ -70,7 +70,29 @@
           <i class="chevron fa-solid fa-chevron-up"></i>
         </div>
         <fieldset>
-          <legend>사본판별 설정</legend>
+          <legend>사본판별 RETRY 설정</legend>
+
+          <div id="ssa-type">
+            <label for="real">
+              <input type="radio" name="type" id="real" value="REAL" />
+              본인(REAL)거부율
+            </label>
+            <label for="fake">
+              <input type="radio" name="type" id="fake" value="FAKE" />
+              타인(FAKE)수락율
+            </label>
+            <label for="ensemble">
+              <input
+                type="radio"
+                name="type"
+                id="ensemble"
+                value="ENSEMBLE"
+                checked
+              />
+              평균 절대값
+            </label>
+          </div>
+
           <div>
             <label for="ssa-max-retry-count">Max Retry</label>
             <select id="ssa-max-retry-count" style="max-width: 100px">
@@ -144,8 +166,36 @@
         <fieldset>
           <legend>촬영 옵션</legend>
           <div>
-            <label for="use-capture-ui">수동 촬영 UI 사용</label>
-            <input type="checkbox" id="use-capture-ui" name="use-capture-ui" />
+            <fieldset>
+              <legend>SERVER</legend>
+              <div>
+                <label for="use-auto-switch">자동 전환 사용</label>
+                <input
+                  type="checkbox"
+                  id="use-auto-switch"
+                  name="use-auto-switch"
+                />
+              </div>
+              <div>
+                <label for="use-manual-switch">수동 전환 사용</label>
+                <input
+                  type="checkbox"
+                  id="use-manual-switch"
+                  name="use-auto-switch"
+                />
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>WASM</legend>
+              <div>
+                <label for="use-force-complete-ui">강제 완료 UI 사용</label>
+                <input
+                  type="checkbox"
+                  id="use-force-complete-ui"
+                  name="use-force-complete-ui"
+                />
+              </div>
+            </fieldset>
           </div>
         </fieldset>
         <fieldset>
