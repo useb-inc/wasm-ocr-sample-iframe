@@ -224,7 +224,36 @@
               name="use-image-warping"
             />
           </div>
+          <div>
+            <label for="use-compress-image">이미지 압축 사용</label>
+            <input
+              type="checkbox"
+              id="use-compress-image"
+              name="use-compress-image"
+            />
+            <br />
+
+            <label for="use-compress-image-max-width"
+              >- max width(가로해상도)</label
+            >
+            <select id="use-compress-image-max-width">
+              <option value="1080">1080</option>
+              <option value="960">960</option>
+              <option value="640">640</option>
+            </select>
+            <br />
+
+            <label for="use-compress-image-max-volume"
+              >- max volume(용량)</label
+            >
+            <select id="use-compress-image-max-volume">
+              <option value="51200">50kb</option>
+              <option value="102400">100kb</option>
+              <option value="204800">200kb</option>
+            </select>
+          </div>
         </fieldset>
+
         <fieldset>
           <legend>카메라 설정</legend>
           <div>
@@ -239,8 +268,30 @@
               <option value="180">180도</option>
               <option value="270">270도</option>
             </select>
+
+            <label for="camera-resolution-criteria"
+              >camera-resolution-criteria</label
+            >
+            <select id="camera-resolution-criteria">
+              <option value="compatibility">호환성 우선(권장)</option>
+              <option value="highQuality">화질 우선</option>
+            </select>
           </div>
         </fieldset>
+
+        <fieldset>
+          <legend>가이드박스 설정</legend>
+          <div>
+            <label for="guide-box-criteria">guide-box-criteria</label>
+            <select id="guide-box-criteria">
+              <option value="cameraResolution">
+                카메라 해상도에 맞춤(권장)
+              </option>
+              <option value="ocrViewSize">화면 크기에 맞춤</option>
+            </select>
+          </div>
+        </fieldset>
+
         <fieldset>
           <legend>UI 해상도 시뮬레이션</legend>
           <div>
