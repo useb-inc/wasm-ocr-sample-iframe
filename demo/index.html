@@ -200,7 +200,7 @@
         </fieldset>
         <fieldset>
           <legend>출력 옵션</legend>
-          <div>
+          <div id="use-encrypt-mode-div">
             <label for="use-encrypt-mode">암호화 적용</label>
             <input
               type="checkbox"
@@ -208,6 +208,34 @@
               name="use-encrypt-mode"
             />
           </div>
+          <div id="use-encrypt-all-mode-div">
+            <label for="use-encrypt-all-mode">암호화 적용 (all)</label>
+            <input
+              type="checkbox"
+              id="use-encrypt-all-mode"
+              name="use-encrypt-all-mode"
+            />
+          </div>
+          <!-- // 추후 위에 주석 풀어야함 - START
+          <div>
+            <label for="use-pii-encrypt-mode">암호화 적용 (pii)</label>
+            <input
+              type="checkbox"
+              id="use-pii-encrypt-mode"
+              name="use-pii-encrypt-mode"
+            />
+          </div>
+          <div>
+            <label for="use-pii-encrypt-face"
+              >신분증 얼굴사진 암호화 적용</label
+            >
+            <input
+              type="checkbox"
+              id="use-pii-encrypt-face"
+              name="use-pii-encrypt-face"
+            />
+          </div>
+          -->
           <div>
             <label for="use-legacy-format">legacy format 지원</label>
             <input
