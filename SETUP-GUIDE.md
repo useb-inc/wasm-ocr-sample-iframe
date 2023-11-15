@@ -46,7 +46,7 @@
     - ※ 윈도우 cmd의 경우 'openssl' 명령이 실행되지 않음, ```git bash```를 실행하여 git bash 상에서 명령어 수행)
 
   - web server 실행
-    - ```http-server -S -C cert.pem -p 8090 -c-1 ./demo``` 명령어로 서버 실행
+    - ```http-server -S -C cert.pem -p 8090 -c-1 ./``` 명령어로 서버 실행
 
 ---
 
