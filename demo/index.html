@@ -10,10 +10,7 @@
     <script type="text/javascript" src="./js/util.js"></script>
     <script type="text/javascript" src="./lib/lodash.min.js"></script>
     <script type="module" src="./js/ui_simulator.js" async></script>
-    <script
-      src="https://kit.fontawesome.com/71d7c8cd6e.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/71d7c8cd6e.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -45,6 +42,7 @@
           <button id="idcard">주민등록증/운전면허증</button>
           <button id="passport">국내/해외 여권</button>
           <button id="alien">외국인등록증</button>
+          <button id="alien-back">외국인등록증 뒷면</button>
           <button id="credit">신용카드</button>
 
           <button id="idcard-ssa">주민등록증/운전면허증 + 사본판별</button>
@@ -55,11 +53,7 @@
 
       <!-- 이미지 스캔 카메라 섹션 -->
       <section class="scan-section">
-        <iframe
-          id="resolution-simulation-iframe"
-          class="resolution-simulation-iframe"
-          allow="camera"
-        ></iframe>
+        <iframe id="resolution-simulation-iframe" class="resolution-simulation-iframe" allow="camera"></iframe>
       </section>
 
       <!-- 옵션 세팅 섹션 -->
@@ -82,13 +76,7 @@
               타인(FAKE)수락율
             </label>
             <label for="ensemble">
-              <input
-                type="radio"
-                name="type"
-                id="ensemble"
-                value="ENSEMBLE"
-                checked
-              />
+              <input type="radio" name="type" id="ensemble" value="ENSEMBLE" checked />
               평균 절대값
             </label>
           </div>
@@ -109,58 +97,23 @@
           <div>
             <label for="use-top-ui">상단 UI</label><br />
             ┌ UI:
-            <input
-              type="checkbox"
-              id="use-top-ui"
-              name="use-top-ui"
-              checked
-            /><br />
+            <input type="checkbox" id="use-top-ui" name="use-top-ui" checked /><br />
             └─ TEXT:
-            <input
-              type="checkbox"
-              id="use-top-ui-text-msg"
-              name="use-top-ui-text-msg"
-            /><br />
+            <input type="checkbox" id="use-top-ui-text-msg" name="use-top-ui-text-msg" /><br />
             <label for="use-middle-ui">중단 UI</label><br />
             ┌ UI:
-            <input
-              type="checkbox"
-              id="use-middle-ui"
-              name="use-middle-ui"
-              checked
-            /><br />
+            <input type="checkbox" id="use-middle-ui" name="use-middle-ui" checked /><br />
             └─ TEXT:
-            <input
-              type="checkbox"
-              id="use-middle-ui-text-msg"
-              name="use-middle-ui-text-msg"
-              checked
-            /><br />
+            <input type="checkbox" id="use-middle-ui-text-msg" name="use-middle-ui-text-msg" checked /><br />
             <label for="use-bottom-ui">하단 UI 사용</label><br />
             ┌ UI:
-            <input
-              type="checkbox"
-              id="use-bottom-ui"
-              name="use-bottom-ui"
-              checked
-            /><br />
+            <input type="checkbox" id="use-bottom-ui" name="use-bottom-ui" checked /><br />
             └─ TEXT:
-            <input
-              type="checkbox"
-              id="use-bottom-ui-text-msg"
-              name="use-bottom-ui-text-msg"
-            /><br />
+            <input type="checkbox" id="use-bottom-ui-text-msg" name="use-bottom-ui-text-msg" /><br />
             <label for="use-bottom-ui">Preview UI 사용</label><br />
             └ UI:
-            <input
-              type="checkbox"
-              id="use-preview-ui"
-              name="use-preview-ui"
-              checked
-            /><br />
-            <span style="font-size: 8px"
-              >※ 사본판별시 OCR 결과 미리보기 UI</span
-            >
+            <input type="checkbox" id="use-preview-ui" name="use-preview-ui" checked /><br />
+            <span style="font-size: 8px">※ 사본판별시 OCR 결과 미리보기 UI</span>
           </div>
         </fieldset>
         <fieldset>
@@ -170,30 +123,18 @@
               <legend>SERVER</legend>
               <div>
                 <label for="use-auto-switch">자동 전환 사용</label>
-                <input
-                  type="checkbox"
-                  id="use-auto-switch"
-                  name="use-auto-switch"
-                />
+                <input type="checkbox" id="use-auto-switch" name="use-auto-switch" />
               </div>
               <div>
                 <label for="use-manual-switch">수동 전환 사용</label>
-                <input
-                  type="checkbox"
-                  id="use-manual-switch"
-                  name="use-auto-switch"
-                />
+                <input type="checkbox" id="use-manual-switch" name="use-auto-switch" />
               </div>
             </fieldset>
             <fieldset>
               <legend>WASM</legend>
               <div>
                 <label for="use-force-complete-ui">강제 완료 UI 사용</label>
-                <input
-                  type="checkbox"
-                  id="use-force-complete-ui"
-                  name="use-force-complete-ui"
-                />
+                <input type="checkbox" id="use-force-complete-ui" name="use-force-complete-ui" />
               </div>
             </fieldset>
           </div>
@@ -202,11 +143,7 @@
           <legend>출력 옵션</legend>
           <div id="use-encrypt-mode-div">
             <label for="use-encrypt-mode">암호화 적용</label>
-            <input
-              type="checkbox"
-              id="use-encrypt-mode"
-              name="use-encrypt-mode"
-            />
+            <input type="checkbox" id="use-encrypt-mode" name="use-encrypt-mode" />
           </div>
           <div id="use-encrypt-all-mode-div">
             <label for="use-encrypt-all-mode">암호화 적용 (all)</label>
@@ -238,32 +175,18 @@
           -->
           <div>
             <label for="use-legacy-format">legacy format 지원</label>
-            <input
-              type="checkbox"
-              id="use-legacy-format"
-              name="use-legacy-format"
-            />
+            <input type="checkbox" id="use-legacy-format" name="use-legacy-format" />
           </div>
           <div>
             <label for="use-image-warping">왜곡 보정(Warping)</label>
-            <input
-              type="checkbox"
-              id="use-image-warping"
-              name="use-image-warping"
-            />
+            <input type="checkbox" id="use-image-warping" name="use-image-warping" />
           </div>
           <div>
             <label for="use-compress-image">이미지 압축 사용</label>
-            <input
-              type="checkbox"
-              id="use-compress-image"
-              name="use-compress-image"
-            />
+            <input type="checkbox" id="use-compress-image" name="use-compress-image" />
             <br />
 
-            <label for="use-compress-image-max-width"
-              >- max width(가로해상도)</label
-            >
+            <label for="use-compress-image-max-width">- max width(가로해상도)</label>
             <select id="use-compress-image-max-width">
               <option value="1080">1080</option>
               <option value="960">960</option>
@@ -271,9 +194,7 @@
             </select>
             <br />
 
-            <label for="use-compress-image-max-volume"
-              >- max volume(용량)</label
-            >
+            <label for="use-compress-image-max-volume">- max volume(용량)</label>
             <select id="use-compress-image-max-volume">
               <option value="51200">50kb</option>
               <option value="102400">100kb</option>
@@ -297,12 +218,10 @@
               <option value="270">270도</option>
             </select>
 
-            <label for="camera-resolution-criteria"
-              >camera-resolution-criteria</label
-            >
+            <label for="camera-resolution-criteria">camera-resolution-criteria</label>
             <select id="camera-resolution-criteria">
-              <option value="compatibility">호환성 우선(권장)</option>
-              <option value="highQuality">화질 우선</option>
+              <option value="highQuality">화질 우선(권장)</option>
+              <option value="compatibility">호환성 우선</option>
             </select>
           </div>
         </fieldset>
@@ -312,9 +231,7 @@
           <div>
             <label for="guide-box-criteria">guide-box-criteria</label>
             <select id="guide-box-criteria">
-              <option value="cameraResolution">
-                카메라 해상도에 맞춤(권장)
-              </option>
+              <option value="cameraResolution">카메라 해상도에 맞춤(권장)</option>
               <option value="ocrViewSize">화면 크기에 맞춤</option>
             </select>
           </div>
@@ -357,12 +274,7 @@
                 max="1920"
                 style="width: 50px"
               />
-              <button
-                id="resolution-reverse-button"
-                style="vertical-align: middle"
-              >
-                반전
-              </button>
+              <button id="resolution-reverse-button" style="vertical-align: middle">반전</button>
               <br />
             </div>
             <div>
@@ -381,137 +293,65 @@
           <legend>인식 프레임 옵션</legend>
           <div>
             <label for="border-width">border-width</label>
-            <input
-              type="number"
-              id="border-width"
-              name="border-width"
-              value="5"
-              min="0"
-            />
+            <input type="number" id="border-width" name="border-width" value="5" min="0" />
           </div>
           <div>
             <label for="border-radius">border-radius</label>
-            <input
-              type="number"
-              id="border-radius"
-              name="border-radius"
-              value="20"
-              min="0"
-            />
+            <input type="number" id="border-radius" name="border-radius" value="20" min="0" />
           </div>
           <div>
             <label for="border-style">border-style (ex: none, solid)</label>
-            <input
-              type="text"
-              id="border-style"
-              name="border-style"
-              value="solid"
-            />
+            <input type="text" id="border-style" name="border-style" value="solid" />
           </div>
           <div>
             <label for="color-not-ready">스캔준비　　</label>
-            <input
-              type="color"
-              id="color-not-ready"
-              name="color-not-ready"
-              value="#000000"
-            />
+            <input type="color" id="color-not-ready" name="color-not-ready" value="#000000" />
           </div>
           <div>
             <label for="color-ready">스캔대기　　</label>
-            <input
-              type="color"
-              id="color-ready"
-              name="color-ready"
-              value="#b8b8b8"
-            />
+            <input type="color" id="color-ready" name="color-ready" value="#b8b8b8" />
           </div>
           <div>
             <label for="color-detect-success">카드검출성공</label>
-            <input
-              type="color"
-              id="color-detect-success"
-              name="color-detect-success"
-              value="#5e8fff"
-            />
+            <input type="color" id="color-detect-success" name="color-detect-success" value="#5e8fff" />
           </div>
           <div>
             <label for="color-detect-failed">카드검출실패</label>
-            <input
-              type="color"
-              id="color-detect-failed"
-              name="color-detect-failed"
-              value="#725b67"
-            />
+            <input type="color" id="color-detect-failed" name="color-detect-failed" value="#725b67" />
           </div>
           <div>
             <label for="color-ocr-recognized">사본판별중　</label>
-            <input
-              type="color"
-              id="color-ocr-recognized"
-              name="color-ocr-recognized"
-              value="#003ac2"
-            />
+            <input type="color" id="color-ocr-recognized" name="color-ocr-recognized" value="#003ac2" />
           </div>
           <div>
             <label for="color-success">OCR완료　　</label>
-            <input
-              type="color"
-              id="color-success"
-              name="color-success"
-              value="#14b00e"
-            />
+            <input type="color" id="color-success" name="color-success" value="#14b00e" />
           </div>
           <div>
             <label for="color-failed">OCR실패　　</label>
-            <input
-              type="color"
-              id="color-failed"
-              name="color-failed"
-              value="#FA113D"
-            />
+            <input type="color" id="color-failed" name="color-failed" value="#FA113D" />
           </div>
         </fieldset>
         <fieldset>
           <legend>마스킹 프레임 옵션</legend>
           <div>
             <label for="use-mask-frame-color-change">색상변경여부</label>
-            <input
-              type="checkbox"
-              id="use-mask-frame-color-change"
-              name="use-mask-frame-color-change"
-              checked
-            />
+            <input type="checkbox" id="use-mask-frame-color-change" name="use-mask-frame-color-change" checked />
           </div>
           <div id="mask-frame-color-default">
             <div>
               <label for="mask-frame-color-base-color">기본색상　　</label>
-              <input
-                type="color"
-                id="mask-frame-color-base-color"
-                name="mask-frame-color-base-color"
-                value="#333333"
-              />
+              <input type="color" id="mask-frame-color-base-color" name="mask-frame-color-base-color" value="#333333" />
             </div>
           </div>
           <div id="mask-frame-color-custom">
             <div>
               <label for="mask-frame-color-not-ready">스캔준비　　</label>
-              <input
-                type="color"
-                id="mask-frame-color-not-ready"
-                name="mask-frame-color-not-ready"
-                value="#333333"
-              />
+              <input type="color" id="mask-frame-color-not-ready" name="mask-frame-color-not-ready" value="#333333" />
             </div>
             <div>
               <label for="mask-frame-color-ready">스캔대기　　</label>
-              <input
-                type="color"
-                id="mask-frame-color-ready"
-                name="mask-frame-color-ready"
-                value="#333333"
-              />
+              <input type="color" id="mask-frame-color-ready" name="mask-frame-color-ready" value="#333333" />
             </div>
             <div>
               <label for="mask-frame-color-detect-success">카드검출성공</label>
@@ -542,21 +382,11 @@
             </div>
             <div>
               <label for="mask-frame-color-success">OCR완료　　</label>
-              <input
-                type="color"
-                id="mask-frame-color-success"
-                name="mask-frame-color-success"
-                value="#111111"
-              />
+              <input type="color" id="mask-frame-color-success" name="mask-frame-color-success" value="#111111" />
             </div>
             <div>
               <label for="mask-frame-color-failed">OCR실패　　</label>
-              <input
-                type="color"
-                id="mask-frame-color-failed"
-                name="mask-frame-color-failed"
-                value="#111111"
-              />
+              <input type="color" id="mask-frame-color-failed" name="mask-frame-color-failed" value="#111111" />
             </div>
           </div>
         </fieldset>
@@ -568,11 +398,11 @@
           </div>
           <div>
             <label for="show-canvas-preview">canvas preview 보기</label>
-            <input
-              type="checkbox"
-              id="show-canvas-preview"
-              name="show-canvas-preview"
-            />
+            <input type="checkbox" id="show-canvas-preview" name="show-canvas-preview" />
+          </div>
+          <div>
+            <label for="use-debug-alert">debug alert 사용</label>
+            <input type="checkbox" id="use-debug-alert" name="use-debug-alert" />
           </div>
         </fieldset>
         <fieldset>
@@ -586,11 +416,7 @@
       </section>
     </section>
 
-    <section
-      id="result-section"
-      class="fullscreen result-section"
-      style="display: none"
-    >
+    <section id="result-section" class="fullscreen result-section" style="display: none">
       <div class="custom--header">useB.OCR WebAssembly SDK Test Result</div>
 
       <div class="custom--section">

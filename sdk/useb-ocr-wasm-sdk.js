@@ -8,28 +8,18 @@ const messageHandler = async (e) => {
     const response = e.data ? e.data : e;
 
     if (targetOrigin !== e.origin) {
-      console.info(
-        "[WARNING] origin is replaced : '" +
-          targetOrigin +
-          "' -> '" +
-          e.origin +
-          "'"
-      );
+      console.info("[WARNING] origin is replaced : '" + targetOrigin + "' -> '" + e.origin + "'");
       targetOrigin = e.origin;
     }
     console.debug('targetOrigin', targetOrigin);
 
     if (!response) {
-      console.info(
-        '[INFO] messageHandler() is skipped, cause : response is undefined'
-      );
+      console.info('[INFO] messageHandler() is skipped, cause : response is undefined');
       return;
     }
 
     if (response.type === 'webpackOk') {
-      console.info(
-        '[INFO] messageHandler() is skipped, cause : webpackOk type'
-      );
+      console.info('[INFO] messageHandler() is skipped, cause : webpackOk type');
       return;
     }
 
@@ -54,18 +44,14 @@ const messageHandler = async (e) => {
         case 'idcard':
         case 'passport':
         case 'alien':
+        case 'alien-back':
         case 'credit':
         // SSA
         case 'idcard-ssa':
         case 'passport-ssa':
         case 'alien-ssa':
           ocr.init(data.settings);
-          await ocr.startOCR(
-            data.ocrType,
-            sendResult,
-            sendResult,
-            onInProgressChange
-          );
+          await ocr.startOCR(data.ocrType, sendResult, sendResult, onInProgressChange);
           break;
         default:
           new Error('Invalid ocrType');
@@ -102,13 +88,10 @@ function sendResult(result) {
 
   if (window.webkit && window.webkit.messageHandlers) {
     // iOS: WKScriptMessageHandler WKScriptMessage name(usebwasmocr)
-    window.webkit.messageHandlers.usebwasmocr &&
-      window.webkit.messageHandlers.usebwasmocr.postMessage(returnMessage);
+    window.webkit.messageHandlers.usebwasmocr && window.webkit.messageHandlers.usebwasmocr.postMessage(returnMessage);
   } else if (window['usebwasmocr']) {
     // Android: WebView JavascriptInterface name(usebwasmocr) and JS function(result)
-    window['usebwasmocr'] &&
-      window['usebwasmocr']['receive'] &&
-      window['usebwasmocr']['receive'](returnMessage);
+    window['usebwasmocr'] && window['usebwasmocr']['receive'] && window['usebwasmocr']['receive'](returnMessage);
   }
 }
 
@@ -191,31 +174,19 @@ async function __onInProgressChangeWASM(
         case ocr.IN_PROGRESS.MANUAL_CAPTURE_SUCCESS:
           textMsgUI = document.getElementById(`preview-ui-text-msg`);
           loadingUI = document.getElementById(`preview-ui-loading`);
-          loadingUIHTML = `${getLoadingUIHTML(
-            uiPosition,
-            showLoadingUI,
-            '#000'
-          )}`;
+          loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, '#000')}`;
           textMsg = `<br/>${cardTypeString} 정보 인식(OCR) 중 ...<br/>`;
           break;
         case ocr.IN_PROGRESS.MANUAL_CAPTURE_FAILED:
           textMsgUI = document.getElementById(`preview-ui-text-msg`);
           loadingUI = document.getElementById(`preview-ui-loading`);
-          loadingUIHTML = `${getLoadingUIHTML(
-            uiPosition,
-            showLoadingUI,
-            '#000'
-          )}`;
+          loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, '#000')}`;
           textMsg = `<br/>${cardTypeString} 감지 실패! 다시 촬영해주세요.<br/>(잠시 후 자동으로 알림이 닫힙니다.)<br/>`;
           break;
         case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
           textMsgUI = document.getElementById(`preview-ui-text-msg`);
           loadingUI = document.getElementById(`preview-ui-loading`);
-          loadingUIHTML = `${getLoadingUIHTML(
-            uiPosition,
-            showLoadingUI,
-            '#000'
-          )}`;
+          loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, '#000')}`;
           textMsg = `<br/>${cardTypeString} 사본(도용) 여부 판별 중...<br/>`;
           break;
       }
@@ -311,31 +282,19 @@ async function __onInProgressChangeServer(
         case ocr.IN_PROGRESS.MANUAL_CAPTURE_SUCCESS:
           textMsgUI = document.getElementById(`preview-ui-text-msg`);
           loadingUI = document.getElementById(`preview-ui-loading`);
-          loadingUIHTML = `${getLoadingUIHTML(
-            uiPosition,
-            showLoadingUI,
-            '#000'
-          )}`;
+          loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, '#000')}`;
           textMsg = `<br/>${cardTypeString} 정보 인식(OCR) 중 ...<br/>`;
           break;
         case ocr.IN_PROGRESS.MANUAL_CAPTURE_FAILED:
           textMsgUI = document.getElementById(`preview-ui-text-msg`);
           loadingUI = document.getElementById(`preview-ui-loading`);
-          loadingUIHTML = `${getLoadingUIHTML(
-            uiPosition,
-            showLoadingUI,
-            '#000'
-          )}`;
+          loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, '#000')}`;
           textMsg = `<br/>${cardTypeString} 감지 실패! 다시 촬영해주세요.<br/>(잠시 후 자동으로 알림이 닫힙니다.)<br/>`;
           break;
         case ocr.IN_PROGRESS.OCR_RECOGNIZED_WITH_SSA:
           textMsgUI = document.getElementById(`preview-ui-text-msg`);
           loadingUI = document.getElementById(`preview-ui-loading`);
-          loadingUIHTML = `${getLoadingUIHTML(
-            uiPosition,
-            showLoadingUI,
-            '#000'
-          )}`;
+          loadingUIHTML = `${getLoadingUIHTML(uiPosition, showLoadingUI, '#000')}`;
           textMsg = `<br/>${cardTypeString} 사본(도용) 여부 판별 중...<br/>`;
           break;
       }

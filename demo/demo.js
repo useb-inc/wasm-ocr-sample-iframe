@@ -65,10 +65,7 @@ const onClickRestartCallback = () => {
 
 import UISimulator from './js/ui_simulator.js';
 
-const ui_simulator = new UISimulator(
-  onClickStartCallback,
-  onClickRestartCallback
-);
+const ui_simulator = new UISimulator(onClickStartCallback, onClickRestartCallback);
 
 const postMessageListener = (event) => {
   console.debug('message response', event.data); // base64 encoded된 JSON 메시지이므로 decoded해야 함
@@ -87,16 +84,13 @@ const postMessageListener = (event) => {
       const review_result = json2.review_result;
 
       if (review_result.ocr_masking_image) {
-        review_result.ocr_masking_image =
-          review_result.ocr_masking_image.substring(0, 50) + '...생략...';
+        review_result.ocr_masking_image = review_result.ocr_masking_image.substring(0, 50) + '...생략...';
       }
       if (review_result.ocr_origin_image) {
-        review_result.ocr_origin_image =
-          review_result.ocr_origin_image.substring(0, 50) + '...생략...';
+        review_result.ocr_origin_image = review_result.ocr_origin_image.substring(0, 50) + '...생략...';
       }
       if (review_result.ocr_face_image) {
-        review_result.ocr_face_image =
-          review_result.ocr_face_image.substring(0, 50) + '...생략...';
+        review_result.ocr_face_image = review_result.ocr_face_image.substring(0, 50) + '...생략...';
       }
     }
 
@@ -161,6 +155,8 @@ function updateOCRResult(data, json) {
       ocr_type_txt = '주민등록증/운전면허증';
     } else if (detail.ocr_type.indexOf('passport') > -1) {
       ocr_type_txt = '국내/해외여권';
+    } else if (detail.ocr_type.indexOf('alien-back') > -1) {
+      ocr_type_txt = '외국인등록증 뒷면';
     } else if (detail.ocr_type.indexOf('alien') > -1) {
       ocr_type_txt = '외국인등록증';
     } else if (detail.ocr_type.indexOf('credit') > -1) {
@@ -172,21 +168,11 @@ function updateOCRResult(data, json) {
     }
     title1.innerHTML +=
       '- OCR 결과 : ' +
-      (json.result === 'success'
-        ? "<span style='color:blue'>성공</span>"
-        : "<span style='color:red'>실패</span>") +
+      (json.result === 'success' ? "<span style='color:blue'>성공</span>" : "<span style='color:red'>실패</span>") +
       ' </br>';
-    title1.innerHTML +=
-      '- OCR 종류 : ' +
-      "<span style='color:blue'>" +
-      ocr_type_txt +
-      '</span></br>';
+    title1.innerHTML += '- OCR 종류 : ' + "<span style='color:blue'>" + ocr_type_txt + '</span></br>';
     if (detail.ocr_type.indexOf('-ssa') > -1 && detail.ocr_data?.truth) {
-      title1.innerHTML +=
-        '- 사본판별 결과 : ' +
-        "<span style='color:blue'>" +
-        detail.ocr_data.truth +
-        '</span></br>';
+      title1.innerHTML += '- 사본판별 결과 : ' + "<span style='color:blue'>" + detail.ocr_data.truth + '</span></br>';
     }
 
     if (detail.ocr_type.indexOf('credit') > -1) {
