@@ -31,6 +31,20 @@
     </div>
 
     <section id="simulator-section" class="simulator-section customer--section">
+      <section class="button-section">
+        <button id="btnPreloadingStart">
+          <i class="fa-solid fa-check" style="display: none"></i>
+          <span>Preloading Start</span>
+        </button>
+
+        <fieldset>
+          <legend>Preloading Status</legend>
+          <div>
+            <input type="text" id="preloading-status-text" readonly />
+          </div>
+        </fieldset>
+      </section>
+
       <section class="type-section">
         <div id="type-toggle">
           <b>OCR Type</b>
@@ -147,11 +161,7 @@
           </div>
           <div id="use-encrypt-all-mode-div">
             <label for="use-encrypt-all-mode">암호화 적용 (all)</label>
-            <input
-              type="checkbox"
-              id="use-encrypt-all-mode"
-              name="use-encrypt-all-mode"
-            />
+            <input type="checkbox" id="use-encrypt-all-mode" name="use-encrypt-all-mode" />
           </div>
           <!-- // 추후 위에 주석 풀어야함 - START
           <div>

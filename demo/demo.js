@@ -28,29 +28,43 @@ const AUTH_SERVER_INFO = {
 const OCR_SERVER_BASE_URL = 'https://quram.useb.co.kr';
 
 const ocrIframe = document.getElementById('resolution-simulation-iframe');
+const ocrDefaultSettings = {
+  licenseKey: OCR_LICENSE_KEY,
+  resourceBaseUrl: OCR_RESOURCE_BASE_URL,
+  // preloadingUITextMsg: '신분증인증 모듈을 불러오는 중 입니다 ~~<br />잠시만 기다려주세요 ~~',
+};
+
+let preloaded = false;
 
 const onClickStartCallback = (type, settings) => {
-  ocrIframe.onload = function () {
-    let params = {
+  const postMessageImpl = function () {
+    const params = {
       ocrType: type,
       settings: {
+        ...ocrDefaultSettings,
         ...settings,
-        licenseKey: OCR_LICENSE_KEY,
-        resourceBaseUrl: OCR_RESOURCE_BASE_URL,
         authServerInfo: AUTH_SERVER_INFO,
         ocrServerBaseUrl: OCR_SERVER_BASE_URL,
       },
     };
 
-    let encodedParams = btoa(encodeURIComponent(JSON.stringify(params)));
+    const encodedParams = btoa(encodeURIComponent(JSON.stringify(params)));
     ocrIframe.contentWindow.postMessage(encodedParams, OCR_TARGET_ORIGIN);
     hideLoadingUI();
+    showOCRIframeUI();
     startOCR();
-    ocrIframe.onload = null;
   };
 
-  ocrIframe.src = OCR_URL;
-  showLoadingUI();
+  if (preloaded) {
+    postMessageImpl();
+  } else {
+    ocrIframe.onload = function () {
+      postMessageImpl();
+      ocrIframe.onload = null;
+    };
+    ocrIframe.src = OCR_URL;
+    showLoadingUI();
+  }
 };
 
 const onClickRestartCallback = () => {
@@ -62,6 +76,28 @@ const onClickRestartCallback = () => {
 
   startOCR();
 };
+
+// Preloading Start Event Callback
+const onPreloadStartCallback = () => {
+  ocrIframe.onload = function () {
+    const params = {
+      ocrType: 'idcard',
+      settings: { ...ocrDefaultSettings },
+      preloading: true,
+    };
+
+    const encodedParams = btoa(encodeURIComponent(JSON.stringify(params)));
+    ocrIframe.contentWindow.postMessage(encodedParams, OCR_TARGET_ORIGIN);
+    ocrIframe.onload = null;
+  };
+
+  ocrIframe.src = OCR_URL;
+  hideOCRIframeUI();
+  setPreloadingStatus('Started');
+};
+
+// preLoading Start Button Event Bind
+document.getElementById('btnPreloadingStart').addEventListener('click', onPreloadStartCallback);
 
 import UISimulator from './js/ui_simulator.js';
 
@@ -101,21 +137,33 @@ const postMessageListener = (event) => {
       updateDebugWin(strHighlight);
       updateOCRResult(strHighlight, json);
       updateOCRStatus('OCR이 완료되었습니다.');
+      endOCR();
     } else if (json.result === 'failed') {
       updateDebugWin(strHighlight);
       updateOCRResult(strHighlight, json);
       updateOCRStatus('OCR이 실패되었습니다.');
+      endOCR();
+    } else if (json.result === 'preloaded') {
+      console.debug('wasm preloaded callback ! need remove loading ui');
+      preloaded = true;
+      setPreloadingStatus('End');
+      hideLoadingUI();
     } else {
       // invalid result
+      endOCR();
     }
   } catch (error) {
     console.log('wrong data', error);
   } finally {
-    endOCR();
+    // endOCR();
   }
 };
 
 window.addEventListener('message', postMessageListener);
+
+function setPreloadingStatus(status) {
+  document.getElementById('preloading-status-text').value = status;
+}
 
 function showLoadingUI() {
   document.getElementById('loading-ui').style.display = 'flex';
@@ -123,6 +171,13 @@ function showLoadingUI() {
 
 function hideLoadingUI() {
   document.getElementById('loading-ui').style.display = 'none';
+}
+
+function showOCRIframeUI() {
+  ocrIframe.style.display = 'block';
+}
+function hideOCRIframeUI() {
+  ocrIframe.style.display = 'none';
 }
 
 function startOCR() {

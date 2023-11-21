@@ -16,6 +16,25 @@ body {
   height: 100%;
 }
 
+.button-section {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  right: 10px;
+  top: 10px;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border: 5px solid #eee;
+  border-radius: 5px;
+  background: #eee;
+  flex-direction: column;
+  margin: 0 auto;
+  transition: all 0.3s ease-in-out;
+}
+
 .type-section {
   position: fixed;
   display: flex;
@@ -71,6 +90,7 @@ body {
   margin: 0 auto;
   border: 10px solid #333;
   border-radius: 10px;
+  display: none;
 }
 
 /*.result-section {*/

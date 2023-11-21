@@ -39,6 +39,12 @@ const messageHandler = async (e) => {
         throw new Error('settings info is empty');
       }
 
+      if (data.preloading) {
+        ocr.init(data.settings);
+        await ocr.preloading(onPreloaded);
+        return;
+      }
+
       switch (data.ocrType) {
         // OCR
         case 'idcard':
@@ -95,6 +101,10 @@ function sendResult(result) {
   }
 }
 
+function onPreloaded() {
+  console.log('ocr-wasm-sdk onPreloaded');
+  sendResult({ result: 'preloaded' });
+}
 async function __onInProgressChangeWASM(
   ocrMode,
   ocrType,

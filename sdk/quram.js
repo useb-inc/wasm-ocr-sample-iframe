@@ -98,7 +98,6 @@ Module.expectedDataFileDownloads++;
     if (!check) throw msg + new Error().stack;
    }
    Module["FS_createPath"]("/", "face_detection", true, true);
-   Module["FS_createPath"]("/", "model", true, true);
    Module["FS_createPath"]("/", "tessdata", true, true);
    Module["FS_createPath"]("/", "weights", true, true);
    function DataRequest(start, end, audio) {
@@ -165,143 +164,135 @@ Module.expectedDataFileDownloads++;
    "start": 0,
    "end": 701059
   }, {
-   "filename": "/model/qr_fd_720x448_DXYDCUV_WASM_0829.model",
-   "start": 701059,
-   "end": 13509162
-  }, {
-   "filename": "/model/quramsoft",
-   "start": 13509162,
-   "end": 13509162
-  }, {
    "filename": "/tessdata/alien.traineddata",
-   "start": 13509162,
-   "end": 15476749
+   "start": 701059,
+   "end": 2668646
   }, {
    "filename": "/tessdata/ar_num.traineddata",
-   "start": 15476749,
-   "end": 15506699
+   "start": 2668646,
+   "end": 2698596
   }, {
    "filename": "/tessdata/card.traineddata",
-   "start": 15506699,
-   "end": 15536081
+   "start": 2698596,
+   "end": 2727978
   }, {
    "filename": "/tessdata/driver_num.traineddata",
-   "start": 15536081,
-   "end": 15558403
+   "start": 2727978,
+   "end": 2750300
   }, {
    "filename": "/tessdata/eng.traineddata",
-   "start": 15558403,
-   "end": 15638460
+   "start": 2750300,
+   "end": 2830357
   }, {
    "filename": "/tessdata/giro.traineddata",
-   "start": 15638460,
-   "end": 15665408
+   "start": 2830357,
+   "end": 2857305
   }, {
    "filename": "/tessdata/income_alpha.traineddata",
-   "start": 15665408,
-   "end": 15722130
+   "start": 2857305,
+   "end": 2914027
   }, {
    "filename": "/tessdata/income_num.traineddata",
-   "start": 15722130,
-   "end": 15751208
+   "start": 2914027,
+   "end": 2943105
   }, {
    "filename": "/tessdata/juminnum.traineddata",
-   "start": 15751208,
-   "end": 15773131
+   "start": 2943105,
+   "end": 2965028
   }, {
    "filename": "/tessdata/kor.traineddata",
-   "start": 15773131,
-   "end": 16880040
+   "start": 2965028,
+   "end": 4071937
   }, {
    "filename": "/tessdata/name.traineddata",
-   "start": 16880040,
-   "end": 16926610
+   "start": 4071937,
+   "end": 4118507
   }, {
    "filename": "/tessdata/number.traineddata",
-   "start": 16926610,
-   "end": 16950722
+   "start": 4118507,
+   "end": 4142619
   }, {
    "filename": "/tessdata/ocr.traineddata",
-   "start": 16950722,
-   "end": 16968932
+   "start": 4142619,
+   "end": 4160829
   }, {
    "filename": "/tessdata/pass2.traineddata",
-   "start": 16968932,
-   "end": 16990576
+   "start": 4160829,
+   "end": 4182473
   }, {
    "filename": "/tessdata/passport.traineddata",
-   "start": 16990576,
-   "end": 17057485
+   "start": 4182473,
+   "end": 4249382
   }, {
    "filename": "/weights/apo_0",
-   "start": 17057485,
-   "end": 17238421
+   "start": 4249382,
+   "end": 4430318
   }, {
    "filename": "/weights/dash_0",
-   "start": 17238421,
-   "end": 17419357
+   "start": 4430318,
+   "end": 4611254
   }, {
    "filename": "/weights/expr_0",
-   "start": 17419357,
-   "end": 17601349
+   "start": 4611254,
+   "end": 4793246
   }, {
    "filename": "/weights/expr_1",
-   "start": 17601349,
-   "end": 17783341
+   "start": 4793246,
+   "end": 4975238
   }, {
    "filename": "/weights/name_dxdy_0",
-   "start": 17783341,
-   "end": 17978305
+   "start": 4975238,
+   "end": 5170202
   }, {
    "filename": "/weights/name_dxdy_1",
-   "start": 17978305,
-   "end": 18173269
+   "start": 5170202,
+   "end": 5365166
   }, {
    "filename": "/weights/name_org_0",
-   "start": 18173269,
-   "end": 18306793
+   "start": 5365166,
+   "end": 5498690
   }, {
    "filename": "/weights/name_org_1",
-   "start": 18306793,
-   "end": 18440317
+   "start": 5498690,
+   "end": 5632214
   }, {
    "filename": "/weights/number_0",
-   "start": 18440317,
-   "end": 18540389
+   "start": 5632214,
+   "end": 5732286
   }, {
    "filename": "/weights/number_1",
-   "start": 18540389,
-   "end": 18640461
+   "start": 5732286,
+   "end": 5832358
   }, {
    "filename": "/weights/number_2",
-   "start": 18640461,
-   "end": 18740533
+   "start": 5832358,
+   "end": 5932430
   }, {
    "filename": "/weights/number_3",
-   "start": 18740533,
-   "end": 18840605
+   "start": 5932430,
+   "end": 6032502
   }, {
    "filename": "/weights/slash_0",
-   "start": 18840605,
-   "end": 19021541
+   "start": 6032502,
+   "end": 6213438
   }, {
    "filename": "/weights/slash_1",
-   "start": 19021541,
-   "end": 19202477
+   "start": 6213438,
+   "end": 6394374
   }, {
    "filename": "/weights/slash_2",
-   "start": 19202477,
-   "end": 19383413
+   "start": 6394374,
+   "end": 6575310
   }, {
    "filename": "/weights/vseg_0",
-   "start": 19383413,
-   "end": 19425025
+   "start": 6575310,
+   "end": 6616922
   }, {
    "filename": "/weights/vseg_1",
-   "start": 19425025,
-   "end": 19466637
+   "start": 6616922,
+   "end": 6658534
   } ],
-  "remote_package_size": 19466637
+  "remote_package_size": 6658534
  });
 })();
 
@@ -766,10 +757,10 @@ function createWasm() {
  function receiveInstance(instance, module) {
   var exports = instance.exports;
   Module["asm"] = exports;
-  wasmMemory = Module["asm"]["wa"];
+  wasmMemory = Module["asm"]["ua"];
   updateGlobalBufferAndViews(wasmMemory.buffer);
-  wasmTable = Module["asm"]["Aa"];
-  addOnInit(Module["asm"]["xa"]);
+  wasmTable = Module["asm"]["ya"];
+  addOnInit(Module["asm"]["va"]);
   removeRunDependency("wasm-instantiate");
  }
  addRunDependency("wasm-instantiate");
@@ -833,11 +824,6 @@ function callRuntimeCallbacks(callbacks) {
 
 function writeArrayToMemory(array, buffer) {
  HEAP8.set(array, buffer);
-}
-
-function __ZN2cv7imwriteERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERKNS_11_InputArrayERKNS0_6vectorIiNS4_IiEEEE() {
- err("missing function: _ZN2cv7imwriteERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERKNS_11_InputArrayERKNS0_6vectorIiNS4_IiEEEE");
- abort(-1);
 }
 
 function ___assert_fail(condition, filename, line, func) {
@@ -4868,280 +4854,310 @@ InternalError = Module["InternalError"] = extendError(Error, "InternalError");
 init_emval();
 
 var asmLibraryArg = {
- "sa": __ZN2cv7imwriteERKNSt3__212basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERKNS_11_InputArrayERKNS0_6vectorIiNS4_IiEEEE,
  "a": ___assert_fail,
  "l": ___cxa_allocate_exception,
- "n": ___cxa_begin_catch,
+ "p": ___cxa_begin_catch,
  "fa": ___cxa_decrement_exception_refcount,
- "s": ___cxa_end_catch,
+ "t": ___cxa_end_catch,
  "c": ___cxa_find_matching_catch_2,
  "h": ___cxa_find_matching_catch_3,
- "A": ___cxa_free_exception,
+ "B": ___cxa_free_exception,
  "ea": ___cxa_increment_exception_refcount,
- "O": ___cxa_rethrow,
+ "N": ___cxa_rethrow,
  "da": ___cxa_rethrow_primary_exception,
  "k": ___cxa_throw,
  "ga": ___cxa_uncaught_exceptions,
  "f": ___resumeException,
- "T": ___syscall_fcntl64,
- "ma": ___syscall_ioctl,
- "S": ___syscall_openat,
- "_": __embind_register_bigint,
- "ua": __embind_register_bool,
- "ta": __embind_register_emval,
- "W": __embind_register_float,
+ "S": ___syscall_fcntl64,
+ "la": ___syscall_ioctl,
+ "R": ___syscall_openat,
+ "Z": __embind_register_bigint,
+ "sa": __embind_register_bool,
+ "ra": __embind_register_emval,
+ "V": __embind_register_float,
  "u": __embind_register_integer,
- "o": __embind_register_memory_view,
- "V": __embind_register_std_string,
+ "n": __embind_register_memory_view,
+ "U": __embind_register_std_string,
  "H": __embind_register_std_wstring,
- "va": __embind_register_void,
- "U": __emscripten_date_now,
- "oa": __emscripten_get_now_is_monotonic,
- "J": __emval_as,
- "y": __emval_decref,
- "la": __emval_get_global,
- "P": __emval_get_property,
+ "ta": __embind_register_void,
+ "T": __emscripten_date_now,
+ "ma": __emscripten_get_now_is_monotonic,
+ "L": __emval_as,
+ "A": __emval_decref,
+ "qa": __emval_get_global,
+ "O": __emval_get_property,
  "Q": __emval_new_cstring,
  "I": __emval_run_destructors,
- "pa": __localtime_js,
- "qa": __tzset_js,
+ "na": __localtime_js,
+ "oa": __tzset_js,
  "x": _abort,
  "ia": _emscripten_get_heap_max,
- "na": _emscripten_get_now,
- "ra": _emscripten_memcpy_big,
+ "W": _emscripten_get_now,
+ "pa": _emscripten_memcpy_big,
  "ha": _emscripten_resize_heap,
  "ja": _environ_get,
  "ka": _environ_sizes_get,
- "B": _exit,
+ "y": _exit,
  "G": _fd_close,
- "R": _fd_read,
- "Z": _fd_seek,
+ "P": _fd_read,
+ "Y": _fd_seek,
  "F": _fd_write,
  "b": _getTempRet0,
- "K": invoke_diii,
- "L": invoke_fiii,
+ "J": invoke_diii,
+ "K": invoke_fiii,
  "m": invoke_i,
  "d": invoke_ii,
  "g": invoke_iii,
- "p": invoke_iiii,
- "j": invoke_iiiii,
- "N": invoke_iiiiid,
+ "q": invoke_iiii,
+ "i": invoke_iiiii,
+ "ca": invoke_iiiiid,
  "z": invoke_iiiiii,
  "v": invoke_iiiiiii,
  "M": invoke_iiiiiiii,
  "D": invoke_iiiiiiiiiiii,
- "Y": invoke_iiiiij,
  "X": invoke_jiiii,
- "i": invoke_v,
+ "j": invoke_v,
  "r": invoke_vi,
  "e": invoke_vii,
- "aa": invoke_viid,
- "ba": invoke_viif,
- "q": invoke_viii,
+ "$": invoke_viid,
+ "aa": invoke_viif,
+ "o": invoke_viii,
  "E": invoke_viiii,
- "t": invoke_viiiiiii,
+ "s": invoke_viiiiiii,
  "w": invoke_viiiiiiiiii,
  "C": invoke_viiiiiiiiiiiiiii,
- "$": _setTempRet0,
- "ca": _strftime_l
+ "_": _setTempRet0,
+ "ba": _strftime_l
 };
 
 var asm = createWasm();
 
 var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
- return (___wasm_call_ctors = Module["___wasm_call_ctors"] = Module["asm"]["xa"]).apply(null, arguments);
+ return (___wasm_call_ctors = Module["___wasm_call_ctors"] = Module["asm"]["va"]).apply(null, arguments);
 };
 
 var _malloc = Module["_malloc"] = function() {
- return (_malloc = Module["_malloc"] = Module["asm"]["ya"]).apply(null, arguments);
+ return (_malloc = Module["_malloc"] = Module["asm"]["wa"]).apply(null, arguments);
 };
 
 var _free = Module["_free"] = function() {
- return (_free = Module["_free"] = Module["asm"]["za"]).apply(null, arguments);
+ return (_free = Module["_free"] = Module["asm"]["xa"]).apply(null, arguments);
 };
 
 var _scanFrame_credit = Module["_scanFrame_credit"] = function() {
- return (_scanFrame_credit = Module["_scanFrame_credit"] = Module["asm"]["Ba"]).apply(null, arguments);
+ return (_scanFrame_credit = Module["_scanFrame_credit"] = Module["asm"]["za"]).apply(null, arguments);
 };
 
 var _getCreditScanner = Module["_getCreditScanner"] = function() {
- return (_getCreditScanner = Module["_getCreditScanner"] = Module["asm"]["Ca"]).apply(null, arguments);
+ return (_getCreditScanner = Module["_getCreditScanner"] = Module["asm"]["Aa"]).apply(null, arguments);
 };
 
 var _destroyCreditScanner = Module["_destroyCreditScanner"] = function() {
- return (_destroyCreditScanner = Module["_destroyCreditScanner"] = Module["asm"]["Da"]).apply(null, arguments);
+ return (_destroyCreditScanner = Module["_destroyCreditScanner"] = Module["asm"]["Ba"]).apply(null, arguments);
 };
 
 var _scanFrame_passport = Module["_scanFrame_passport"] = function() {
- return (_scanFrame_passport = Module["_scanFrame_passport"] = Module["asm"]["Ea"]).apply(null, arguments);
+ return (_scanFrame_passport = Module["_scanFrame_passport"] = Module["asm"]["Ca"]).apply(null, arguments);
 };
 
 var _getPassportScanner = Module["_getPassportScanner"] = function() {
- return (_getPassportScanner = Module["_getPassportScanner"] = Module["asm"]["Fa"]).apply(null, arguments);
+ return (_getPassportScanner = Module["_getPassportScanner"] = Module["asm"]["Da"]).apply(null, arguments);
 };
 
 var _destroyPassportScanner = Module["_destroyPassportScanner"] = function() {
- return (_destroyPassportScanner = Module["_destroyPassportScanner"] = Module["asm"]["Ga"]).apply(null, arguments);
+ return (_destroyPassportScanner = Module["_destroyPassportScanner"] = Module["asm"]["Ea"]).apply(null, arguments);
 };
 
 var _scanFrame_alien_back = Module["_scanFrame_alien_back"] = function() {
- return (_scanFrame_alien_back = Module["_scanFrame_alien_back"] = Module["asm"]["Ha"]).apply(null, arguments);
+ return (_scanFrame_alien_back = Module["_scanFrame_alien_back"] = Module["asm"]["Fa"]).apply(null, arguments);
 };
 
 var _scanFrame_alien = Module["_scanFrame_alien"] = function() {
- return (_scanFrame_alien = Module["_scanFrame_alien"] = Module["asm"]["Ia"]).apply(null, arguments);
+ return (_scanFrame_alien = Module["_scanFrame_alien"] = Module["asm"]["Ga"]).apply(null, arguments);
 };
 
 var _getAlienScanner = Module["_getAlienScanner"] = function() {
- return (_getAlienScanner = Module["_getAlienScanner"] = Module["asm"]["Ja"]).apply(null, arguments);
+ return (_getAlienScanner = Module["_getAlienScanner"] = Module["asm"]["Ha"]).apply(null, arguments);
 };
 
 var _destroyAlienScanner = Module["_destroyAlienScanner"] = function() {
- return (_destroyAlienScanner = Module["_destroyAlienScanner"] = Module["asm"]["Ka"]).apply(null, arguments);
+ return (_destroyAlienScanner = Module["_destroyAlienScanner"] = Module["asm"]["Ia"]).apply(null, arguments);
 };
 
 var _detect_idcard_opt = Module["_detect_idcard_opt"] = function() {
- return (_detect_idcard_opt = Module["_detect_idcard_opt"] = Module["asm"]["La"]).apply(null, arguments);
+ return (_detect_idcard_opt = Module["_detect_idcard_opt"] = Module["asm"]["Ja"]).apply(null, arguments);
 };
 
 var _detect_idcard = Module["_detect_idcard"] = function() {
- return (_detect_idcard = Module["_detect_idcard"] = Module["asm"]["Ma"]).apply(null, arguments);
+ return (_detect_idcard = Module["_detect_idcard"] = Module["asm"]["Ka"]).apply(null, arguments);
 };
 
 var _scanFrame_idcard = Module["_scanFrame_idcard"] = function() {
- return (_scanFrame_idcard = Module["_scanFrame_idcard"] = Module["asm"]["Na"]).apply(null, arguments);
+ return (_scanFrame_idcard = Module["_scanFrame_idcard"] = Module["asm"]["La"]).apply(null, arguments);
 };
 
 var _getTruthTime = Module["_getTruthTime"] = function() {
- return (_getTruthTime = Module["_getTruthTime"] = Module["asm"]["Oa"]).apply(null, arguments);
+ return (_getTruthTime = Module["_getTruthTime"] = Module["asm"]["Ma"]).apply(null, arguments);
 };
 
 var _getMaskRect = Module["_getMaskRect"] = function() {
- return (_getMaskRect = Module["_getMaskRect"] = Module["asm"]["Pa"]).apply(null, arguments);
+ return (_getMaskRect = Module["_getMaskRect"] = Module["asm"]["Na"]).apply(null, arguments);
 };
 
 var _scanFrame_truth = Module["_scanFrame_truth"] = function() {
- return (_scanFrame_truth = Module["_scanFrame_truth"] = Module["asm"]["Qa"]).apply(null, arguments);
+ return (_scanFrame_truth = Module["_scanFrame_truth"] = Module["asm"]["Oa"]).apply(null, arguments);
 };
 
 var _getIDCardScanner = Module["_getIDCardScanner"] = function() {
- return (_getIDCardScanner = Module["_getIDCardScanner"] = Module["asm"]["Ra"]).apply(null, arguments);
+ return (_getIDCardScanner = Module["_getIDCardScanner"] = Module["asm"]["Pa"]).apply(null, arguments);
 };
 
 var _destroyIDCardScanner = Module["_destroyIDCardScanner"] = function() {
- return (_destroyIDCardScanner = Module["_destroyIDCardScanner"] = Module["asm"]["Sa"]).apply(null, arguments);
-};
-
-var _encodeJpgDetectedFrameImage = Module["_encodeJpgDetectedFrameImage"] = function() {
- return (_encodeJpgDetectedFrameImage = Module["_encodeJpgDetectedFrameImage"] = Module["asm"]["Ta"]).apply(null, arguments);
-};
-
-var _encryptJpgDetectedFrameImage = Module["_encryptJpgDetectedFrameImage"] = function() {
- return (_encryptJpgDetectedFrameImage = Module["_encryptJpgDetectedFrameImage"] = Module["asm"]["Ua"]).apply(null, arguments);
-};
-
-var _getEncryptedJpgSize = Module["_getEncryptedJpgSize"] = function() {
- return (_getEncryptedJpgSize = Module["_getEncryptedJpgSize"] = Module["asm"]["Va"]).apply(null, arguments);
-};
-
-var _getEncryptedJpgBuffer = Module["_getEncryptedJpgBuffer"] = function() {
- return (_getEncryptedJpgBuffer = Module["_getEncryptedJpgBuffer"] = Module["asm"]["Wa"]).apply(null, arguments);
-};
-
-var _destroyEncryptedJpg = Module["_destroyEncryptedJpg"] = function() {
- return (_destroyEncryptedJpg = Module["_destroyEncryptedJpg"] = Module["asm"]["Xa"]).apply(null, arguments);
-};
-
-var _destroyEncryptedResult = Module["_destroyEncryptedResult"] = function() {
- return (_destroyEncryptedResult = Module["_destroyEncryptedResult"] = Module["asm"]["Ya"]).apply(null, arguments);
-};
-
-var _encryptResult = Module["_encryptResult"] = function() {
- return (_encryptResult = Module["_encryptResult"] = Module["asm"]["Za"]).apply(null, arguments);
-};
-
-var _encodeJpgDetectedPhotoImage = Module["_encodeJpgDetectedPhotoImage"] = function() {
- return (_encodeJpgDetectedPhotoImage = Module["_encodeJpgDetectedPhotoImage"] = Module["asm"]["_a"]).apply(null, arguments);
-};
-
-var _getEncodedJpgSize = Module["_getEncodedJpgSize"] = function() {
- return (_getEncodedJpgSize = Module["_getEncodedJpgSize"] = Module["asm"]["$a"]).apply(null, arguments);
-};
-
-var _getEncodedJpgBuffer = Module["_getEncodedJpgBuffer"] = function() {
- return (_getEncodedJpgBuffer = Module["_getEncodedJpgBuffer"] = Module["asm"]["ab"]).apply(null, arguments);
+ return (_destroyIDCardScanner = Module["_destroyIDCardScanner"] = Module["asm"]["Qa"]).apply(null, arguments);
 };
 
 var _destroyEncodedJpg = Module["_destroyEncodedJpg"] = function() {
- return (_destroyEncodedJpg = Module["_destroyEncodedJpg"] = Module["asm"]["bb"]).apply(null, arguments);
+ return (_destroyEncodedJpg = Module["_destroyEncodedJpg"] = Module["asm"]["Ra"]).apply(null, arguments);
+};
+
+var _encodeJpgDetectedFrameImage = Module["_encodeJpgDetectedFrameImage"] = function() {
+ return (_encodeJpgDetectedFrameImage = Module["_encodeJpgDetectedFrameImage"] = Module["asm"]["Sa"]).apply(null, arguments);
+};
+
+var _encodeJpgDetectedFrameBase64 = Module["_encodeJpgDetectedFrameBase64"] = function() {
+ return (_encodeJpgDetectedFrameBase64 = Module["_encodeJpgDetectedFrameBase64"] = Module["asm"]["Ta"]).apply(null, arguments);
+};
+
+var _encodeJpgDetectedPhotoImage = Module["_encodeJpgDetectedPhotoImage"] = function() {
+ return (_encodeJpgDetectedPhotoImage = Module["_encodeJpgDetectedPhotoImage"] = Module["asm"]["Ua"]).apply(null, arguments);
+};
+
+var _encodeJpgDetectedPhotoBase64 = Module["_encodeJpgDetectedPhotoBase64"] = function() {
+ return (_encodeJpgDetectedPhotoBase64 = Module["_encodeJpgDetectedPhotoBase64"] = Module["asm"]["Va"]).apply(null, arguments);
+};
+
+var _destroyEncryptedJpg = Module["_destroyEncryptedJpg"] = function() {
+ return (_destroyEncryptedJpg = Module["_destroyEncryptedJpg"] = Module["asm"]["Wa"]).apply(null, arguments);
+};
+
+var _encryptJpgDetectedFrameImage = Module["_encryptJpgDetectedFrameImage"] = function() {
+ return (_encryptJpgDetectedFrameImage = Module["_encryptJpgDetectedFrameImage"] = Module["asm"]["Xa"]).apply(null, arguments);
+};
+
+var _encryptJpgDetectedFrameBase64 = Module["_encryptJpgDetectedFrameBase64"] = function() {
+ return (_encryptJpgDetectedFrameBase64 = Module["_encryptJpgDetectedFrameBase64"] = Module["asm"]["Ya"]).apply(null, arguments);
+};
+
+var _encryptBase64jpgDetectedFrameBase64 = Module["_encryptBase64jpgDetectedFrameBase64"] = function() {
+ return (_encryptBase64jpgDetectedFrameBase64 = Module["_encryptBase64jpgDetectedFrameBase64"] = Module["asm"]["Za"]).apply(null, arguments);
+};
+
+var _encryptJpgDetectedPhotoImage = Module["_encryptJpgDetectedPhotoImage"] = function() {
+ return (_encryptJpgDetectedPhotoImage = Module["_encryptJpgDetectedPhotoImage"] = Module["asm"]["_a"]).apply(null, arguments);
+};
+
+var _encryptJpgDetectedPhotoBase64 = Module["_encryptJpgDetectedPhotoBase64"] = function() {
+ return (_encryptJpgDetectedPhotoBase64 = Module["_encryptJpgDetectedPhotoBase64"] = Module["asm"]["$a"]).apply(null, arguments);
+};
+
+var _encryptBase64jpgDetectedPhotoBase64 = Module["_encryptBase64jpgDetectedPhotoBase64"] = function() {
+ return (_encryptBase64jpgDetectedPhotoBase64 = Module["_encryptBase64jpgDetectedPhotoBase64"] = Module["asm"]["ab"]).apply(null, arguments);
+};
+
+var _getEncryptedJpgSize = Module["_getEncryptedJpgSize"] = function() {
+ return (_getEncryptedJpgSize = Module["_getEncryptedJpgSize"] = Module["asm"]["bb"]).apply(null, arguments);
+};
+
+var _getEncryptedJpgBuffer = Module["_getEncryptedJpgBuffer"] = function() {
+ return (_getEncryptedJpgBuffer = Module["_getEncryptedJpgBuffer"] = Module["asm"]["cb"]).apply(null, arguments);
+};
+
+var _destroyEncryptedResult = Module["_destroyEncryptedResult"] = function() {
+ return (_destroyEncryptedResult = Module["_destroyEncryptedResult"] = Module["asm"]["db"]).apply(null, arguments);
+};
+
+var _encryptResult = Module["_encryptResult"] = function() {
+ return (_encryptResult = Module["_encryptResult"] = Module["asm"]["eb"]).apply(null, arguments);
+};
+
+var _getEncodedJpgSize = Module["_getEncodedJpgSize"] = function() {
+ return (_getEncodedJpgSize = Module["_getEncodedJpgSize"] = Module["asm"]["fb"]).apply(null, arguments);
+};
+
+var _getEncodedJpgBuffer = Module["_getEncodedJpgBuffer"] = function() {
+ return (_getEncodedJpgBuffer = Module["_getEncodedJpgBuffer"] = Module["asm"]["gb"]).apply(null, arguments);
 };
 
 var _setIgnoreComplete = Module["_setIgnoreComplete"] = function() {
- return (_setIgnoreComplete = Module["_setIgnoreComplete"] = Module["asm"]["cb"]).apply(null, arguments);
+ return (_setIgnoreComplete = Module["_setIgnoreComplete"] = Module["asm"]["hb"]).apply(null, arguments);
 };
 
 var _initDetectedFrameImage = Module["_initDetectedFrameImage"] = function() {
- return (_initDetectedFrameImage = Module["_initDetectedFrameImage"] = Module["asm"]["db"]).apply(null, arguments);
+ return (_initDetectedFrameImage = Module["_initDetectedFrameImage"] = Module["asm"]["ib"]).apply(null, arguments);
 };
 
 var _initDetectedPhotoImage = Module["_initDetectedPhotoImage"] = function() {
- return (_initDetectedPhotoImage = Module["_initDetectedPhotoImage"] = Module["asm"]["eb"]).apply(null, arguments);
+ return (_initDetectedPhotoImage = Module["_initDetectedPhotoImage"] = Module["asm"]["jb"]).apply(null, arguments);
 };
 
 var _getImageWidth = Module["_getImageWidth"] = function() {
- return (_getImageWidth = Module["_getImageWidth"] = Module["asm"]["fb"]).apply(null, arguments);
+ return (_getImageWidth = Module["_getImageWidth"] = Module["asm"]["kb"]).apply(null, arguments);
 };
 
 var _getImageHeight = Module["_getImageHeight"] = function() {
- return (_getImageHeight = Module["_getImageHeight"] = Module["asm"]["gb"]).apply(null, arguments);
+ return (_getImageHeight = Module["_getImageHeight"] = Module["asm"]["lb"]).apply(null, arguments);
 };
 
 var _getImage = Module["_getImage"] = function() {
- return (_getImage = Module["_getImage"] = Module["asm"]["hb"]).apply(null, arguments);
+ return (_getImage = Module["_getImage"] = Module["asm"]["mb"]).apply(null, arguments);
+};
+
+var _setPiiEncrypt = Module["_setPiiEncrypt"] = function() {
+ return (_setPiiEncrypt = Module["_setPiiEncrypt"] = Module["asm"]["nb"]).apply(null, arguments);
 };
 
 var ___errno_location = Module["___errno_location"] = function() {
- return (___errno_location = Module["___errno_location"] = Module["asm"]["ib"]).apply(null, arguments);
+ return (___errno_location = Module["___errno_location"] = Module["asm"]["ob"]).apply(null, arguments);
+};
+
+var _performanceChecker = Module["_performanceChecker"] = function() {
+ return (_performanceChecker = Module["_performanceChecker"] = Module["asm"]["pb"]).apply(null, arguments);
 };
 
 var ___getTypeName = Module["___getTypeName"] = function() {
- return (___getTypeName = Module["___getTypeName"] = Module["asm"]["jb"]).apply(null, arguments);
+ return (___getTypeName = Module["___getTypeName"] = Module["asm"]["qb"]).apply(null, arguments);
 };
 
 var __embind_initialize_bindings = Module["__embind_initialize_bindings"] = function() {
- return (__embind_initialize_bindings = Module["__embind_initialize_bindings"] = Module["asm"]["kb"]).apply(null, arguments);
+ return (__embind_initialize_bindings = Module["__embind_initialize_bindings"] = Module["asm"]["rb"]).apply(null, arguments);
 };
 
 var _setThrew = Module["_setThrew"] = function() {
- return (_setThrew = Module["_setThrew"] = Module["asm"]["lb"]).apply(null, arguments);
+ return (_setThrew = Module["_setThrew"] = Module["asm"]["sb"]).apply(null, arguments);
 };
 
 var stackSave = Module["stackSave"] = function() {
- return (stackSave = Module["stackSave"] = Module["asm"]["mb"]).apply(null, arguments);
+ return (stackSave = Module["stackSave"] = Module["asm"]["tb"]).apply(null, arguments);
 };
 
 var stackRestore = Module["stackRestore"] = function() {
- return (stackRestore = Module["stackRestore"] = Module["asm"]["nb"]).apply(null, arguments);
+ return (stackRestore = Module["stackRestore"] = Module["asm"]["ub"]).apply(null, arguments);
 };
 
 var stackAlloc = Module["stackAlloc"] = function() {
- return (stackAlloc = Module["stackAlloc"] = Module["asm"]["ob"]).apply(null, arguments);
+ return (stackAlloc = Module["stackAlloc"] = Module["asm"]["vb"]).apply(null, arguments);
 };
 
 var ___cxa_can_catch = Module["___cxa_can_catch"] = function() {
- return (___cxa_can_catch = Module["___cxa_can_catch"] = Module["asm"]["pb"]).apply(null, arguments);
+ return (___cxa_can_catch = Module["___cxa_can_catch"] = Module["asm"]["wb"]).apply(null, arguments);
 };
 
 var ___cxa_is_pointer_type = Module["___cxa_is_pointer_type"] = function() {
- return (___cxa_is_pointer_type = Module["___cxa_is_pointer_type"] = Module["asm"]["qb"]).apply(null, arguments);
-};
-
-var dynCall_iiiiij = Module["dynCall_iiiiij"] = function() {
- return (dynCall_iiiiij = Module["dynCall_iiiiij"] = Module["asm"]["rb"]).apply(null, arguments);
+ return (___cxa_is_pointer_type = Module["___cxa_is_pointer_type"] = Module["asm"]["xb"]).apply(null, arguments);
 };
 
 var dynCall_jiiii = Module["dynCall_jiiii"] = function() {
- return (dynCall_jiiii = Module["dynCall_jiiii"] = Module["asm"]["sb"]).apply(null, arguments);
+ return (dynCall_jiiii = Module["dynCall_jiiii"] = Module["asm"]["yb"]).apply(null, arguments);
 };
 
 function invoke_vi(index, a1) {
@@ -5386,17 +5402,6 @@ function invoke_viid(index, a1, a2, a3) {
  }
 }
 
-function invoke_iiiiij(index, a1, a2, a3, a4, a5, a6) {
- var sp = stackSave();
- try {
-  return dynCall_iiiiij(index, a1, a2, a3, a4, a5, a6);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0) throw e;
-  _setThrew(1, 0);
- }
-}
-
 function invoke_jiiii(index, a1, a2, a3, a4) {
  var sp = stackSave();
  try {
@@ -5501,7 +5506,11 @@ destroyCreditScanner = Module.cwrap("destroyCreditScanner", "", [ "number" ]);
 
 encodeJpgDetectedFrameImage = Module.cwrap("encodeJpgDetectedFrameImage", "number", [ "number", "number", "number" ]);
 
+encodeJpgDetectedFrameBase64 = Module.cwrap("encodeJpgDetectedFrameBase64", "number", [ "number", "number", "number" ]);
+
 encodeJpgDetectedPhotoImage = Module.cwrap("encodeJpgDetectedPhotoImage", "number", [ "number" ]);
+
+encodeJpgDetectedPhotoBase64 = Module.cwrap("encodeJpgDetectedPhotoBase64", "number", [ "number" ]);
 
 getEncodedJpgSize = Module.cwrap("getEncodedJpgSize", "number", [ "" ]);
 
@@ -5529,6 +5538,16 @@ getTruthTimeResult = Module.cwrap("getTruthTime", "string", [ "number" ]);
 
 encryptJpgDetectedFrameImage = Module.cwrap("encryptJpgDetectedFrameImage", "number", [ "number", "number", "number" ]);
 
+encryptJpgDetectedFrameBase64 = Module.cwrap("encryptJpgDetectedFrameBase64", "number", [ "number", "number", "number" ]);
+
+encryptBase64jpgDetectedFrameBase64 = Module.cwrap("encryptBase64jpgDetectedFrameBase64", "number", [ "number", "number", "number" ]);
+
+encryptJpgDetectedPhotoImage = Module.cwrap("encryptJpgDetectedPhotoImage", "number", [ "number" ]);
+
+encryptJpgDetectedPhotoBase64 = Module.cwrap("encryptJpgDetectedPhotoBase64", "number", [ "number" ]);
+
+encryptBase64jpgDetectedPhotoBase64 = Module.cwrap("encryptBase64jpgDetectedPhotoBase64", "number", [ "number" ]);
+
 getEncryptedJpgSize = Module.cwrap("getEncryptedJpgSize", "number", [ "" ]);
 
 getEncryptedJpgBuffer = Module.cwrap("getEncryptedJpgBuffer", "number", [ "" ]);
@@ -5542,3 +5561,7 @@ encryptResult = Module.cwrap("encryptResult", "string", [ "number" ]);
 destroyEncryptedResult = Module.cwrap("destroyEncryptedResult", "", [ "" ]);
 
 getMaskRect = Module.cwrap("getMaskRect", "string", [ "number", "number" ]);
+
+setPiiEncrypt = Module.cwrap("setPiiEncrypt", "", [ "bool" ]);
+
+performanceChecker = Module.cwrap("performanceChecker", "number", [ "" ]);

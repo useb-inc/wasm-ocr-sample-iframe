@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <div data-useb-ocr="ocr" style="display: none">
+    <div data-useb-ocr="ocr" style="width: 100%; height: 100%">
       <div data-useb-ocr="topUI">
         <!-- TOP UI는 flex-direction: column-reverse 인점 고려하여 순서 배치 -->
         <div id="top-ui-bg" style="width: 100%">
@@ -44,6 +44,11 @@
         <span id="preview-ui-loading"></span>
         <span id="preview-ui-text-msg" class="text-info text-color-black"></span>
       </div>
+
+      <!-- <div data-useb-ocr="preloadingUI" class="preloading-ui">
+        <span>Preloading UI</span>
+        <span id="preloading-ui-text-msg" class="text-info">Preloading UI 커스텀 메시지</span>
+      </div> -->
     </div>
 
     <script type="module" src="./useb-ocr-wasm-sdk.js" async></script>
