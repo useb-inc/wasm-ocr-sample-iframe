@@ -18,53 +18,71 @@ body {
 
 .button-section {
   position: fixed;
+  top: 10px;
+  right: 10px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 10px;
-  padding: 10px;
-  right: 10px;
-  top: 10px;
+  padding: 12px;
   width: 100%;
   max-width: 200px;
   height: auto;
-  border: 5px solid #eee;
-  border-radius: 5px;
-  background: #eee;
-  flex-direction: column;
-  margin: 0 auto;
-  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+  background-color: #eee;
+  box-shadow: 0px 0px 4px 0px #555;
+}
+
+.button-section fieldset input {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.button-section #btnPreloadingStart {
+  margin: 0;
+  padding: 4px 12px;
+  font-size: 14px;
+  line-height: 24px;
+  cursor: pointer;
 }
 
 .type-section {
   position: fixed;
+  top: 10px;
+  left: 10px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 10px;
-  padding: 10px;
-  left: 10px;
-  top: 10px;
+  padding: 16px;
   width: 100%;
   max-width: 500px;
   height: auto;
-  border: 5px solid #eee;
-  border-radius: 5px;
-  background: #eee;
-  flex-direction: column;
-  margin: 0 auto;
-  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+  background-color: #eee;
+  transition: max-height 0.3s ease-in-out;
+  box-shadow: 0px 0px 4px 0px #555;
+}
+
+.type-section.collapsed {
+  gap: 0;
+  width: 158px;
 }
 
 #type-toggle {
   position: fixed;
-  padding: 10px;
   left: 10px;
   top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px;
   width: 95%;
   max-width: 500px;
   height: auto;
-  border: 5px solid #eee;
-  border-radius: 5px;
-  background: #eee;
+  border-radius: 8px;
+  background-color: #eee;
 }
 
 .type-button {
@@ -72,6 +90,49 @@ body {
   justify-content: center;
   gap: 10px;
   padding-top: 40px;
+}
+
+@media screen and (max-width: 479px) {
+  .type-section {
+    margin: 0;
+    border: 0;
+    width: 240px;
+    padding: 12px;
+  }
+
+  #type-toggle {
+    position: initial;
+    width: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+  }
+
+  .type-button {
+    justify-content: initial;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    max-height: 358px;
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  .type-button button {
+    margin: 0;
+    padding: 4px 12px;
+    font-size: 14px;
+    line-height: 24px;
+    cursor: pointer;
+  }
+
+  .button-section {
+    top: 70px;
+  }
+}
+
+.collapsed .type-button {
+  max-height: 0;
+  overflow: hidden;
 }
 
 .scan-section {
@@ -200,9 +261,9 @@ button.active {
 }
 
 .collapsed {
-  height: 20px;
+  max-height: 20px;
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
+  transition: max-height 0.3s ease-in-out;
 }
 
 /** 11 **/

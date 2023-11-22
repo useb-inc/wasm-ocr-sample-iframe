@@ -148,6 +148,12 @@ const postMessageListener = (event) => {
       preloaded = true;
       setPreloadingStatus('End');
       hideLoadingUI();
+    } else if (json.result === 'error') {
+      console.debug('wasm preloaded callback ! need remove loading ui');
+      updateOCRStatus(`OCR중 에러가 발생되었습니다 (${json.error_message})`);
+      setPreloadingStatus('');
+      hideLoadingUI();
+      endOCR();
     } else {
       // invalid result
       endOCR();

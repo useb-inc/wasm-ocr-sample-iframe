@@ -40,9 +40,14 @@ const messageHandler = async (e) => {
       }
 
       if (data.preloading) {
-        ocr.init(data.settings);
-        await ocr.preloading(onPreloaded);
-        return;
+        try {
+          ocr.init(data.settings);
+          await ocr.preloading(onPreloaded);
+          return;
+        } catch (err) {
+          console.debug('[WARNING] preloading error');
+          throw new Error(`preloading error`);
+        }
       }
 
       switch (data.ocrType) {
@@ -70,6 +75,7 @@ const messageHandler = async (e) => {
       console.error('[usebwasmocr] error code', e.errorCode);
       console.error('[usebwasmocr] error message', e.message);
     }
+    sendErrorResult('error', e.message);
   }
 };
 
@@ -78,6 +84,13 @@ window.addEventListener('message', messageHandler);
 //android
 document.addEventListener('message', messageHandler);
 window.usebwasmocrreceive = messageHandler;
+
+function sendErrorResult(result, errorMessage) {
+  sendResult({
+    result: 'error',
+    error_message: errorMessage,
+  });
+}
 
 function sendResult(result) {
   console.debug('sendResult', result);
