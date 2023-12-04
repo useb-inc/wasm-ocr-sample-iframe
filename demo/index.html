@@ -234,6 +234,13 @@
               <option value="compatibility">호환성 우선</option>
             </select>
           </div>
+          <div>
+            <label for="camera-resource-request-retry-limit">카메라 리소스요청 재시도 횟수</label>
+            <input type="number" id="camera-resource-request-retry-limit" value="100" step="1" min="-1" />
+            <br />
+            <label for="camera-resource-request-retry-interval">카메라 리소스요청 재시도 간격(ms)</label>
+            <input type="number" id="camera-resource-request-retry-interval" value="1000" />
+          </div>
         </fieldset>
 
         <fieldset>
@@ -314,11 +321,11 @@
             <input type="text" id="border-style" name="border-style" value="solid" />
           </div>
           <div>
-            <label for="color-not-ready">스캔준비　　</label>
+            <label for="color-not-ready">스캔준비</label>
             <input type="color" id="color-not-ready" name="color-not-ready" value="#000000" />
           </div>
           <div>
-            <label for="color-ready">스캔대기　　</label>
+            <label for="color-ready">스캔대기</label>
             <input type="color" id="color-ready" name="color-ready" value="#b8b8b8" />
           </div>
           <div>
@@ -330,15 +337,15 @@
             <input type="color" id="color-detect-failed" name="color-detect-failed" value="#725b67" />
           </div>
           <div>
-            <label for="color-ocr-recognized">사본판별중　</label>
+            <label for="color-ocr-recognized">사본판별중</label>
             <input type="color" id="color-ocr-recognized" name="color-ocr-recognized" value="#003ac2" />
           </div>
           <div>
-            <label for="color-success">OCR완료　　</label>
+            <label for="color-success">OCR완료</label>
             <input type="color" id="color-success" name="color-success" value="#14b00e" />
           </div>
           <div>
-            <label for="color-failed">OCR실패　　</label>
+            <label for="color-failed">OCR실패</label>
             <input type="color" id="color-failed" name="color-failed" value="#FA113D" />
           </div>
         </fieldset>
@@ -350,17 +357,17 @@
           </div>
           <div id="mask-frame-color-default">
             <div>
-              <label for="mask-frame-color-base-color">기본색상　　</label>
+              <label for="mask-frame-color-base-color">기본색상</label>
               <input type="color" id="mask-frame-color-base-color" name="mask-frame-color-base-color" value="#333333" />
             </div>
           </div>
           <div id="mask-frame-color-custom">
             <div>
-              <label for="mask-frame-color-not-ready">스캔준비　　</label>
+              <label for="mask-frame-color-not-ready">스캔준비</label>
               <input type="color" id="mask-frame-color-not-ready" name="mask-frame-color-not-ready" value="#333333" />
             </div>
             <div>
-              <label for="mask-frame-color-ready">스캔대기　　</label>
+              <label for="mask-frame-color-ready">스캔대기</label>
               <input type="color" id="mask-frame-color-ready" name="mask-frame-color-ready" value="#333333" />
             </div>
             <div>
@@ -382,7 +389,7 @@
               />
             </div>
             <div>
-              <label for="mask-frame-color-ocr-recognized">사본판별중　</label>
+              <label for="mask-frame-color-ocr-recognized">사본판별중</label>
               <input
                 type="color"
                 id="mask-frame-color-ocr-recognized"
@@ -391,11 +398,11 @@
               />
             </div>
             <div>
-              <label for="mask-frame-color-success">OCR완료　　</label>
+              <label for="mask-frame-color-success">OCR완료</label>
               <input type="color" id="mask-frame-color-success" name="mask-frame-color-success" value="#111111" />
             </div>
             <div>
-              <label for="mask-frame-color-failed">OCR실패　　</label>
+              <label for="mask-frame-color-failed">OCR실패</label>
               <input type="color" id="mask-frame-color-failed" name="mask-frame-color-failed" value="#111111" />
             </div>
           </div>

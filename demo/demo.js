@@ -71,7 +71,7 @@ const onClickRestartCallback = () => {
   document.getElementById('ocr_result').innerHTML = '';
   document.getElementById('ocr_status').innerHTML = '';
 
-  ocrIframe.src = '';
+  hideOCRIframeUI();
   ui_simulator.resetButton();
 
   startOCR();
