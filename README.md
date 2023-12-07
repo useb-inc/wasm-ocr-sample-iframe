@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-v1.13.5-blue)
+![Version](https://img.shields.io/badge/version-v1.13.6-blue)
 
 # [useB.WASM] (고객사) WEB ↔ (ocr.html) iframe  연동 가이드
 
