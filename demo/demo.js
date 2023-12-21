@@ -80,9 +80,16 @@ const onClickRestartCallback = () => {
 // Preloading Start Event Callback
 const onPreloadStartCallback = () => {
   ocrIframe.onload = function () {
+    const force_wasm_reload = document.querySelector('#force_wasm_reload').checked;
+    const force_wasm_reload_flag = force_wasm_reload ? document.querySelector('#force_wasm_reload_flag').value : '';
+
     const params = {
       ocrType: 'idcard',
-      settings: { ...ocrDefaultSettings },
+      settings: {
+        ...ocrDefaultSettings,
+        force_wasm_reload,
+        force_wasm_reload_flag,
+      },
       preloading: true,
     };
 
