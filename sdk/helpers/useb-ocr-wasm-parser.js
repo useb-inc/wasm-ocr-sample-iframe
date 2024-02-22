@@ -25,23 +25,24 @@ class OcrResultParser {
       case 'driver':
       case 'idcard-ssa':
       case 'driver-ssa':
-        this.__parseIdDriver(ocrResult, legacyFormat);
+        this.__parseIdDriver(ocrResult.ocr_result, legacyFormat);
         break;
       case 'passport':
       case 'passport-ssa':
       case 'foreign-passport':
       case 'foreign-passport-ssa':
-        this.__parsePassport(ocrResult, legacyFormat);
+        this.__parsePassport(ocrResult.ocr_result, legacyFormat);
         break;
       case 'alien':
       case 'alien-ssa':
-        this.__parseAlien(ocrResult, legacyFormat);
+        this.__parseAlien(ocrResult.ocr_result, legacyFormat);
         break;
       case 'alien-back':
-        legacyFormat = _objectSpread({}, ocrResult);
+        legacyFormat = _objectSpread({}, ocrResult.ocr_result);
         break;
       case 'credit':
-        [legacyFormat, ocrResult] = this.__parseCredit(ocrResult, legacyFormat);
+        [legacyFormat, newFormat] = this.__parseCredit(ocrResult.ocr_result, legacyFormat);
+        ocrResult.ocr_result = newFormat;
         break;
       default:
         throw new Error('Unsupported OCR type');
@@ -54,21 +55,60 @@ class OcrResultParser {
 
   // prettier-ignore
   __parseSsaResult(ssaRetryType, ssaRetryPivot, ssaResult, ssaRetryCount, ssaResultList, ocrResult, legacyFormat) {
-    var ssaResultObj = objectUtil.csvToObject(ssaResult);
-    ocrResult.fd_confidence = ssaResultObj.conf;
-    ocrResult.id_truth = ssaResultObj.truth;
-    ocrResult.id_truth_retry_count = ssaRetryCount;
+    function __parseSSARawData(ssaRawData) {
+      var _ssaRawData$ssa_resul, _ssaRawData$ssa_resul2;
+      // const result = {
+      //   fd_confidence: ssaRawData?.ssa_result?.fd_confidence || ssaRawData?.fd_confidence,
+      //   id_truth: ssaRawData?.ssa_result?.id_truth || ssaRawData?.id_truth
+      // }
+      // TODO : PII 일때 truth 로 오는 오류 id_truth 고쳐진 뒤 수정 필요.
+      var result = {
+        fd_confidence: (ssaRawData === null || ssaRawData === void 0 ? void 0 : (_ssaRawData$ssa_resul = ssaRawData.ssa_result) === null || _ssaRawData$ssa_resul === void 0 ? void 0 : _ssaRawData$ssa_resul.fd_confidence) || (ssaRawData === null || ssaRawData === void 0 ? void 0 : ssaRawData.fd_confidence) || (ssaRawData === null || ssaRawData === void 0 ? void 0 : ssaRawData.conf),
+        id_truth: (ssaRawData === null || ssaRawData === void 0 ? void 0 : (_ssaRawData$ssa_resul2 = ssaRawData.ssa_result) === null || _ssaRawData$ssa_resul2 === void 0 ? void 0 : _ssaRawData$ssa_resul2.id_truth) || (ssaRawData === null || ssaRawData === void 0 ? void 0 : ssaRawData.id_truth) || (ssaRawData === null || ssaRawData === void 0 ? void 0 : ssaRawData.truth)
+      };
+      if (ssaRawData !== null && ssaRawData !== void 0 && ssaRawData.encrypted) {
+        result.encrypted = ssaRawData === null || ssaRawData === void 0 ? void 0 : ssaRawData.encrypted;
+      }
+      if (ssaRawData !== null && ssaRawData !== void 0 && ssaRawData.encrypted_overall) {
+        result.encrypted_overall = ssaRawData === null || ssaRawData === void 0 ? void 0 : ssaRawData.encrypted_overall;
+      }
+      return result;
+    }
+
+    // SSA 관련 처리
+    var ssaResultObj = objectUtil.stringToJson(ssaResult);
+    var parseSSAResultObj = __parseSSARawData(ssaResultObj);
+
+    // 하위호환성을 위해 평문일때는 ocr_result 내부에도 넣어줌
+    ocrResult.ocr_result.fd_confidence = parseSSAResultObj.fd_confidence;
+    ocrResult.ocr_result.id_truth = parseSSAResultObj.id_truth;
+
+    // ssa_result 값 추가
+    ocrResult.ssa_result = {};
+    ocrResult.ssa_result.fd_confidence = parseSSAResultObj.fd_confidence;
+    ocrResult.ssa_result.id_truth = parseSSAResultObj.id_truth;
+    if (parseSSAResultObj.encrypted) {
+      ocrResult.encrypted.ssa_result = parseSSAResultObj.encrypted;
+      ocrResult.encrypted.ocr_result.fd_confidence = parseSSAResultObj.encrypted.fd_confidence;
+      ocrResult.encrypted.ocr_result.id_truth = parseSSAResultObj.encrypted.id_truth;
+    } else if (parseSSAResultObj.encrypted_overall) {
+      ocrResult.ssa_encrypted_overall = parseSSAResultObj.encrypted_overall;
+    } else {
+      // value encrypt 또는 overall encrypt 일 때는 id_truth_retry_count 전달하지 않음
+      ocrResult.ocr_result.id_truth_retry_count = ssaRetryCount;
+      ocrResult.ssa_result.id_truth_retry_count = ssaRetryCount;
+    }
+
+    // SSA Retry 관련 처리
     if (ssaResultList && ssaRetryCount > 0) {
       var truthResultDetail = [];
       for (var item of ssaResultList) {
-        var tmpObj = objectUtil.csvToObject(item);
-        var truthResult = {
-          id_truth: tmpObj.truth,
-          fd_confidence: tmpObj.conf
-        }; // prettier-ignore
+        var tmpObj = objectUtil.stringToJson(item);
+        var truthResult = __parseSSARawData(tmpObj); // prettier-ignore
         truthResultDetail.push(truthResult);
       }
-      ocrResult.id_truth_result_detail = truthResultDetail;
+      ocrResult.ocr_result.id_truth_result_detail = truthResultDetail;
+      ocrResult.ssa_result.id_truth_result_detail = truthResultDetail;
       if (ssaRetryType === 'ENSEMBLE') {
         var average = list => {
           var sum = list.map(el => Math.abs(ssaRetryPivot - el.fd_confidence)).reduce((acc, cur) => cur + acc, 0);
@@ -77,7 +117,7 @@ class OcrResultParser {
         };
         var fakeList = [];
         var realList = [];
-        ocrResult.id_truth_result_detail.forEach(el => {
+        ocrResult.ocr_result.id_truth_result_detail.forEach(el => {
           if (el.id_truth === "FAKE") fakeList.push(el);
           if (el.id_truth === "REAL") realList.push(el);
         });
@@ -88,9 +128,15 @@ class OcrResultParser {
         var r_abs = Math.abs(ssaRetryPivot - r_avg);
 
         // real 에 더 근접함
-        if (r_abs - f_abs < 0) ocrResult.id_truth = "REAL";
+        if (r_abs - f_abs < 0) {
+          ocrResult.ocr_result.id_truth = "REAL";
+          ocrResult.ssa_result.id_truth = "REAL";
+        }
         // fake 에 더 근접하거나 같다면 FAKE
-        if (f_abs - r_abs < 0 || r_abs - f_abs === 0) ocrResult.id_truth = "FAKE";
+        if (f_abs - r_abs < 0 || r_abs - f_abs === 0) {
+          ocrResult.ocr_result.id_truth = "FAKE";
+          ocrResult.ssa_result.id_truth = "FAKE";
+        }
       }
     }
     var keyMapSsaResult = {
@@ -99,7 +145,7 @@ class OcrResultParser {
       truthRetryCount: 'id_truth_retry_count',
       truthResultDetail: 'id_truth_result_detail'
     };
-    this.__convertLegacyFormat(ocrResult, legacyFormat, keyMapSsaResult);
+    this.__convertLegacyFormat(ocrResult.ocr_result, legacyFormat, keyMapSsaResult);
     if (ssaResultList && ssaRetryCount > 0) {
       var tmpResultDetail = [];
       for (var idx in legacyFormat.truthResultDetail) {
@@ -114,42 +160,41 @@ class OcrResultParser {
       legacyFormat.truthResultDetail = tmpResultDetail;
     }
   }
-  __csvToObject(str) {
-    var pairs = str.split(';');
-    var obj = {};
-    for (var i = 0; i < pairs.length; i++) {
-      var pair = pairs[i].split(':');
-      if (pair.length === 2) obj[pair[0]] = pair[1];
-    }
-    return obj;
-  }
   __convertLegacyFormat(obj, legacyFormat, map) {
     for (var key in map) {
       legacyFormat[key] = typeof obj[map[key]] === 'object' ? _objectSpread({}, obj[map[key]]) : obj[map[key]];
     }
     return legacyFormat;
   }
-  __getObjectValueWithDot(obj, key) {
-    if (obj) {
-      if (key.split('.').length === 1) {
-        return obj[key];
-      }
-      var tmpKey = key.split('.')[0];
-      var tmpKey2 = key.slice(tmpKey.length + 1, key.length);
-      return this.__getObjectValueWithDot(obj[tmpKey], tmpKey2);
-    }
-  }
-  __parseIdDriver(ocrResult, legacyFormat) {
+  __reformatJumin(ocrResult) {
     // 주민번호 형식 리턴값 형식 변경
-    // birth 추가
     if (ocrResult.masked_jumin) {
       // 암호화 된 경우 대응
-      ocrResult.birth = ocrResult.masked_jumin.slice(0, 6);
       if (ocrResult.masked_jumin !== undefined && ocrResult.masked_jumin.length === 13) {
         ocrResult.masked_jumin = ocrResult.masked_jumin.slice(0, 6) + '-' + ocrResult.masked_jumin.slice(6, 13);
       } else {
         ocrResult.masked_jumin = '';
       }
+    } else {
+      if (ocrResult.jumin !== undefined && ocrResult.jumin.length === 13) {
+        ocrResult.jumin = ocrResult.jumin.slice(0, 6) + '-' + ocrResult.jumin.slice(6, 13);
+      } else {
+        ocrResult.jumin = '';
+      }
+    }
+  }
+  __addBirth(ocrResult) {
+    if (ocrResult.masked_jumin) {
+      // 암호화 된 경우 대응
+      ocrResult.birth = ocrResult.masked_jumin.slice(0, 6);
+    } else {
+      // 일반(평문) 시나리오
+      ocrResult.birth = ocrResult.jumin.slice(0, 6);
+    }
+  }
+  __addIsOldFormatDriverNumber(ocrResult) {
+    if (ocrResult.masked_jumin) {
+      // 암호화 된 경우 대응
       if (ocrResult.result_scan_type === '2') {
         // 구형 면허증 포멧 판정 (ex: 제주 13-001234-12 -> true)
         var regex = /[가-힣]/g;
@@ -163,12 +208,6 @@ class OcrResultParser {
       }
     } else {
       // 일반(평문) 시나리오
-      ocrResult.birth = ocrResult.jumin.slice(0, 6);
-      if (ocrResult.jumin !== undefined && ocrResult.jumin.length === 13) {
-        ocrResult.jumin = ocrResult.jumin.slice(0, 6) + '-' + ocrResult.jumin.slice(6, 13);
-      } else {
-        ocrResult.jumin = '';
-      }
       if (ocrResult.result_scan_type === '2') {
         // 구형 면허증 포멧 판정 (ex: 제주 13-001234-12 -> true)
         var _regex = /[가-힣]/g;
@@ -179,6 +218,12 @@ class OcrResultParser {
         }
       }
     }
+  }
+  __parseIdDriver(ocrResult, legacyFormat) {
+    // 주민번호 형식 리턴값 형식 변경
+    this.__reformatJumin(ocrResult);
+    this.__addBirth(ocrResult);
+    this.__addIsOldFormatDriverNumber(ocrResult);
     var keyMapIdDriver = {
       Completed: 'complete',
       type: 'result_scan_type',
@@ -200,12 +245,7 @@ class OcrResultParser {
     this.__convertLegacyFormat(ocrResult, legacyFormat, keyMapIdDriver);
   }
   __parsePassport(ocrResult, legacyFormat) {
-    // 주민번호 형식 리턴값 형식 변경
-    if (ocrResult.jumin !== undefined && ocrResult.jumin.length === 13) {
-      ocrResult.jumin = ocrResult.jumin.slice(0, 6) + '-' + ocrResult.jumin.slice(6, 13);
-    } else {
-      ocrResult.jumin = '';
-    }
+    this.__reformatJumin(ocrResult);
     var keyMapPassport = {
       Completed: 'complete',
       name: 'name',
@@ -234,12 +274,7 @@ class OcrResultParser {
     this.__convertLegacyFormat(ocrResult, legacyFormat, keyMapPassport);
   }
   __parseAlien(ocrResult, legacyFormat) {
-    // 주민번호 형식 리턴값 형식 변경
-    if (ocrResult.jumin !== undefined && ocrResult.jumin.length === 13) {
-      ocrResult.jumin = ocrResult.jumin.slice(0, 6) + '-' + ocrResult.jumin.slice(6, 13);
-    } else {
-      ocrResult.jumin = '';
-    }
+    this.__reformatJumin(ocrResult);
     var keyMapAlien = {
       Completed: 'complete',
       name: 'name',
