@@ -56,3 +56,19 @@ function syntaxHighlight(json) {
 //     });
 //     return await await res.json();
 // }
+
+/**
+ *
+ * @param {string} str
+ * @param {number} maxLength
+ * @returns string
+ */
+function stringShortener(str, maxLength) {
+  var length = maxLength !== null && maxLength !== void 0 ? maxLength : 50;
+  try {
+    return str.substring(0, length) + '...생략...';
+  } catch (e) {
+    void 0;
+    return str;
+  }
+}
