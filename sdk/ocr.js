@@ -2751,8 +2751,8 @@ class UseBOCR {
         source = source.replace('var asm = createWasm();', 'console.log("create wasm and data - start")\n' + 'await (async function() {\n' + '  return new Promise(function(resolve) {\n' + '    var isCreatedWasm = false;\n' + '    var isCreatedData = false;\n' + '    createWasm().then(() => {\n' + '      isCreatedWasm = true;\n' + '      if (isCreatedData) { resolve(); }\n' + '    });\n' + '    createModelData().then(() => {\n' + '      isCreatedData = true;\n' + '      if (isCreatedWasm) { resolve(); }\n' + '    })\n' + '  });\n' + '})();\n' + 'console.log("create wasm and data - end")');
         return source;
       });
-      src = "\n    (async function() {\n      ".concat(src, "\n      Module.lengthBytesUTF8 = lengthBytesUTF8\n      Module.stringToUTF8 = stringToUTF8\n      return Module\n    })()\n        ");
-      _this22.__OCREngine = yield eval(src);
+      src = "\n    return (async function() {\n      ".concat(src, "\n      Module.lengthBytesUTF8 = lengthBytesUTF8\n      Module.stringToUTF8 = stringToUTF8\n      return Module\n    })()\n        ");
+      _this22.__OCREngine = yield new Function(src)();
       _this22.__OCREngine.onRuntimeInitialized = /*#__PURE__*/function () {
         var _ref9 = _asyncToGenerator(function* (_) {
           void 0;
@@ -3541,6 +3541,7 @@ class UseBOCR {
     this.__destroyBuffer();
     this.__destroyPrevImage();
     this.__destroyStringOnWasmHeap();
+    this.__detectedCardQueue = [];
   }
   restoreInitialize() {
     this.__initialized = false;
