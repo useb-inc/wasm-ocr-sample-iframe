@@ -336,6 +336,8 @@ class UISimulator {
       });
       document.getElementById('use-auto-switch').addEventListener('change', e => {
         this.__settings.useAutoSwitchToServerMode = e.target.checked;
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        document.querySelector('#server-ocr-type-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
         this.__saveSettingsHandler();
       });
       document.getElementById('switch-to-server-threshold').addEventListener('change', e => {
@@ -344,6 +346,43 @@ class UISimulator {
       });
       document.getElementById('use-manual-switch').addEventListener('change', e => {
         this.__settings.useManualSwitchToServerMode = e.target.checked;
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        document.querySelector('#server-ocr-type-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#server-ocr-type').addEventListener('change', e => {
+        this.__settings.ocrServerBaseUrl = '';
+        document.querySelector('#ocr-server-base-url-ui').style.display = e.target.value === 'default' ? 'none' : 'block';
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-base-url').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerBaseUrl = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-url-idcard').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlIdcard = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-url-driver').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlDriver = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-url-passport').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlPassport = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-url-foreign-passport').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlForeignPassport = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-url-alien').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlAlien = e.target.value;
         this.__saveSettingsHandler();
       });
       var setEncryptOptionUI = (showKeylistUI, setKeylist) => {

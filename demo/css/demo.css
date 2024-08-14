@@ -476,6 +476,10 @@ input:checked + .slider:before {
   font-weight: normal;
 }
 
+#ocr-server-base-url-ui input:not(:first-of-type) {
+  width: 30%;
+}
+
 .custom--header {
   background: no-repeat url('../img/bg_graphic.svg');
   background-size: cover;

@@ -44,7 +44,7 @@ const onClickStartCallback = (type, settings) => {
         ...ocrDefaultSettings,
         ...settings,
         authServerInfo: AUTH_SERVER_INFO,
-        ocrServerBaseUrl: OCR_SERVER_BASE_URL,
+        ocrServerBaseUrl: settings.ocrServerBaseUrl || OCR_SERVER_BASE_URL,
       },
     };
 
