@@ -338,6 +338,7 @@ class UISimulator {
         this.__settings.useAutoSwitchToServerMode = e.target.checked;
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         document.querySelector('#server-ocr-type-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
+        document.querySelector('#server-ocr-result-key-list-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
         this.__saveSettingsHandler();
       });
       document.getElementById('switch-to-server-threshold').addEventListener('change', e => {
@@ -348,6 +349,7 @@ class UISimulator {
         this.__settings.useManualSwitchToServerMode = e.target.checked;
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         document.querySelector('#server-ocr-type-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
+        document.querySelector('#server-ocr-result-key-list-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
         this.__saveSettingsHandler();
       });
       document.querySelector('#server-ocr-type').addEventListener('change', e => {
@@ -383,6 +385,11 @@ class UISimulator {
       document.querySelector('#ocr-server-url-alien').addEventListener('change', e => {
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlAlien = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#server-ocr-result-key-list').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerParseKeyList = e.target.value;
         this.__saveSettingsHandler();
       });
       var setEncryptOptionUI = (showKeylistUI, setKeylist) => {
