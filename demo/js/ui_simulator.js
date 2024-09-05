@@ -220,7 +220,51 @@ class UISimulator {
     // { title: '신분증 사본탐지 신뢰도', value: 'fd_confidence' },
     // { title: '신분증 사본탐지 결과 (REAL : 실물, FAKE : 가짜)', value: 'id_truth' },
     ]);
+    _defineProperty(this, "__ocrResultVeteranKeys", [{
+      title: '이름',
+      value: 'name'
+    }, {
+      title: '주민등록번호',
+      value: 'jumin'
+    }, {
+      title: '발행일자',
+      value: 'issued_date'
+    }, {
+      title: '마스킹 보훈번호',
+      value: 'masked_veterans_number'
+    }, {
+      title: '컬러 검출 점수',
+      value: 'color_point'
+    }, {
+      title: '얼굴 검출 점수',
+      value: 'found_face'
+    }, {
+      title: '눈 검출 점수',
+      value: 'found_eye'
+    }, {
+      title: '빛 반사율',
+      value: 'specular_ratio'
+    }, {
+      title: '스캔 시작 시간',
+      value: 'start_time'
+    }, {
+      title: '스캔 완료 시간',
+      value: 'end_time'
+    }, {
+      title: '원본 신분증 이미지',
+      value: 'ocr_origin_image'
+    }, {
+      title: '마스킹된 신분증 이미지',
+      value: 'ocr_masking_image'
+    }, {
+      title: '신분증 상의 얼굴 크롭 이미지',
+      value: 'ocr_face_image'
+    }
 
+    // { title: '사본판별 활성화 여부', value: 'ssa_mode' },
+    // { title: '신분증 사본탐지 신뢰도', value: 'fd_confidence' },
+    // { title: '신분증 사본탐지 결과 (REAL : 실물, FAKE : 가짜)', value: 'id_truth' },
+    ]);
     if (!!!onClickStartCallback || !!!onClickRestartCallback) {
       throw new Error('onClick callback function parameter is not exist');
     }
@@ -403,6 +447,8 @@ class UISimulator {
           this.__settings.encryptedOcrResultPassportKeylist = setKeylist ? this.__ocrResultPassportKeys.map(k => k.value).join(',') : ''; // prettier-ignore
           this.__settings.ocrResultAlienKeylist = setKeylist ? this.__ocrResultAlienKeys.map(k => k.value).join(',') : ''; // prettier-ignore
           this.__settings.encryptedOcrResultAlienKeylist = setKeylist ? this.__ocrResultAlienKeys.map(k => k.value).join(',') : ''; // prettier-ignore
+          this.__settings.ocrResultVeteranKeylist = setKeylist ? this.__ocrResultVeteranKeys.map(k => k.value).join(',') : ''; // prettier-ignore
+          this.__settings.encryptedOcrResultVeteranKeylist = setKeylist ? this.__ocrResultVeteranKeys.map(k => k.value).join(',') : ''; // prettier-ignore
         } else {
           // document.getElementById('use-encrypt-mode-div').style.display = 'block';
           // document.getElementById('use-encrypt-all-mode-div').style.display = 'block';
@@ -413,6 +459,8 @@ class UISimulator {
           delete this.__settings.encryptedOcrResultPassportKeylist;
           delete this.__settings.ocrResultAlienKeylist;
           delete this.__settings.encryptedOcrResultAlienKeylist;
+          delete this.__settings.ocrResultVeteranKeylist;
+          delete this.__settings.encryptedOcrResultVeteranKeylist;
         }
       };
       var resetEncryptSettings = () => {
@@ -421,7 +469,7 @@ class UISimulator {
         delete this.__settings.useEncryptOverallMode;
 
         // all check option 을 모두 checked 상태로 강제로 만들어서 keylist 전체를 초기 상태인 on 상태로 셋팅
-        var allCheckOpts = ['idcard-plain-all-check', 'idcard-encrypt-all-check', 'passport-plain-all-check', 'passport-encrypt-all-check', 'alien-plain-all-check', 'alien-encrypt-all-check'];
+        var allCheckOpts = ['idcard-plain-all-check', 'idcard-encrypt-all-check', 'passport-plain-all-check', 'passport-encrypt-all-check', 'alien-plain-all-check', 'alien-encrypt-all-check', 'veteran-plain-all-check', 'veteran-encrypt-all-check'];
         allCheckOpts.forEach(name => {
           document.getElementsByName(name)[0].checked = false;
           document.getElementsByName(name)[0].click();
@@ -648,6 +696,10 @@ class UISimulator {
         this.__settings.useFaceImage = false; // 외국인등록증 뒷면은 얼굴 없음
         this.__onClickStart();
       });
+      document.getElementById('veteran').addEventListener('click', () => {
+        this.__type = 'veteran';
+        this.__onClickStart();
+      });
       document.getElementById('credit').addEventListener('click', () => {
         this.__type = 'credit';
         this.__onClickStart();
@@ -662,6 +714,10 @@ class UISimulator {
       });
       document.getElementById('alien-ssa').addEventListener('click', () => {
         this.__type = 'alien-ssa';
+        this.__onClickStart();
+      });
+      document.getElementById('veteran-ssa').addEventListener('click', () => {
+        this.__type = 'veteran-ssa';
         this.__onClickStart();
       });
       document.getElementById('restart_btn').addEventListener('click', () => {
@@ -696,6 +752,8 @@ class UISimulator {
     insertOcrResultKeyOptions('encrypt-ocr-result-passport', this.__ocrResultPassportKeys);
     insertOcrResultKeyOptions('ocr-result-alien', this.__ocrResultAlienKeys);
     insertOcrResultKeyOptions('encrypt-ocr-result-alien', this.__ocrResultAlienKeys);
+    insertOcrResultKeyOptions('ocr-result-veteran', this.__ocrResultVeteranKeys);
+    insertOcrResultKeyOptions('encrypt-ocr-result-veteran', this.__ocrResultVeteranKeys);
     var addKeyList = (target, key) => {
       return [...target.split(','), key].filter(v => !!v).join(',');
     };
@@ -726,6 +784,12 @@ class UISimulator {
         case 'encrypt-ocr-result-alien-keylist':
           settingTarget = 'encryptedOcrResultAlienKeylist';
           break;
+        case 'ocr-result-veteran-keylist':
+          settingTarget = 'ocrResultVeteranKeylist';
+          break;
+        case 'encrypt-ocr-result-veteran-keylist':
+          settingTarget = 'encryptedOcrResultVeteranKeylist';
+          break;
 
         // all 체크 버튼 처리
         case 'idcard-plain-all-check':
@@ -734,6 +798,8 @@ class UISimulator {
         case 'passport-encrypt-all-check':
         case 'alien-plain-all-check':
         case 'alien-encrypt-all-check':
+        case 'veteran-plain-all-check':
+        case 'veteran-encrypt-all-check':
           var ocrType = e.target.name.split("-")[0];
           var prefix = e.target.name.split("-")[1] === 'encrypt' ? 'encrypt-' : '';
           document.getElementsByName("".concat(prefix, "ocr-result-").concat(ocrType, "-keylist")).forEach(input => {

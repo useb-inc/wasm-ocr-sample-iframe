@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>OCR/SSA WebAssembly Sample</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="./css/demo.css?ver=v1.22.1" />
+    <link rel="stylesheet" type="text/css" href="./css/demo.css?ver=v1.23.0" />
 
-    <script type="text/javascript" src="./js/util.js?ver=v1.22.1"></script>
-    <script type="text/javascript" src="./lib/lodash.min.js?ver=v1.22.1"></script>
-    <script type="module" src="./js/ui_simulator.js?ver=v1.22.1" async></script>
+    <script type="text/javascript" src="./js/util.js?ver=v1.23.0"></script>
+    <script type="text/javascript" src="./lib/lodash.min.js?ver=v1.23.0"></script>
+    <script type="module" src="./js/ui_simulator.js?ver=v1.23.0" async></script>
     <script src="https://kit.fontawesome.com/71d7c8cd6e.js" crossorigin="anonymous"></script>
   </head>
 
@@ -57,11 +57,13 @@
           <button id="passport">국내/해외 여권</button>
           <button id="alien">외국인등록증</button>
           <button id="alien-back">외국인등록증 뒷면</button>
+          <button id="veteran">국가보훈증</button>
           <button id="credit">신용카드</button>
 
           <button id="idcard-ssa">주민등록증/운전면허증 + 사본판별</button>
           <button id="passport-ssa">국내/해외 여권 + 사본판별</button>
           <button id="alien-ssa">외국인등록증 + 사본판별</button>
+          <button id="veteran-ssa">국가보훈증 + 사본판별</button>
         </div>
       </section>
 
@@ -240,6 +242,16 @@
               <label>- 외국인등록증 암호화 설정</label><br />
               <label><input type="checkbox" name="alien-encrypt-all-check" checked /> all</label>
               <ul id="encrypt-ocr-result-alien-keylist-wrapper"></ul>
+            </div>
+            <div>
+              <label>- 국가보훈증 평문 설정</label><br />
+              <label><input type="checkbox" name="veteran-plain-all-check" checked /> all</label>
+              <ul id="ocr-result-veteran-keylist-wrapper"></ul>
+            </div>
+            <div>
+              <label>- 국가보훈증 암호화 설정</label><br />
+              <label><input type="checkbox" name="veteran-encrypt-all-check" checked /> all</label>
+              <ul id="encrypt-ocr-result-veteran-keylist-wrapper"></ul>
             </div>
           </div>
           <div>
@@ -535,6 +547,6 @@
       <div id="ocr_result" class="custom--section"></div>
     </section>
 
-    <script type="module" src="./demo.js?ver=v1.22.1" async></script>
+    <script type="module" src="./demo.js?ver=v1.23.0" async></script>
   </body>
 </html>

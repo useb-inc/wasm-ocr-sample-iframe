@@ -239,6 +239,8 @@ function updateOCRResult(data, json) {
       ocr_type_txt = '외국인등록증 뒷면';
     } else if (detail.ocr_type.indexOf('alien') > -1) {
       ocr_type_txt = '외국인등록증';
+    } else if (detail.ocr_type.indexOf('veteran') > -1) {
+      ocr_type_txt = '국가보훈증';
     } else if (detail.ocr_type.indexOf('credit') > -1) {
       ocr_type_txt = '신용카드';
     } else if (detail.ocr_type.indexOf('idcard-ssa') > -1) {
