@@ -265,6 +265,7 @@ class UISimulator {
     // { title: '신분증 사본탐지 신뢰도', value: 'fd_confidence' },
     // { title: '신분증 사본탐지 결과 (REAL : 실물, FAKE : 가짜)', value: 'id_truth' },
     ]);
+
     if (!!!onClickStartCallback || !!!onClickRestartCallback) {
       throw new Error('onClick callback function parameter is not exist');
     }
@@ -429,6 +430,11 @@ class UISimulator {
       document.querySelector('#ocr-server-url-alien').addEventListener('change', e => {
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlAlien = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-url-veteran').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlVeteran = e.target.value;
         this.__saveSettingsHandler();
       });
       document.querySelector('#server-ocr-result-key-list').addEventListener('change', e => {
@@ -718,6 +724,10 @@ class UISimulator {
       });
       document.getElementById('veteran-ssa').addEventListener('click', () => {
         this.__type = 'veteran-ssa';
+        this.__onClickStart();
+      });
+      document.getElementById('barcode').addEventListener('click', () => {
+        this.__type = 'barcode';
         this.__onClickStart();
       });
       document.getElementById('restart_btn').addEventListener('click', () => {
