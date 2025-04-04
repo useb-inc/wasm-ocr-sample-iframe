@@ -243,6 +243,8 @@ function updateOCRResult(data, json) {
       ocr_type_txt = '국가보훈증';
     } else if (detail.ocr_type.indexOf('credit') > -1) {
       ocr_type_txt = '신용카드';
+    } else if (detail.ocr_type.indexOf('barcode') > -1) {
+      ocr_type_txt = 'USIM 바코드';
     } else if (detail.ocr_type.indexOf('idcard-ssa') > -1) {
       ocr_type_txt += ' + 사본탐지';
     } else {

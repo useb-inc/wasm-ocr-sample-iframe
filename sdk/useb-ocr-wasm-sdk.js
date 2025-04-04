@@ -1,4 +1,4 @@
-import UseBOCR from './ocr.js';
+import UseBOCR from './ocr.js?ver=v1.32.2';
 
 const ocr = new UseBOCR();
 let targetOrigin = null;
@@ -51,7 +51,7 @@ const messageHandler = async (e) => {
       try {
         // document URL이 reload되지 않고 startOCR 중복호출 되었을 때,
         // 자원정리 이슈 방지하여 stopOCR 미리 한번 호출.
-        ocr.stopOCR();
+        await ocr.stopOCR();
       } catch (e) {
         // nothing to do..
       }
@@ -80,8 +80,9 @@ const messageHandler = async (e) => {
         case 'passport-ssa':
         case 'alien-ssa':
         case 'veteran-ssa':
+        case 'barcode':
           ocr.init(data.settings);
-          await ocr.startOCR(data.ocrType, sendResult, sendResult, onInProgressChange);
+          await ocr.startOCR(data.ocrType, sendResult, sendResult, onInProgressChange, serverOCRPreprocessor);
           break;
         default:
           new Error('Invalid ocrType');
@@ -97,6 +98,11 @@ const messageHandler = async (e) => {
     sendErrorResult('error', e.message);
   }
 };
+
+function serverOCRPreprocessor(result) {
+  console.log('serverOCRPreprocessor', { result });
+  return result;
+}
 
 //ios
 window.addEventListener('message', messageHandler);
@@ -220,7 +226,8 @@ async function __onInProgressChangeWASM(
   recognizedImage
 ) {
   const isCreditCard = ocrType.indexOf('credit') > -1;
-  const cardTypeString = isCreditCard ? '신용카드' : '신분증';
+  const isBarcode = ocrType.indexOf('barcode') > -1;
+  const cardTypeString = isCreditCard ? '신용카드' : isBarcode ? 'USIM 바코드' : '신분증';
   let showLoadingUI = false;
   let showCaptureUI = false;
 
@@ -233,7 +240,7 @@ async function __onInProgressChangeWASM(
         textMsg = `${cardTypeString} 촬영을 위해 카메라를 불러오는 중 입니다.`;
         break;
       case ocr.IN_PROGRESS.READY:
-        textMsg = `영역 안에 ${cardTypeString}이 꽉 차도록 위치시키면 자동 촬영됩니다.`;
+        textMsg = `영역 안에 ${cardTypeString}이(가) 꽉 차도록 위치시키면 자동 촬영됩니다.`;
         break;
       case ocr.IN_PROGRESS.CARD_DETECT_SUCCESS:
         textMsg = `${cardTypeString}이(가) 감지되었습니다. <br/>${cardTypeString} 정보를 자동으로 인식(OCR) 중 입니다.`;
@@ -333,7 +340,8 @@ async function __onInProgressChangeServer(
   recognizedImage
 ) {
   const isCreditCard = ocrType.indexOf('credit') > -1;
-  const cardTypeString = isCreditCard ? '신용카드' : '신분증';
+  const isBarcode = ocrType.indexOf('barcode') > -1;
+  const cardTypeString = isCreditCard ? '신용카드' : isBarcode ? 'USIM 바코드' : '신분증';
   let showLoadingUI = false;
   let showCaptureUI = false;
 
@@ -346,7 +354,7 @@ async function __onInProgressChangeServer(
         textMsg = `${cardTypeString} 촬영을 위해 카메라를 불러오는 중 입니다.`;
         break;
       case ocr.IN_PROGRESS.READY:
-        textMsg = `영역 안에 ${cardTypeString}이 꽉 차도록 위치시킨 후 촬영 버튼을 눌러주세요.`;
+        textMsg = `영역 안에 ${cardTypeString}이(가) 꽉 차도록 위치시킨 후 촬영 버튼을 눌러주세요.`;
         showCaptureUI = true;
         break;
       case ocr.IN_PROGRESS.MANUAL_CAPTURE_SUCCESS:
