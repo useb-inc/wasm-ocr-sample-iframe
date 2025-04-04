@@ -379,16 +379,11 @@ class UISimulator {
         this.__settings.useForceCompleteUI = e.target.checked;
         this.__saveSettingsHandler();
       });
-      document.getElementById('wasm-resource-timeout').addEventListener('change', e => {
-        this.__settings.wasmResourceTimeout = Number(e.target.value) > 0 ? Number(e.target.value) : -1;
-        this.__saveSettingsHandler();
-      });
       document.getElementById('use-auto-switch').addEventListener('change', e => {
         this.__settings.useAutoSwitchToServerMode = e.target.checked;
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         document.querySelector('#server-ocr-type-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
         document.querySelector('#server-ocr-result-key-list-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
-        document.querySelector('#wasm-resource-timeout-ui').style.display = e.target.checked ? 'block' : 'none';
         this.__saveSettingsHandler();
       });
       document.getElementById('switch-to-server-threshold').addEventListener('change', e => {
@@ -412,9 +407,14 @@ class UISimulator {
         if (showServerOcrBaseUrlUI) this.__settings.ocrServerBaseUrl = e.target.value;
         this.__saveSettingsHandler();
       });
-      document.querySelector('#ocr-server-url-idcard-driver').addEventListener('change', e => {
+      document.querySelector('#ocr-server-url-idcard').addEventListener('change', e => {
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
-        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlIdcardDriver = e.target.value;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlIdcard = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.querySelector('#ocr-server-url-driver').addEventListener('change', e => {
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlDriver = e.target.value;
         this.__saveSettingsHandler();
       });
       document.querySelector('#ocr-server-url-passport').addEventListener('change', e => {
@@ -432,18 +432,9 @@ class UISimulator {
         if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlAlien = e.target.value;
         this.__saveSettingsHandler();
       });
-      document.querySelector('#ocr-server-url-veteran').addEventListener('change', e => {
-        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
-        if (showServerOcrBaseUrlUI) this.__settings.ocrServerUrlVeteran = e.target.value;
-        this.__saveSettingsHandler();
-      });
       document.querySelector('#server-ocr-result-key-list').addEventListener('change', e => {
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         if (showServerOcrBaseUrlUI) this.__settings.ocrServerParseKeyList = e.target.value;
-        this.__saveSettingsHandler();
-      });
-      document.querySelector('#skip-server-mode-request-ocr').addEventListener('change', e => {
-        this.__settings.skipServerModeRequestOCR = e.target.checked;
         this.__saveSettingsHandler();
       });
       var setEncryptOptionUI = (showKeylistUI, setKeylist) => {
@@ -546,10 +537,6 @@ class UISimulator {
       });
       document.getElementById('camera-resolution-criteria').addEventListener('change', e => {
         this.__settings.cameraResolutionCriteria = e.target.value;
-        this.__saveSettingsHandler();
-      });
-      document.getElementById('origin-image-square-ratio').addEventListener('change', e => {
-        this.__settings.useOriginImageSquareRatio = e.target.checked;
         this.__saveSettingsHandler();
       });
       document.getElementById('camera-resource-request-retry-limit').addEventListener('change', e => {
@@ -732,10 +719,6 @@ class UISimulator {
       });
       document.getElementById('veteran-ssa').addEventListener('click', () => {
         this.__type = 'veteran-ssa';
-        this.__onClickStart();
-      });
-      document.getElementById('barcode').addEventListener('click', () => {
-        this.__type = 'barcode';
         this.__onClickStart();
       });
       document.getElementById('restart_btn').addEventListener('click', () => {

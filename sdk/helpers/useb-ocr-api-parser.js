@@ -8,7 +8,7 @@ import objectUtil from './object-util.js';
 /* global-module */
 class OcrResultParser {
   constructor() {
-    _defineProperty(this, "__ocrTypeList", ['idcard', 'driver', 'passport', 'foreign-passport', 'alien', 'veteran', 'credit', 'idcard-ssa', 'driver-ssa', 'passport-ssa', 'foreign-passport-ssa', 'alien-ssa', 'veteran-ssa', 'credit-ssa', 'barcode']);
+    _defineProperty(this, "__ocrTypeList", ['idcard', 'driver', 'passport', 'foreign-passport', 'alien', 'veteran', 'credit', 'idcard-ssa', 'driver-ssa', 'passport-ssa', 'foreign-passport-ssa', 'alien-ssa', 'veteran-ssa', 'credit-ssa']);
     _defineProperty(this, "MASK_INFO", ['rect_id_issue_date', 'rect_id_number', 'rect_kor_personal_number', 'rect_license_number', 'rect_overseas_residents', 'rect_passport_jumin_number', 'rect_passport_number', 'rect_passport_number_mrz']);
     _defineProperty(this, "RESULT_SCAN_TYPE_MAP", {
       RESIDENT_REGISTRATION: '1',
@@ -23,8 +23,7 @@ class OcrResultParser {
       // TODO 현재 SERVER SDK 구분안함
       ALIEN_REGISTRATION_3: '5-3',
       // TODO 현재 SERVER SDK 구분안함
-      VETERAN: '13',
-      BARCODE: '8'
+      VETERAN: '13'
     });
     _defineProperty(this, "RESULT_MASKING_TYPE_MAP", {
       1: 'kor',
@@ -33,8 +32,7 @@ class OcrResultParser {
       4: 'passport-oversea',
       // TODO 현재 SERVER SDK 구분안함
       5: 'alien',
-      13: 'veteran',
-      8: 'barcode'
+      13: 'veteran'
     });
   }
   parseOcrResult(ocrType, ssaMode, ocrResult, parseKeyList) {
@@ -105,26 +103,17 @@ class OcrResultParser {
     };
   }
   __parseBase64ImageResult(ocrResult, base64ImageResult) {
-    var mimeType = 'data:image/jpeg;base64,';
-    if (ocrResult.image_base64_mask && !ocrResult.image_base64_mask.startsWith(mimeType)) {
-      if (this.detectMimeType(ocrResult.image_base64_mask)) {
-        ocrResult.image_base64_mask = mimeType + ocrResult.image_base64_mask;
-      }
+    if (ocrResult.image_base64_mask && !ocrResult.image_base64_mask.startsWith('data:image')) {
+      ocrResult.image_base64_mask = 'data:image/jpeg;base64,' + ocrResult.image_base64_mask;
     }
-    if (ocrResult.marked && !ocrResult.marked.startsWith(mimeType)) {
-      if (this.detectMimeType(ocrResult.marked)) {
-        ocrResult.marked = mimeType + ocrResult.marked;
-      }
+    if (ocrResult.marked && !ocrResult.marked.startsWith('data:image')) {
+      ocrResult.marked = 'data:image/jpeg;base64,' + ocrResult.marked;
     }
-    if (ocrResult.image_base64_face && !ocrResult.image_base64_face.startsWith(mimeType)) {
-      if (this.detectMimeType(ocrResult.image_base64_face)) {
-        ocrResult.image_base64_face = mimeType + ocrResult.image_base64_face;
-      }
+    if (ocrResult.image_base64_face && !ocrResult.image_base64_face.startsWith('data:image')) {
+      ocrResult.image_base64_face = 'data:image/jpeg;base64,' + ocrResult.image_base64_face;
     }
-    if (ocrResult.portrait && !ocrResult.portrait.startsWith(mimeType)) {
-      if (this.detectMimeType(ocrResult.portrait)) {
-        ocrResult.portrait = mimeType + ocrResult.portrait;
-      }
+    if (ocrResult.portrait && !ocrResult.portrait.startsWith('data:image')) {
+      ocrResult.portrait = 'data:image/jpeg;base64,' + ocrResult.portrait;
     }
     var maskingImageKey = ocrResult.image_base64_mask ? 'image_base64_mask' : 'marked';
     var faceImageKey = ocrResult.image_base64_face ? 'image_base64_face' : 'portrait';
@@ -398,20 +387,6 @@ class OcrResultParser {
       } else result[key] = value;
     }
     return result;
-  }
-  detectMimeType(base64) {
-    var signatures = {
-      JVBERi0: 'application/pdf',
-      R0lGODdh: 'image/gif',
-      R0lGODlh: 'image/gif',
-      iVBORw0KGgo: 'image/png',
-      '/9j/': 'image/jpeg'
-    };
-    for (var sign in signatures) {
-      if (base64.startsWith(sign)) {
-        return signatures[sign];
-      }
-    }
   }
 }
 export default new OcrResultParser();
