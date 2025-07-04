@@ -601,6 +601,10 @@ class UISimulator {
         this.__settings.force_wasm_reload_flag = checked ? e.target.value : '';
         this.__saveSettingsHandler();
       });
+      document.getElementById('request_camera_before_module_load').addEventListener('change', e => {
+        this.__settings.useRequestCameraBeforeModuleLoad = e.target.checked;
+        this.__saveSettingsHandler();
+      });
       document.getElementById('ocr_config').addEventListener('change', e => {
         this.__settings.ocr_config = e.target.value;
         this.__saveSettingsHandler();
