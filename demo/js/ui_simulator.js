@@ -385,9 +385,19 @@ class UISimulator {
       });
       document.getElementById('use-auto-switch').addEventListener('change', e => {
         this.__settings.useAutoSwitchToServerMode = e.target.checked;
-        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
+
+        // Auto 활성화 시 Hybrid 비활성화
+        if (e.target.checked) {
+          var hybridMode = document.getElementById('use-hybrid-mode');
+          if (hybridMode !== null && hybridMode !== void 0 && hybridMode.checked) hybridMode.click();
+        }
+        var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode || this.__settings.useHybridMode;
         document.querySelector('#server-ocr-type-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
         document.querySelector('#server-ocr-result-key-list-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
+
+        // Threshold UI도 Hybrid 모드일 때 표시
+        var showThresholdUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useHybridMode;
+        document.querySelector('#switch-to-server-threshold-ui').style.display = showThresholdUI ? 'block' : 'none';
         document.querySelector('#wasm-resource-timeout-ui').style.display = e.target.checked ? 'block' : 'none';
         this.__saveSettingsHandler();
       });
@@ -397,6 +407,12 @@ class UISimulator {
       });
       document.getElementById('use-manual-switch').addEventListener('change', e => {
         this.__settings.useManualSwitchToServerMode = e.target.checked;
+
+        // Manual 활성화 시 Hybrid 비활성화
+        if (e.target.checked) {
+          var hybridMode = document.getElementById('use-hybrid-mode');
+          if (hybridMode !== null && hybridMode !== void 0 && hybridMode.checked) hybridMode.click();
+        }
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         document.querySelector('#server-ocr-type-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
         document.querySelector('#server-ocr-result-key-list-ui').style.display = showServerOcrBaseUrlUI ? 'block' : 'none';
@@ -445,6 +461,26 @@ class UISimulator {
       document.querySelector('#server-ocr-result-key-list').addEventListener('change', e => {
         var showServerOcrBaseUrlUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode;
         if (showServerOcrBaseUrlUI) this.__settings.ocrServerParseKeyList = e.target.value;
+        this.__saveSettingsHandler();
+      });
+      document.getElementById('use-hybrid-mode').addEventListener('change', e => {
+        this.__settings.useHybridMode = e.target.checked;
+        if (e.target.checked) {
+          // Auto/Manual 체크박스 해제
+          var autoSwitch = document.getElementById('use-auto-switch');
+          var manualSwitch = document.getElementById('use-manual-switch');
+          if (autoSwitch.checked) autoSwitch.click();
+          if (manualSwitch.checked) manualSwitch.click();
+        }
+
+        // 하이브리드 모드 일때 auto (latency threshold)와 wasmResouceTimeout UI 표시
+        var showThresholdUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useHybridMode;
+        var showTimeoutUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useHybridMode;
+        var showServerOcrUI = this.__settings.useAutoSwitchToServerMode || this.__settings.useManualSwitchToServerMode || this.__settings.useHybridMode;
+        document.querySelector('#switch-to-server-threshold-ui').style.display = showThresholdUI ? 'block' : 'none';
+        document.querySelector('#wasm-resource-timeout-ui').style.display = showTimeoutUI ? 'block' : 'none';
+        document.querySelector('#server-ocr-type-ui').style.display = showServerOcrUI ? 'block' : 'none';
+        document.querySelector('#server-ocr-result-key-list-ui').style.display = showServerOcrUI ? 'block' : 'none';
         this.__saveSettingsHandler();
       });
       document.querySelector('#skip-server-mode-request-ocr').addEventListener('change', e => {

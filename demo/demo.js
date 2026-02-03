@@ -31,7 +31,6 @@ const ocrIframe = document.getElementById('resolution-simulation-iframe');
 const ocrDefaultSettings = {
   licenseKey: OCR_LICENSE_KEY,
   resourceBaseUrl: OCR_RESOURCE_BASE_URL,
-  // preloadingUITextMsg: '신분증인증 모듈을 불러오는 중 입니다 ~~<br />잠시만 기다려주세요 ~~',
 };
 
 let preloaded = false;
