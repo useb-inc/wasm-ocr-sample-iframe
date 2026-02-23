@@ -491,6 +491,13 @@ class UISimulator {
         this.__settings.useFakeImage = e.target.checked;
         this.__saveSettingsHandler();
       });
+      document.querySelectorAll('input[name="server-ocr-config"]').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          var checked = [...document.querySelectorAll('input[name="server-ocr-config"]:checked')].map(el => el.value);
+          this.__settings.serverOcrConfigs = checked.length > 0 ? checked : [];
+          this.__saveSettingsHandler();
+        });
+      });
       var setEncryptOptionUI = (showKeylistUI, setKeylist) => {
         if (showKeylistUI) {
           // document.getElementById('use-encrypt-mode-div').style.display = 'none';
